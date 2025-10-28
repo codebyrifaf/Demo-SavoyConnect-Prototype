@@ -1,0 +1,66 @@
+/* SavoyConnect Design Tokens */
+
+/* Colors */
+:root {
+  --color-primary: #0B5FFF;        /* Savoy Blue */
+  --color-accent: #FFD66B;         /* Creamy Yellow */
+  --color-secondary: #FF6B6B;      /* Soft Coral */
+  --color-neutral-900: #0F1724;    /* Text */
+  --color-neutral-700: #334155;    /* Secondary text */
+  --color-neutral-300: #E6E9EE;    /* Borders / Dividers */
+  --color-success: #10B981;        /* Success / Positive */
+  --color-warning: #F59E0B;        /* Warning / Alerts */
+  --color-error: #EF4444;          /* Error / Danger */
+  --color-background: #FFFFFF;     /* Light theme background */
+  --color-surface: #F8F9FA;        /* Cards / Surface BG */
+}
+
+/* Typography */
+:root {
+  --font-display: 'Poppins', sans-serif;
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Nunito', sans-serif;
+
+  --font-size-xl: 36px;
+  --font-size-l: 24px;
+  --font-size-m: 18px;
+  --font-size-base: 16px;
+  --font-size-sm: 14px;
+  --font-size-xs: 12px;
+
+  --line-height-xl: 44px;
+  --line-height-l: 32px;
+  --line-height-m: 24px;
+  --line-height-base: 24px;
+  --line-height-sm: 20px;
+  --line-height-xs: 16px;
+
+  --font-weight-bold: 700;
+  --font-weight-semibold: 600;
+  --font-weight-regular: 400;
+}
+
+/* Spacing */
+:root {
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+}
+
+/* Border Radius */
+:root {
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+/* Shadow / Elevation */
+:root {
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 8px rgba(0,0,0,0.15);
+  --shadow-lg: 0 8px 16px rgba(0,0,0,0.2);
+}
