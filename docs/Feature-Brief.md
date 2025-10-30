@@ -1,4 +1,8 @@
-
+SavoyConnect Consumer Centric Features
+ Prepared by: Rifaf & Dipto
+ Role: Intern
+ Company: Data Limited
+ Date: October 2025
 
 ### 1.1 Ordering Flow (Pieces or Liters)
 - What: Order by pieces (boxes) or liters. Real-time totals, delivery fee threshold, validation, and a structured delivery form.
