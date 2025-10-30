@@ -125,6 +125,8 @@
                     </div>
                 </div>
 
+                
+
                 <!-- Quick Actions -->
                 <div class="section">
                     <h3 class="section-title">Quick Actions</h3>
@@ -149,29 +151,49 @@
                     </div>
                 </div>
 
-                <!-- Make Your Own Box Section -->
-                <div class="section">
-                    <div class="custom-box-banner" onclick="openCustomBoxModal()">
-                        <div class="custom-box-icon">🎨</div>
-                        <div class="custom-box-content">
-                            <h3>Make Your Own Box</h3>
-                            <p>Create a personalized gift box • 4-6 flavors</p>
+                <!-- Recipe Suggestions Section (Personalized) -->
+                <div id="recipeSuggestionsContainer" class="section" style="display: none;">
+                    <div class="recipe-suggestions-banner">
+                        <div class="suggestions-header">
+                            <div class="suggestions-icon">🍳</div>
+                            <div class="suggestions-text">
+                                <h3>Recipe Suggestions For You</h3>
+                                <p>You viewed <span id="suggestionIngredientName">Mango</span> recipes <span id="suggestionViewCount">5</span> times - try these new ones!</p>
+                            </div>
                         </div>
-                        <button class="btn-custom-box">Customize →</button>
+                        <div id="recipeSuggestionCards" class="recipe-suggestion-cards">
+                            <!-- Recipe suggestion cards will be dynamically inserted here -->
+                        </div>
+                        <button class="btn-view-all-recipes" onclick="navigateTo('recipes')">
+                            <span>📖</span>
+                            <span>View All Recipes</span>
+                            <span class="arrow-icon">→</span>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Order Ice Cream Section -->
+                <!-- Make Your Own Box & Order Ice Cream Section (Two Column) -->
                 <div class="section">
-                    <div class="order-banner" onclick="openOrderModal()">
-                        <div class="order-banner-content">
-                            <div class="order-icon">📦</div>
-                            <div class="order-text">
-                                <h3>Order Ice Cream</h3>
-                                <p>By box (24 pieces) or by liter</p>
+                    <div class="two-column-grid">
+                        <div class="custom-box-banner" onclick="openCustomBoxModal()">
+                            <div class="custom-box-icon">🎨</div>
+                            <div class="custom-box-content">
+                                <h3>Make Your Own Box</h3>
+                                <p>Personalized gift box • 4-6 flavors</p>
                             </div>
+                            <button class="btn-custom-box">Customize →</button>
                         </div>
-                        <button class="btn-order">Order Now →</button>
+
+                        <div class="order-banner" onclick="openOrderModal()">
+                            <div class="order-banner-content">
+                                <div class="order-icon">📦</div>
+                                <div class="order-text">
+                                    <h3>Order Ice Cream</h3>
+                                    <p>By box or by liter</p>
+                                </div>
+                            </div>
+                            <button class="btn-order">Order Now →</button>
+                        </div>
                     </div>
                 </div>
 
@@ -620,6 +642,228 @@
                     </div>
                 </div>
 
+                <!-- Recipe Inspiration Section -->
+                <div class="section" id="recipeInspirationSection">
+                    <div class="recipe-inspiration-banner" onclick="showFlavorRecipes()">
+                        <div class="recipe-banner-icon">🍳</div>
+                        <div class="recipe-banner-content">
+                            <h3>Recipe Inspiration</h3>
+                            <p id="recipeInspirationText">Explore delicious recipes you can make with <span id="mainIngredientName"></span></p>
+                        </div>
+                        <button class="btn-recipe">Explore Recipes →</button>
+                    </div>
+                </div>
+
+                <!-- Ratings & Reviews Section -->
+                <div class="section">
+                    <div class="ratings-header">
+                        <h3 class="section-title">Ratings & Reviews</h3>
+                        <button class="btn-write-review-flavor" onclick="openFlavorReviewModal()">
+                            ✍️ Write Review
+                        </button>
+                    </div>
+
+                    <!-- Overall Rating Summary -->
+                    <div class="flavor-rating-summary">
+                        <div class="rating-overview">
+                            <div class="rating-score-large">
+                                <div class="score-number" id="flavorAvgRating">4.7</div>
+                                <div class="rating-stars-display">
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star half">★</span>
+                                </div>
+                                <p class="rating-count" id="flavorRatingCount">Based on 1,234 reviews</p>
+                            </div>
+                            <div class="rating-bars">
+                                <div class="rating-bar-row">
+                                    <span class="bar-label">5★</span>
+                                    <div class="bar-container">
+                                        <div class="bar-fill" style="width: 75%"></div>
+                                    </div>
+                                    <span class="bar-count">925</span>
+                                </div>
+                                <div class="rating-bar-row">
+                                    <span class="bar-label">4★</span>
+                                    <div class="bar-container">
+                                        <div class="bar-fill" style="width: 15%"></div>
+                                    </div>
+                                    <span class="bar-count">185</span>
+                                </div>
+                                <div class="rating-bar-row">
+                                    <span class="bar-label">3★</span>
+                                    <div class="bar-container">
+                                        <div class="bar-fill" style="width: 6%"></div>
+                                    </div>
+                                    <span class="bar-count">74</span>
+                                </div>
+                                <div class="rating-bar-row">
+                                    <span class="bar-label">2★</span>
+                                    <div class="bar-container">
+                                        <div class="bar-fill" style="width: 3%"></div>
+                                    </div>
+                                    <span class="bar-count">37</span>
+                                </div>
+                                <div class="rating-bar-row">
+                                    <span class="bar-label">1★</span>
+                                    <div class="bar-container">
+                                        <div class="bar-fill" style="width: 1%"></div>
+                                    </div>
+                                    <span class="bar-count">13</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Filter Reviews -->
+                    <div class="review-filters">
+                        <button class="filter-chip active" onclick="filterFlavorReviews('all')">All</button>
+                        <button class="filter-chip" onclick="filterFlavorReviews('5')">5★</button>
+                        <button class="filter-chip" onclick="filterFlavorReviews('4')">4★</button>
+                        <button class="filter-chip" onclick="filterFlavorReviews('3')">3★</button>
+                        <button class="filter-chip" onclick="filterFlavorReviews('with-photos')">📷 With Photos</button>
+                        <button class="filter-chip" onclick="filterFlavorReviews('recent')">Recent</button>
+                    </div>
+
+                    <!-- Reviews List -->
+                    <div class="flavor-reviews-list" id="flavorReviewsList">
+                        <!-- Review 1 -->
+                        <div class="flavor-review-card" data-rating="5">
+                            <div class="review-header">
+                                <div class="reviewer-info">
+                                    <div class="reviewer-avatar">👤</div>
+                                    <div class="reviewer-details">
+                                        <h4 class="reviewer-name">Sarah Ahmed</h4>
+                                        <div class="review-stars">
+                                            <span class="star filled">★</span>
+                                            <span class="star filled">★</span>
+                                            <span class="star filled">★</span>
+                                            <span class="star filled">★</span>
+                                            <span class="star filled">★</span>
+                                        </div>
+                                        <p class="review-date">2 days ago</p>
+                                    </div>
+                                </div>
+                                <button class="btn-review-menu" onclick="toggleReviewMenu(this)">⋮</button>
+                            </div>
+                            <p class="review-text">Absolutely amazing! This is hands down the best chocolate ice cream I've ever had. The Belgian chocolate really makes a difference - it's so rich and creamy. My whole family loves it! 🍫😍</p>
+                            <div class="review-actions">
+                                <button class="review-action-btn" onclick="likeReview('review1')">
+                                    <span class="action-icon">👍</span>
+                                    <span class="action-count">24</span>
+                                </button>
+                                <button class="review-action-btn" onclick="reportReview('review1')">
+                                    <span class="action-icon">🚩</span>
+                                    <span>Report</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Review 2 -->
+                        <div class="flavor-review-card" data-rating="5">
+                            <div class="review-header">
+                                <div class="reviewer-info">
+                                    <div class="reviewer-avatar">👤</div>
+                                    <div class="reviewer-details">
+                                        <h4 class="reviewer-name">Kabir Rahman</h4>
+                                        <div class="review-stars">
+                                            <span class="star filled">★</span>
+                                            <span class="star filled">★</span>
+                                            <span class="star filled">★</span>
+                                            <span class="star filled">★</span>
+                                            <span class="star filled">★</span>
+                                        </div>
+                                        <p class="review-date">5 days ago</p>
+                                    </div>
+                                </div>
+                                <button class="btn-review-menu" onclick="toggleReviewMenu(this)">⋮</button>
+                            </div>
+                            <p class="review-text">Been buying this flavor for years and it never disappoints! Perfect balance of sweetness and chocolate intensity. Great for desserts or just eating straight from the container. 10/10 would recommend!</p>
+                            <div class="review-actions">
+                                <button class="review-action-btn" onclick="likeReview('review2')">
+                                    <span class="action-icon">👍</span>
+                                    <span class="action-count">18</span>
+                                </button>
+                                <button class="review-action-btn" onclick="reportReview('review2')">
+                                    <span class="action-icon">🚩</span>
+                                    <span>Report</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Review 3 -->
+                        <div class="flavor-review-card" data-rating="4">
+                            <div class="review-header">
+                                <div class="reviewer-info">
+                                    <div class="reviewer-avatar">👤</div>
+                                    <div class="reviewer-details">
+                                        <h4 class="reviewer-name">Nadia Islam</h4>
+                                        <div class="review-stars">
+                                            <span class="star filled">★</span>
+                                            <span class="star filled">★</span>
+                                            <span class="star filled">★</span>
+                                            <span class="star filled">★</span>
+                                            <span class="star empty">★</span>
+                                        </div>
+                                        <p class="review-date">1 week ago</p>
+                                    </div>
+                                </div>
+                                <button class="btn-review-menu" onclick="toggleReviewMenu(this)">⋮</button>
+                            </div>
+                            <p class="review-text">Really good chocolate flavor! Very creamy and not too sweet. Only giving 4 stars because I wish the portion sizes were bigger for the price. But quality-wise, it's excellent!</p>
+                            <div class="review-actions">
+                                <button class="review-action-btn" onclick="likeReview('review3')">
+                                    <span class="action-icon">👍</span>
+                                    <span class="action-count">12</span>
+                                </button>
+                                <button class="review-action-btn" onclick="reportReview('review3')">
+                                    <span class="action-icon">🚩</span>
+                                    <span>Report</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Review 4 -->
+                        <div class="flavor-review-card" data-rating="5">
+                            <div class="review-header">
+                                <div class="reviewer-info">
+                                    <div class="reviewer-avatar">👤</div>
+                                    <div class="reviewer-details">
+                                        <h4 class="reviewer-name">Fahim Hassan</h4>
+                                        <div class="review-stars">
+                                            <span class="star filled">★</span>
+                                            <span class="star filled">★</span>
+                                            <span class="star filled">★</span>
+                                            <span class="star filled">★</span>
+                                            <span class="star filled">★</span>
+                                        </div>
+                                        <p class="review-date">2 weeks ago</p>
+                                    </div>
+                                </div>
+                                <button class="btn-review-menu" onclick="toggleReviewMenu(this)">⋮</button>
+                            </div>
+                            <p class="review-text">My kids go crazy for this! We always keep a tub in the freezer. The chocolate taste is authentic and the texture is smooth. No ice crystals. Worth every taka! 🍦👌</p>
+                            <div class="review-actions">
+                                <button class="review-action-btn" onclick="likeReview('review4')">
+                                    <span class="action-icon">👍</span>
+                                    <span class="action-count">31</span>
+                                </button>
+                                <button class="review-action-btn" onclick="reportReview('review4')">
+                                    <span class="action-icon">🚩</span>
+                                    <span>Report</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Load More Reviews -->
+                    <button class="btn-load-more" onclick="loadMoreFlavorReviews()">
+                        Load More Reviews
+                    </button>
+                </div>
+
                 <!-- Similar Flavors -->
                 <div class="section">
                     <h3 class="section-title">You Might Also Like</h3>
@@ -640,6 +884,160 @@
                             <p>Bold & Energizing</p>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="bottom-nav">
+                <button class="nav-item" onclick="navigateTo('home')">
+                    <span class="nav-icon">🏠</span>
+                    <span>Home</span>
+                </button>
+                <button class="nav-item" onclick="navigateTo('wallet')">
+                    <span class="nav-icon">💎</span>
+                    <span>Wallet</span>
+                </button>
+                <button class="nav-item" onclick="navigateTo('challenges')">
+                    <span class="nav-icon">⚡</span>
+                    <span>Engage</span>
+                </button>
+                <button class="nav-item" onclick="navigateTo('profile')">
+                    <span class="nav-icon">👤</span>
+                    <span>Profile</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Recipe Exploration Screen -->
+        <div id="recipe-exploration" class="screen">
+            <div class="top-bar">
+                <button class="btn-back" onclick="backToFlavorDetail()">←</button>
+                <h2 id="recipeExplorationTitle">Recipe Ideas</h2>
+                <button class="btn-icon" onclick="shareRecipes()">📤</button>
+            </div>
+            <div class="content">
+                <!-- Recipe Header -->
+                <div class="recipe-header">
+                    <div class="recipe-header-icon" id="recipeHeaderIcon">🥭</div>
+                    <h1 id="recipeIngredientName">Mango Recipes</h1>
+                    <p id="recipeDescription">Delicious recipes inspired by your favorite ice cream flavor</p>
+                </div>
+
+                <!-- Recipe Count -->
+                <div class="recipe-count-banner">
+                    <span id="recipeCount">3</span> recipes to inspire your creativity
+                </div>
+
+                <!-- Recipe Cards Grid -->
+                <div class="recipe-cards-grid" id="recipeCardsGrid">
+                    <!-- Recipe cards will be dynamically inserted here -->
+                </div>
+            </div>
+            <div class="bottom-nav">
+                <button class="nav-item" onclick="navigateTo('home')">
+                    <span class="nav-icon">🏠</span>
+                    <span>Home</span>
+                </button>
+                <button class="nav-item" onclick="navigateTo('wallet')">
+                    <span class="nav-icon">💎</span>
+                    <span>Wallet</span>
+                </button>
+                <button class="nav-item" onclick="navigateTo('challenges')">
+                    <span class="nav-icon">⚡</span>
+                    <span>Engage</span>
+                </button>
+                <button class="nav-item" onclick="navigateTo('profile')">
+                    <span class="nav-icon">👤</span>
+                    <span>Profile</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Recipe Detail Screen -->
+        <div id="recipe-detail" class="screen">
+            <div class="top-bar">
+                <button class="btn-back" onclick="navigateTo('recipe-exploration')">←</button>
+                <h2>Recipe Details</h2>
+                <button class="btn-icon" onclick="shareRecipe()">📤</button>
+            </div>
+            <div class="content">
+                <!-- Recipe Hero -->
+                <div class="recipe-detail-hero">
+                    <div class="recipe-detail-image" id="recipeDetailImage">🥭</div>
+                    <h1 id="recipeDetailName">Tropical Mango Smoothie</h1>
+                    <div class="recipe-meta">
+                        <span class="recipe-meta-item">
+                            <span class="meta-icon">⏱️</span>
+                            <span id="recipeDetailPrepTime">5 min</span>
+                        </span>
+                        <span class="recipe-meta-item">
+                            <span class="meta-icon">🍽️</span>
+                            <span id="recipeDetailServings">2 servings</span>
+                        </span>
+                        <span class="recipe-meta-item">
+                            <span class="meta-icon">📊</span>
+                            <span id="recipeDetailDifficulty">Easy</span>
+                        </span>
+                    </div>
+                    <span class="recipe-category-badge" id="recipeDetailCategory">Beverages</span>
+                </div>
+
+                <!-- Recipe Description -->
+                <div class="section">
+                    <h3 class="section-title">About This Recipe</h3>
+                    <div class="recipe-description-card">
+                        <p id="recipeDetailDescription">A refreshing tropical smoothie perfect for hot summer days</p>
+                    </div>
+                </div>
+
+                <!-- Ingredients -->
+                <div class="section">
+                    <h3 class="section-title">Ingredients</h3>
+                    <div class="ingredients-list-card">
+                        <ul id="recipeDetailIngredients">
+                            <!-- Ingredients will be dynamically inserted -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Instructions -->
+                <div class="section">
+                    <h3 class="section-title">Instructions</h3>
+                    <div class="instructions-card">
+                        <ol id="recipeDetailInstructions">
+                            <!-- Instructions will be dynamically inserted -->
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Tips -->
+                <div class="section" id="recipeTipsSection">
+                    <h3 class="section-title">Pro Tips</h3>
+                    <div class="tips-card">
+                        <div class="tip-icon">💡</div>
+                        <p id="recipeDetailTips">Use frozen mango chunks for a thicker consistency</p>
+                    </div>
+                </div>
+
+                <!-- Pair With Ice Cream -->
+                <div class="section">
+                    <h3 class="section-title">Perfect Pairing</h3>
+                    <div class="pairing-card">
+                        <div class="pairing-icon">🍦</div>
+                        <div class="pairing-content">
+                            <h4>Try with <span id="pairingFlavorName">Mango Tango</span> Ice Cream!</h4>
+                            <p>Add a scoop for extra creaminess and flavor</p>
+                        </div>
+                        <button class="btn-pairing" onclick="backToFlavorDetail()">View Flavor</button>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="recipe-actions">
+                    <button class="btn-primary" onclick="saveRecipe()">
+                        ❤️ Save Recipe
+                    </button>
+                    <button class="btn-secondary" onclick="shareRecipe()">
+                        📤 Share
+                    </button>
                 </div>
             </div>
             <div class="bottom-nav">
@@ -1358,6 +1756,273 @@
             </div>
         </div>
 
+        <!-- All Recipes Screen -->
+        <div id="recipes" class="screen">
+            <div class="top-bar">
+                <button class="btn-back" onclick="navigateTo('home')">←</button>
+                <h2>All Recipes</h2>
+                <button class="btn-icon" onclick="openRecipeSearch()">🔍</button>
+            </div>
+            <div class="content">
+                <!-- Recipes Header -->
+                <div class="all-recipes-header">
+                    <h1>🍨 Savoy Recipe Collection</h1>
+                    <p>Delicious recipes featuring your favorite ice cream flavors</p>
+                </div>
+
+                <!-- Category Filter -->
+                <div class="recipe-category-filter">
+                    <button class="category-chip active" onclick="filterRecipeCategory('all')">All</button>
+                    <button class="category-chip" onclick="filterRecipeCategory('beverages')">🥤 Beverages</button>
+                    <button class="category-chip" onclick="filterRecipeCategory('desserts')">🍰 Desserts</button>
+                    <button class="category-chip" onclick="filterRecipeCategory('shakes')">🥛 Shakes</button>
+                    <button class="category-chip" onclick="filterRecipeCategory('treats')">🍪 Treats</button>
+                </div>
+
+                <!-- All Recipes Grid -->
+                <div class="all-recipes-grid">
+                    <!-- Mango Lassi -->
+                    <div class="full-recipe-card" data-category="beverages" onclick="openRecipeFromList('mango-lassi')">
+                        <div class="recipe-card-image">
+                            <img src="https://www.savoybd.com/storage/editor/images/lassi_edited.jpg" alt="Classic Mango Lassi" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="recipe-card-emoji" style="display: none;">🥭</div>
+                            <span class="recipe-badge-new">Popular</span>
+                        </div>
+                        <div class="recipe-card-body">
+                            <h3>Classic Mango Lassi</h3>
+                            <p class="recipe-category-tag">🥤 Beverages</p>
+                            <p class="recipe-description">A refreshing traditional yogurt-based drink blended with ripe mangoes and Savoy Mango ice cream</p>
+                            <div class="recipe-meta-info">
+                                <span><span class="icon">⏱️</span> 10 min</span>
+                                <span><span class="icon">👥</span> 2 servings</span>
+                                <span><span class="icon">⭐</span> 4.8</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chocolate Brownie Sundae -->
+                    <div class="full-recipe-card" data-category="desserts" onclick="openRecipeFromList('chocolate-brownie')">
+                        <div class="recipe-card-image">
+                            <img src="https://www.savoybd.com/storage/editor/images/brownie.jpg" alt="Chocolate Brownie Sundae" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="recipe-card-emoji" style="display: none;">🍫</div>
+                        </div>
+                        <div class="recipe-card-body">
+                            <h3>Chocolate Brownie Sundae</h3>
+                            <p class="recipe-category-tag">🍰 Desserts</p>
+                            <p class="recipe-description">Warm chocolate brownies topped with vanilla ice cream, chocolate sauce, and nuts</p>
+                            <div class="recipe-meta-info">
+                                <span><span class="icon">⏱️</span> 25 min</span>
+                                <span><span class="icon">👥</span> 4 servings</span>
+                                <span><span class="icon">⭐</span> 4.9</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Strawberry Milkshake -->
+                    <div class="full-recipe-card" data-category="shakes" onclick="openRecipeFromList('strawberry-shake')">
+                        <div class="recipe-card-image">
+                            <img src="https://www.savoybd.com/storage/editor/images/milkshake.jpg" alt="Strawberry Milkshake" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="recipe-card-emoji" style="display: none;">🍓</div>
+                            <span class="recipe-badge-new">Trending</span>
+                        </div>
+                        <div class="recipe-card-body">
+                            <h3>Strawberry Milkshake</h3>
+                            <p class="recipe-category-tag">🥛 Shakes</p>
+                            <p class="recipe-description">Creamy milkshake made with fresh strawberries and Savoy Strawberry ice cream</p>
+                            <div class="recipe-meta-info">
+                                <span><span class="icon">⏱️</span> 5 min</span>
+                                <span><span class="icon">👥</span> 2 servings</span>
+                                <span><span class="icon">⭐</span> 4.7</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ice Cream Sandwich -->
+                    <div class="full-recipe-card" data-category="treats" onclick="openRecipeFromList('ice-cream-sandwich')">
+                        <div class="recipe-card-image">
+                            <img src="https://www.savoybd.com/storage/editor/images/sandwich.jpg" alt="Ice Cream Sandwich" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="recipe-card-emoji" style="display: none;">🍪</div>
+                        </div>
+                        <div class="recipe-card-body">
+                            <h3>Ice Cream Sandwich</h3>
+                            <p class="recipe-category-tag">🍪 Treats</p>
+                            <p class="recipe-description">Chocolate chip cookies sandwiched with your favorite Savoy ice cream flavor</p>
+                            <div class="recipe-meta-info">
+                                <span><span class="icon">⏱️</span> 30 min</span>
+                                <span><span class="icon">👥</span> 6 servings</span>
+                                <span><span class="icon">⭐</span> 4.6</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Banana Split -->
+                    <div class="full-recipe-card" data-category="desserts" onclick="openRecipeFromList('banana-split')">
+                        <div class="recipe-card-image">
+                            <img src="https://www.savoybd.com/storage/editor/images/banana_split.jpg" alt="Classic Banana Split" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="recipe-card-emoji" style="display: none;">🍌</div>
+                        </div>
+                        <div class="recipe-card-body">
+                            <h3>Classic Banana Split</h3>
+                            <p class="recipe-category-tag">🍰 Desserts</p>
+                            <p class="recipe-description">Split banana topped with three scoops of ice cream, chocolate sauce, and whipped cream</p>
+                            <div class="recipe-meta-info">
+                                <span><span class="icon">⏱️</span> 15 min</span>
+                                <span><span class="icon">👥</span> 1 serving</span>
+                                <span><span class="icon">⭐</span> 4.8</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Affogato -->
+                    <div class="full-recipe-card" data-category="beverages" onclick="openRecipeFromList('affogato')">
+                        <div class="recipe-card-image">
+                            <img src="https://www.savoybd.com/storage/editor/images/affogato.jpg" alt="Affogato" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="recipe-card-emoji" style="display: none;">☕</div>
+                            <span class="recipe-badge-new">New</span>
+                        </div>
+                        <div class="recipe-card-body">
+                            <h3>Affogato</h3>
+                            <p class="recipe-category-tag">🥤 Beverages</p>
+                            <p class="recipe-description">Vanilla ice cream drowned in a shot of hot espresso - an Italian classic</p>
+                            <div class="recipe-meta-info">
+                                <span><span class="icon">⏱️</span> 5 min</span>
+                                <span><span class="icon">👥</span> 1 serving</span>
+                                <span><span class="icon">⭐</span> 4.9</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fruit Parfait -->
+                    <div class="full-recipe-card" data-category="desserts" onclick="openRecipeFromList('fruit-parfait')">
+                        <div class="recipe-card-image">
+                            <img src="https://www.savoybd.com/storage/editor/images/parfait.jpg" alt="Fruit Parfait" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="recipe-card-emoji" style="display: none;">🍓</div>
+                        </div>
+                        <div class="recipe-card-body">
+                            <h3>Fruit Parfait</h3>
+                            <p class="recipe-category-tag">🍰 Desserts</p>
+                            <p class="recipe-description">Layered dessert with fresh fruits, granola, and vanilla ice cream</p>
+                            <div class="recipe-meta-info">
+                                <span><span class="icon">⏱️</span> 10 min</span>
+                                <span><span class="icon">👥</span> 2 servings</span>
+                                <span><span class="icon">⭐</span> 4.7</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Oreo Shake -->
+                    <div class="full-recipe-card" data-category="shakes" onclick="openRecipeFromList('oreo-shake')">
+                        <div class="recipe-card-image">
+                            <img src="https://www.savoybd.com/storage/editor/images/oreo_shake.jpg" alt="Oreo Milkshake" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="recipe-card-emoji" style="display: none;">🍪</div>
+                            <span class="recipe-badge-new">Popular</span>
+                        </div>
+                        <div class="recipe-card-body">
+                            <h3>Oreo Milkshake</h3>
+                            <p class="recipe-category-tag">🥛 Shakes</p>
+                            <p class="recipe-description">Thick and creamy shake loaded with crushed Oreos and vanilla ice cream</p>
+                            <div class="recipe-meta-info">
+                                <span><span class="icon">⏱️</span> 5 min</span>
+                                <span><span class="icon">👥</span> 2 servings</span>
+                                <span><span class="icon">⭐</span> 4.8</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ice Cream Float -->
+                    <div class="full-recipe-card" data-category="beverages" onclick="openRecipeFromList('ice-cream-float')">
+                        <div class="recipe-card-image">
+                            <img src="https://www.savoybd.com/storage/editor/images/float.jpg" alt="Ice Cream Float" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="recipe-card-emoji" style="display: none;">🥤</div>
+                        </div>
+                        <div class="recipe-card-body">
+                            <h3>Ice Cream Float</h3>
+                            <p class="recipe-category-tag">🥤 Beverages</p>
+                            <p class="recipe-description">Fizzy soda topped with a scoop of vanilla ice cream for a classic refreshment</p>
+                            <div class="recipe-meta-info">
+                                <span><span class="icon">⏱️</span> 3 min</span>
+                                <span><span class="icon">👥</span> 1 serving</span>
+                                <span><span class="icon">⭐</span> 4.5</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Waffle Cone Sundae -->
+                    <div class="full-recipe-card" data-category="treats" onclick="openRecipeFromList('waffle-sundae')">
+                        <div class="recipe-card-image">
+                            <img src="https://www.savoybd.com/storage/editor/images/waffle.jpg" alt="Waffle Cone Sundae" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="recipe-card-emoji" style="display: none;">🧇</div>
+                        </div>
+                        <div class="recipe-card-body">
+                            <h3>Waffle Cone Sundae</h3>
+                            <p class="recipe-category-tag">🍪 Treats</p>
+                            <p class="recipe-description">Crispy waffle cone bowl filled with ice cream, toppings, and drizzles</p>
+                            <div class="recipe-meta-info">
+                                <span><span class="icon">⏱️</span> 20 min</span>
+                                <span><span class="icon">👥</span> 2 servings</span>
+                                <span><span class="icon">⭐</span> 4.7</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mango Smoothie Bowl -->
+                    <div class="full-recipe-card" data-category="desserts" onclick="openRecipeFromList('smoothie-bowl')">
+                        <div class="recipe-card-image">
+                            <img src="https://www.savoybd.com/storage/editor/images/smoothie_bowl.jpg" alt="Mango Smoothie Bowl" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="recipe-card-emoji" style="display: none;">🥭</div>
+                            <span class="recipe-badge-new">Trending</span>
+                        </div>
+                        <div class="recipe-card-body">
+                            <h3>Mango Smoothie Bowl</h3>
+                            <p class="recipe-category-tag">🍰 Desserts</p>
+                            <p class="recipe-description">Thick mango smoothie bowl topped with fresh fruits, granola, and coconut</p>
+                            <div class="recipe-meta-info">
+                                <span><span class="icon">⏱️</span> 15 min</span>
+                                <span><span class="icon">👥</span> 2 servings</span>
+                                <span><span class="icon">⭐</span> 4.9</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chocolate Lava Cake -->
+                    <div class="full-recipe-card" data-category="desserts" onclick="openRecipeFromList('lava-cake')">
+                        <div class="recipe-card-image">
+                            <img src="https://www.savoybd.com/storage/editor/images/lava_cake.jpg" alt="Chocolate Lava Cake" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="recipe-card-emoji" style="display: none;">🍫</div>
+                        </div>
+                        <div class="recipe-card-body">
+                            <h3>Chocolate Lava Cake</h3>
+                            <p class="recipe-category-tag">🍰 Desserts</p>
+                            <p class="recipe-description">Warm molten chocolate cake served with a scoop of vanilla ice cream</p>
+                            <div class="recipe-meta-info">
+                                <span><span class="icon">⏱️</span> 35 min</span>
+                                <span><span class="icon">👥</span> 4 servings</span>
+                                <span><span class="icon">⭐</span> 5.0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-nav">
+                <button class="nav-item" onclick="navigateTo('home')">
+                    <span class="nav-icon">🏠</span>
+                    <span>Home</span>
+                </button>
+                <button class="nav-item" onclick="navigateTo('wallet')">
+                    <span class="nav-icon">💎</span>
+                    <span>Wallet</span>
+                </button>
+                <button class="nav-item" onclick="navigateTo('challenges')">
+                    <span class="nav-icon">⚡</span>
+                    <span>Engage</span>
+                </button>
+                <button class="nav-item" onclick="navigateTo('profile')">
+                    <span class="nav-icon">👤</span>
+                    <span>Profile</span>
+                </button>
+            </div>
+        </div>
+
         <!-- Challenges Screen -->
         <!-- Engage Section (with 3 Tabs: Challenges, Community, Games) -->
         <div id="challenges" class="screen">
@@ -1371,9 +2036,13 @@
                     <span class="tab-icon">🎯</span>
                     <span>Challenges</span>
                 </button>
+                <button class="engage-tab" onclick="switchEngageTab('leaderboard')">
+                    <span class="tab-icon">🏆</span>
+                    <span>Leaderboard</span>
+                </button>
                 <button class="engage-tab" onclick="switchEngageTab('community')">
-                    <span class="tab-icon">💬</span>
-                    <span>Community</span>
+                    <span class="tab-icon">👀</span>
+                    <span>Savoy Adda</span>
                 </button>
                 <button class="engage-tab" onclick="switchEngageTab('games')">
                     <span class="tab-icon">🎮</span>
@@ -1457,6 +2126,283 @@
                                 <span>Reward: 100 IceCoins 💎</span>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Leaderboard Tab Content -->
+                <div id="engageLeaderboard" class="engage-tab-content">
+                    <!-- Leaderboard Header -->
+                    <div class="leaderboard-header">
+                        <div class="leaderboard-title">
+                            <h2>🏆 Top Earners</h2>
+                            <p>Compete and climb the rankings!</p>
+                        </div>
+                    </div>
+
+                    <!-- Period Toggle -->
+                    <div class="leaderboard-period-toggle">
+                        <button class="period-btn active" onclick="switchLeaderboardPeriod('weekly')">
+                            <span class="period-icon">📅</span>
+                            <span>This Week</span>
+                        </button>
+                        <button class="period-btn" onclick="switchLeaderboardPeriod('monthly')">
+                            <span class="period-icon">📆</span>
+                            <span>This Month</span>
+                        </button>
+                        <button class="period-btn" onclick="switchLeaderboardPeriod('alltime')">
+                            <span class="period-icon">⏳</span>
+                            <span>All Time</span>
+                        </button>
+                    </div>
+
+                    <!-- Current User Position Card -->
+                    <div class="user-position-card">
+                        <div class="position-badge">
+                            <div class="position-rank">#8</div>
+                            <div class="position-label">Rifaf Rahman</div>
+                        </div>
+                        <div class="position-stats">
+                            <div class="position-stat">
+                                <span class="stat-icon">💎</span>
+                                <div>
+                                    <div class="stat-value">2,450</div>
+                                    <div class="stat-label">IceCoins Earned</div>
+                                </div>
+                            </div>
+                            <div class="position-stat">
+                                <span class="stat-icon">📈</span>
+                                <div>
+                                    <div class="stat-value">+3</div>
+                                    <div class="stat-label">Rank Change</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="position-progress">
+                            <p>Just 150 IceCoins away from rank #7!</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top 3 Podium -->
+                    <div class="leaderboard-podium">
+                        <div class="podium-card podium-2">
+                            <div class="podium-crown">🥈</div>
+                            <div class="podium-avatar">👨</div>
+                            <div class="podium-rank">#2</div>
+                            <div class="podium-name">Karim Ahmed</div>
+                            <div class="podium-coins">
+                                <span class="coin-icon">💎</span>
+                                <span class="coin-amount">4,280</span>
+                            </div>
+                            <div class="podium-tier-badge tier-gold">Gold</div>
+                        </div>
+
+                        <div class="podium-card podium-1">
+                            <div class="podium-crown">👑</div>
+                            <div class="podium-avatar">👩</div>
+                            <div class="podium-rank">#1</div>
+                            <div class="podium-name">Sarah Khan</div>
+                            <div class="podium-coins">
+                                <span class="coin-icon">💎</span>
+                                <span class="coin-amount">5,640</span>
+                            </div>
+                            <div class="podium-tier-badge tier-platinum">Platinum</div>
+                        </div>
+
+                        <div class="podium-card podium-3">
+                            <div class="podium-crown">🥉</div>
+                            <div class="podium-avatar">👨</div>
+                            <div class="podium-rank">#3</div>
+                            <div class="podium-name">Rafi Hassan</div>
+                            <div class="podium-coins">
+                                <span class="coin-icon">💎</span>
+                                <span class="coin-amount">3,850</span>
+                            </div>
+                            <div class="podium-tier-badge tier-gold">Gold</div>
+                        </div>
+                    </div>
+
+                    <!-- Leaderboard List -->
+                    <div class="leaderboard-list">
+                        <h3 class="list-title">Full Rankings</h3>
+                        
+                        <div class="leaderboard-item rank-4">
+                            <div class="item-rank">4</div>
+                            <div class="item-avatar">👩</div>
+                            <div class="item-info">
+                                <div class="item-name">Nadia Rahman</div>
+                                <div class="item-tier">
+                                    <span class="tier-badge tier-gold">Gold</span>
+                                    <span class="item-streak">🔥 5 day streak</span>
+                                </div>
+                            </div>
+                            <div class="item-coins">
+                                <span class="coin-icon">💎</span>
+                                <span class="coin-amount">3,120</span>
+                            </div>
+                        </div>
+
+                        <div class="leaderboard-item rank-5">
+                            <div class="item-rank">5</div>
+                            <div class="item-avatar">👨</div>
+                            <div class="item-info">
+                                <div class="item-name">Tahmid Ali</div>
+                                <div class="item-tier">
+                                    <span class="tier-badge tier-silver">Silver</span>
+                                    <span class="item-streak">🔥 3 day streak</span>
+                                </div>
+                            </div>
+                            <div class="item-coins">
+                                <span class="coin-icon">💎</span>
+                                <span class="coin-amount">2,890</span>
+                            </div>
+                        </div>
+
+                        <div class="leaderboard-item rank-6">
+                            <div class="item-rank">6</div>
+                            <div class="item-avatar">👩</div>
+                            <div class="item-info">
+                                <div class="item-name">Farida Islam</div>
+                                <div class="item-tier">
+                                    <span class="tier-badge tier-silver">Silver</span>
+                                </div>
+                            </div>
+                            <div class="item-coins">
+                                <span class="coin-icon">💎</span>
+                                <span class="coin-amount">2,710</span>
+                            </div>
+                        </div>
+
+                        <div class="leaderboard-item rank-7">
+                            <div class="item-rank">7</div>
+                            <div class="item-avatar">👨</div>
+                            <div class="item-info">
+                                <div class="item-name">Imran Chowdhury</div>
+                                <div class="item-tier">
+                                    <span class="tier-badge tier-silver">Silver</span>
+                                    <span class="item-trend up">↑ 2</span>
+                                </div>
+                            </div>
+                            <div class="item-coins">
+                                <span class="coin-icon">💎</span>
+                                <span class="coin-amount">2,600</span>
+                            </div>
+                        </div>
+
+                        <div class="leaderboard-item rank-you">
+                            <div class="item-rank">8</div>
+                            <div class="item-avatar">👤</div>
+                            <div class="item-info">
+                                <div class="item-name">You (Savoy Fan)</div>
+                                <div class="item-tier">
+                                    <span class="tier-badge tier-silver">Silver</span>
+                                    <span class="item-trend up">↑ 3</span>
+                                </div>
+                            </div>
+                            <div class="item-coins">
+                                <span class="coin-icon">💎</span>
+                                <span class="coin-amount">2,450</span>
+                            </div>
+                        </div>
+
+                        <div class="leaderboard-item rank-9">
+                            <div class="item-rank">9</div>
+                            <div class="item-avatar">👩</div>
+                            <div class="item-info">
+                                <div class="item-name">Priya Das</div>
+                                <div class="item-tier">
+                                    <span class="tier-badge tier-silver">Silver</span>
+                                    <span class="item-trend down">↓ 1</span>
+                                </div>
+                            </div>
+                            <div class="item-coins">
+                                <span class="coin-icon">💎</span>
+                                <span class="coin-amount">2,340</span>
+                            </div>
+                        </div>
+
+                        <div class="leaderboard-item rank-10">
+                            <div class="item-rank">10</div>
+                            <div class="item-avatar">👨</div>
+                            <div class="item-info">
+                                <div class="item-name">Shakib Hossain</div>
+                                <div class="item-tier">
+                                    <span class="tier-badge tier-bronze">Bronze</span>
+                                </div>
+                            </div>
+                            <div class="item-coins">
+                                <span class="coin-icon">💎</span>
+                                <span class="coin-amount">2,180</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rewards Section -->
+                    <div class="leaderboard-rewards">
+                        <h3>🎁 Top Earner Rewards</h3>
+                        <div class="rewards-grid">
+                            <div class="reward-card rank-1-reward">
+                                <div class="reward-icon">👑</div>
+                                <div class="reward-rank">#1</div>
+                                <div class="reward-title">Champion</div>
+                                <ul class="reward-list">
+                                    <li>5,000 Bonus IceCoins</li>
+                                    <li>Free Premium Box</li>
+                                    <li>50% Off Next Month</li>
+                                    <li>Exclusive Gold Badge</li>
+                                </ul>
+                            </div>
+
+                            <div class="reward-card rank-2-reward">
+                                <div class="reward-icon">🥈</div>
+                                <div class="reward-rank">#2</div>
+                                <div class="reward-title">Runner-Up</div>
+                                <ul class="reward-list">
+                                    <li>3,000 Bonus IceCoins</li>
+                                    <li>Free Large Box</li>
+                                    <li>30% Off Next Month</li>
+                                    <li>Silver Badge</li>
+                                </ul>
+                            </div>
+
+                            <div class="reward-card rank-3-reward">
+                                <div class="reward-icon">🥉</div>
+                                <div class="reward-rank">#3</div>
+                                <div class="reward-title">Third Place</div>
+                                <ul class="reward-list">
+                                    <li>2,000 Bonus IceCoins</li>
+                                    <li>Free Medium Box</li>
+                                    <li>20% Off Next Month</li>
+                                    <li>Bronze Badge</li>
+                                </ul>
+                            </div>
+
+                            <div class="reward-card top-10-reward">
+                                <div class="reward-icon">⭐</div>
+                                <div class="reward-rank">#4-10</div>
+                                <div class="reward-title">Top 10</div>
+                                <ul class="reward-list">
+                                    <li>1,000 Bonus IceCoins</li>
+                                    <li>15% Off Next Month</li>
+                                    <li>Early Access to New Flavors</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Leaderboard Rules -->
+                    <div class="leaderboard-rules">
+                        <h4>📜 How It Works</h4>
+                        <ul>
+                            <li>Rankings update <strong>every hour</strong></li>
+                            <li>Earn IceCoins through purchases, challenges, and engagement</li>
+                            <li>Weekly leaderboard resets <strong>every Monday at 12 AM</strong></li>
+                            <li>Monthly leaderboard resets <strong>1st of each month</strong></li>
+                            <li>Top earners receive rewards at the end of each period</li>
+                            <li>Rewards are automatically added to your account</li>
+                        </ul>
                     </div>
                 </div>
 
@@ -1633,18 +2579,7 @@
                     <div class="games-section">
                         <h3>📱 Offline Games</h3>
                         <div class="games-grid">
-                            <div class="game-card" onclick="playGame('spin-wheel')">
-                                <div class="game-icon">🎡</div>
-                                <div class="game-info">
-                                    <h4>Spin & Win</h4>
-                                    <p>Daily spin for rewards</p>
-                                    <div class="game-rewards">
-                                        <span class="reward-badge">💎 Random</span>
-                                        <span class="reward-badge">🎁 Coupons</span>
-                                    </div>
-                                </div>
-                                <div class="game-status">✅ Available</div>
-                            </div>
+                            
 
                             <div class="game-card" onclick="playGame('scratch-card')">
                                 <div class="game-icon">🎫</div>
@@ -2046,18 +2981,35 @@
                 <div class="section">
                     <h3 class="section-title">Preferences</h3>
                     <div class="preference-list">
-                        <button class="preference-item" onclick="navigateTo('rewards')">
-                            <span>🍦 Favorite Flavors</span>
-                            <span>→</span>
-                        </button>
-                        <button class="preference-item" onclick="navigateTo('store-locator')">
-                            <span>� Find Stores</span>
+                        <button class="preference-item" onclick="openOrderHistoryModal()">
+                            <span>📦 Order History</span>
                             <span>→</span>
                         </button>
                         
-                        <button class="preference-item">
+                        <button class="preference-item" onclick="openPaymentMethodsModal()">
                             <span>💳 Payment Methods</span>
                             <span>→</span>
+                        </button>
+                        <button class="preference-item" onclick="openCustomerCareModal()">
+                            <span>📞 Customer Care</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Feedback Section -->
+                <div class="section">
+                    <h3 class="section-title">Share Your Feedback</h3>
+                    <div class="feedback-card">
+                        <div class="feedback-header">
+                            <div class="feedback-icon">💬</div>
+                            <div class="feedback-text">
+                                <h4>We'd Love to Hear From You!</h4>
+                                <p>Your feedback helps us serve you better</p>
+                            </div>
+                        </div>
+                        <button class="btn-feedback" onclick="openFeedbackModal()">
+                            Give Feedback →
                         </button>
                     </div>
                 </div>
@@ -2691,20 +3643,87 @@
                     </div>
                     <div class="settings-section">
                         <h3>Support</h3>
-                        <button class="settings-item">
-                            <span>Help Center</span>
+                        <button class="settings-item" onclick="openCustomerCareModal()">
+                            <span>📞 Customer Care</span>
                             <span>→</span>
                         </button>
-                        <button class="settings-item">
-                            <span>Terms & Conditions</span>
+                        <button class="settings-item" onclick="navigateTo('help-center')">
+                            <span>❓ Help Center</span>
                             <span>→</span>
                         </button>
-                        <button class="settings-item">
-                            <span>About</span>
+                        <button class="settings-item" onclick="openTermsModal()">
+                            <span>📄 Terms & Conditions</span>
+                            <span>→</span>
+                        </button>
+                        <button class="settings-item" onclick="openAboutModal()">
+                            <span>ℹ️ About</span>
                             <span>→</span>
                         </button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Flavor Review Modal -->
+    <div id="flavorReviewModal" class="modal">
+        <div class="modal-content review-modal-content">
+            <div class="modal-header">
+                <h2>Rate This Flavor</h2>
+                <button class="modal-close" onclick="closeFlavorReviewModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="flavorReviewForm" onsubmit="submitFlavorReview(event)">
+                    <!-- Flavor Preview -->
+                    <div class="review-flavor-preview">
+                        <div class="flavor-icon-preview" id="reviewFlavorIcon">🍫</div>
+                        <h3 id="reviewFlavorName">Chocolate Delight</h3>
+                    </div>
+
+                    <!-- Rating Selection -->
+                    <div class="form-group">
+                        <label>Your Rating *</label>
+                        <div class="star-rating-input" id="flavorStarRatingInput">
+                            <span class="star-input" data-value="1" onclick="setFlavorRating(1)">★</span>
+                            <span class="star-input" data-value="2" onclick="setFlavorRating(2)">★</span>
+                            <span class="star-input" data-value="3" onclick="setFlavorRating(3)">★</span>
+                            <span class="star-input" data-value="4" onclick="setFlavorRating(4)">★</span>
+                            <span class="star-input" data-value="5" onclick="setFlavorRating(5)">★</span>
+                        </div>
+                        <input type="hidden" id="flavorRatingValue" name="rating" required>
+                    </div>
+
+                    <!-- Review Title -->
+                    <div class="form-group">
+                        <label for="flavorReviewTitle">Review Title *</label>
+                        <input type="text" id="flavorReviewTitle" name="title" placeholder="Sum up your experience" required>
+                    </div>
+
+                    <!-- Review Text -->
+                    <div class="form-group">
+                        <label for="flavorReviewText">Your Review *</label>
+                        <textarea id="flavorReviewText" name="review" rows="5" placeholder="Tell us what you think about this flavor..." required></textarea>
+                        <span class="char-count"><span id="flavorCharCount">0</span>/500</span>
+                    </div>
+
+                    <!-- Taste Date -->
+                    <div class="form-group">
+                        <label for="tasteDate">When did you try this?</label>
+                        <input type="date" id="tasteDate" name="tasteDate" max="2025-10-29">
+                    </div>
+
+                    <!-- Recommend Checkbox -->
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="wouldRecommendFlavor" name="recommend">
+                            <span>I would recommend this flavor to others</span>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-primary btn-full">Submit Review</button>
+                </form>
             </div>
         </div>
     </div>
@@ -3886,6 +4905,771 @@
         </div>
     </div>
 
+    <!-- Order History Modal -->
+    <div id="orderHistoryModal" class="modal">
+        <div class="modal-content order-history-modal-content">
+            <div class="modal-header">
+                <h2>📦 Order History</h2>
+                <button class="modal-close" onclick="closeOrderHistoryModal()">✕</button>
+            </div>
+            
+            <div class="modal-body order-history-body">
+                <!-- Filter Tabs -->
+                <div class="order-filter-tabs">
+                    <button class="order-filter-tab active" onclick="filterOrders('all')">All Orders</button>
+                    <button class="order-filter-tab" onclick="filterOrders('completed')">Completed</button>
+                    <button class="order-filter-tab" onclick="filterOrders('pending')">Pending</button>
+                    <button class="order-filter-tab" onclick="filterOrders('cancelled')">Cancelled</button>
+                </div>
+
+                <!-- Orders List -->
+                <div class="orders-list" id="ordersList">
+                    <!-- Order 1 - Completed -->
+                    <div class="order-history-card" data-status="completed">
+                        <div class="order-card-header">
+                            <div class="order-info-main">
+                                <h4>Order #SV-2024-1523</h4>
+                                <span class="order-date">Oct 25, 2025 • 3:45 PM</span>
+                            </div>
+                            <span class="order-status-badge completed">✅ Delivered</span>
+                        </div>
+                        <div class="order-items-summary">
+                            <div class="order-item-row">
+                                <span class="item-name">🍫 Chocolate Delight (500ml)</span>
+                                <span class="item-qty">x2</span>
+                            </div>
+                            <div class="order-item-row">
+                                <span class="item-name">🍓 Strawberry Bliss (500ml)</span>
+                                <span class="item-qty">x1</span>
+                            </div>
+                        </div>
+                        <div class="order-card-footer">
+                            <div class="order-total">
+                                <span class="total-label">Total:</span>
+                                <span class="total-amount">৳850</span>
+                            </div>
+                            <div class="order-actions">
+                                <button class="btn-order-detail" onclick="viewOrderDetail('SV-2024-1523')">View Details</button>
+                                <button class="btn-reorder" onclick="reorderItems('SV-2024-1523')">Reorder</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order 2 - Pending -->
+                    <div class="order-history-card" data-status="pending">
+                        <div class="order-card-header">
+                            <div class="order-info-main">
+                                <h4>Order #SV-2024-1524</h4>
+                                <span class="order-date">Oct 28, 2025 • 11:20 AM</span>
+                            </div>
+                            <span class="order-status-badge pending">🚚 In Transit</span>
+                        </div>
+                        <div class="order-items-summary">
+                            <div class="order-item-row">
+                                <span class="item-name">🥭 Mango Tango (1L)</span>
+                                <span class="item-qty">x1</span>
+                            </div>
+                            <div class="order-item-row">
+                                <span class="item-name">🍪 Cookies & Cream (500ml)</span>
+                                <span class="item-qty">x3</span>
+                            </div>
+                        </div>
+                        <div class="order-tracking-bar">
+                            <div class="tracking-step completed">
+                                <div class="tracking-dot"></div>
+                                <span>Confirmed</span>
+                            </div>
+                            <div class="tracking-line completed"></div>
+                            <div class="tracking-step completed">
+                                <div class="tracking-dot"></div>
+                                <span>Preparing</span>
+                            </div>
+                            <div class="tracking-line active"></div>
+                            <div class="tracking-step active">
+                                <div class="tracking-dot"></div>
+                                <span>In Transit</span>
+                            </div>
+                            <div class="tracking-line"></div>
+                            <div class="tracking-step">
+                                <div class="tracking-dot"></div>
+                                <span>Delivered</span>
+                            </div>
+                        </div>
+                        <div class="order-card-footer">
+                            <div class="order-total">
+                                <span class="total-label">Total:</span>
+                                <span class="total-amount">৳1,150</span>
+                            </div>
+                            <div class="order-actions">
+                                <button class="btn-order-detail" onclick="viewOrderDetail('SV-2024-1524')">Track Order</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order 3 - Completed -->
+                    <div class="order-history-card" data-status="completed">
+                        <div class="order-card-header">
+                            <div class="order-info-main">
+                                <h4>Order #SV-2024-1501</h4>
+                                <span class="order-date">Oct 15, 2025 • 5:30 PM</span>
+                            </div>
+                            <span class="order-status-badge completed">✅ Delivered</span>
+                        </div>
+                        <div class="order-items-summary">
+                            <div class="order-item-row">
+                                <span class="item-name">🍦 Vanilla Classic (1L)</span>
+                                <span class="item-qty">x2</span>
+                            </div>
+                        </div>
+                        <div class="order-card-footer">
+                            <div class="order-total">
+                                <span class="total-label">Total:</span>
+                                <span class="total-amount">৳500</span>
+                            </div>
+                            <div class="order-actions">
+                                <button class="btn-order-detail" onclick="viewOrderDetail('SV-2024-1501')">View Details</button>
+                                <button class="btn-reorder" onclick="reorderItems('SV-2024-1501')">Reorder</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order 4 - Cancelled -->
+                    <div class="order-history-card" data-status="cancelled">
+                        <div class="order-card-header">
+                            <div class="order-info-main">
+                                <h4>Order #SV-2024-1490</h4>
+                                <span class="order-date">Oct 10, 2025 • 2:15 PM</span>
+                            </div>
+                            <span class="order-status-badge cancelled">❌ Cancelled</span>
+                        </div>
+                        <div class="order-items-summary">
+                            <div class="order-item-row">
+                                <span class="item-name">🥥 Coconut Dream (500ml)</span>
+                                <span class="item-qty">x2</span>
+                            </div>
+                        </div>
+                        <div class="order-card-footer">
+                            <div class="order-total">
+                                <span class="total-label">Total:</span>
+                                <span class="total-amount">৳600</span>
+                            </div>
+                            <div class="order-actions">
+                                <button class="btn-order-detail" onclick="viewOrderDetail('SV-2024-1490')">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty State (hidden by default) -->
+                <div class="empty-orders-state" id="emptyOrdersState" style="display: none;">
+                    <div class="empty-icon">📦</div>
+                    <h3>No Orders Yet</h3>
+                    <p>Start ordering your favorite Savoy ice cream flavors!</p>
+                    <button class="btn-primary" onclick="closeOrderHistoryModal(); openOrderModal();">
+                        Browse Flavors
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Methods Modal -->
+    <div id="paymentMethodsModal" class="modal">
+        <div class="modal-content payment-methods-modal-content">
+            <div class="modal-header">
+                <h2>💳 Payment Methods</h2>
+                <button class="modal-close" onclick="closePaymentMethodsModal()">✕</button>
+            </div>
+            
+            <div class="modal-body payment-methods-body">
+                <!-- Saved Cards Section -->
+                <div class="payment-section">
+                    <div class="section-header">
+                        <h3>Saved Cards</h3>
+                        <button class="btn-add-card" onclick="openAddCardForm()">+ Add New Card</button>
+                    </div>
+                    
+                    <div class="saved-cards-list" id="savedCardsList">
+                        <!-- Card 1 -->
+                        <div class="payment-card-item">
+                            <div class="card-info">
+                                <div class="card-brand visa">💳 VISA</div>
+                                <div class="card-details">
+                                    <p class="card-number">•••• •••• •••• 4532</p>
+                                    <p class="card-holder">John Doe</p>
+                                    <p class="card-expiry">Expires: 12/26</p>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <span class="default-badge">Default</span>
+                                <button class="btn-icon-action" onclick="editCard('card1')">✏️</button>
+                                <button class="btn-icon-action" onclick="deleteCard('card1')">🗑️</button>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="payment-card-item">
+                            <div class="card-info">
+                                <div class="card-brand mastercard">💳 Mastercard</div>
+                                <div class="card-details">
+                                    <p class="card-number">•••• •••• •••• 8765</p>
+                                    <p class="card-holder">John Doe</p>
+                                    <p class="card-expiry">Expires: 08/25</p>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <button class="btn-set-default" onclick="setDefaultCard('card2')">Set as Default</button>
+                                <button class="btn-icon-action" onclick="editCard('card2')">✏️</button>
+                                <button class="btn-icon-action" onclick="deleteCard('card2')">🗑️</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Banking Section -->
+                <div class="payment-section">
+                    <div class="section-header">
+                        <h3>Mobile Banking</h3>
+                    </div>
+                    
+                    <div class="mobile-banking-list">
+                        <div class="payment-option-item">
+                            <div class="payment-option-info">
+                                <div class="payment-icon bkash">📱</div>
+                                <div class="payment-details">
+                                    <h4>bKash</h4>
+                                    <p>+880 1712-345678</p>
+                                </div>
+                            </div>
+                            <div class="payment-option-actions">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked onchange="togglePaymentMethod('bkash')">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="payment-option-item">
+                            <div class="payment-option-info">
+                                <div class="payment-icon nagad">📱</div>
+                                <div class="payment-details">
+                                    <h4>Nagad</h4>
+                                    <p>+880 1812-345678</p>
+                                </div>
+                            </div>
+                            <div class="payment-option-actions">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked onchange="togglePaymentMethod('nagad')">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="payment-option-item">
+                            <div class="payment-option-info">
+                                <div class="payment-icon rocket">📱</div>
+                                <div class="payment-details">
+                                    <h4>Rocket</h4>
+                                    <p>Not connected</p>
+                                </div>
+                            </div>
+                            <div class="payment-option-actions">
+                                <button class="btn-connect" onclick="connectMobileBanking('rocket')">Connect</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other Payment Options -->
+                <div class="payment-section">
+                    <div class="section-header">
+                        <h3>Other Options</h3>
+                    </div>
+                    
+                    <div class="other-payment-list">
+                        <div class="payment-option-item">
+                            <div class="payment-option-info">
+                                <div class="payment-icon cod">💵</div>
+                                <div class="payment-details">
+                                    <h4>Cash on Delivery</h4>
+                                    <p>Pay when you receive your order</p>
+                                </div>
+                            </div>
+                            <div class="payment-option-actions">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked onchange="togglePaymentMethod('cod')">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Security Info -->
+                <div class="payment-security-info">
+                    <div class="security-icon">🔒</div>
+                    <div class="security-text">
+                        <h4>Secure Payments</h4>
+                        <p>All transactions are encrypted and secure. We never store your complete card details.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Card Form Modal -->
+    <div id="addCardModal" class="modal">
+        <div class="modal-content add-card-modal-content">
+            <div class="modal-header">
+                <h2>💳 Add New Card</h2>
+                <button class="modal-close" onclick="closeAddCardForm()">✕</button>
+            </div>
+            
+            <div class="modal-body add-card-body">
+                <form id="addCardForm" onsubmit="saveNewCard(event)">
+                    <!-- Card Number -->
+                    <div class="form-group">
+                        <label for="cardNumber">Card Number *</label>
+                        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                    </div>
+
+                    <!-- Card Holder Name -->
+                    <div class="form-group">
+                        <label for="cardHolder">Cardholder Name *</label>
+                        <input type="text" id="cardHolder" placeholder="John Doe" required>
+                    </div>
+
+                    <!-- Expiry and CVV -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cardExpiry">Expiry Date *</label>
+                            <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cardCVV">CVV *</label>
+                            <input type="text" id="cardCVV" placeholder="123" maxlength="3" required>
+                        </div>
+                    </div>
+
+                    <!-- Set as Default -->
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="setAsDefault">
+                            <span>Set as default payment method</span>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-primary btn-full">Add Card</button>
+                </form>
+
+                <div class="supported-cards">
+                    <p>Supported Cards:</p>
+                    <div class="card-logos">
+                        <span>💳 VISA</span>
+                        <span>💳 Mastercard</span>
+                        <span>💳 AMEX</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer Care Modal -->
+    <div id="customerCareModal" class="modal">
+        <div class="modal-content customer-care-modal-content">
+            <div class="modal-header">
+                <h2>📞 Customer Care</h2>
+                <button class="modal-close" onclick="closeCustomerCareModal()">✕</button>
+            </div>
+            
+            <div class="modal-body customer-care-body">
+                <!-- Quick Contact Options -->
+                <div class="contact-options-grid">
+                    <button class="contact-option-card" onclick="initiateCall()">
+                        <div class="contact-icon phone-icon">📞</div>
+                        <h4>Call Us</h4>
+                        <p>+880 1234-567890</p>
+                        <span class="availability">Available 24/7</span>
+                    </button>
+                    
+                    <button class="contact-option-card" onclick="initiateWhatsApp()">
+                        <div class="contact-icon whatsapp-icon">💬</div>
+                        <h4>WhatsApp</h4>
+                        <p>Chat with us</p>
+                        <span class="availability">Instant response</span>
+                    </button>
+                    
+                    <button class="contact-option-card" onclick="initiateEmail()">
+                        <div class="contact-icon email-icon">📧</div>
+                        <h4>Email</h4>
+                        <p>support@savoy.com</p>
+                        <span class="availability">Reply within 24h</span>
+                    </button>
+                    
+                    <button class="contact-option-card" onclick="openLiveChat()">
+                        <div class="contact-icon chat-icon">💭</div>
+                        <h4>Live Chat</h4>
+                        <p>Chat now</p>
+                        <span class="availability online">Online now</span>
+                    </button>
+                </div>
+
+                <!-- Help Topics -->
+                <div class="help-topics-section">
+                    <h3>Common Help Topics</h3>
+                    <div class="help-topics-list">
+                        <button class="help-topic-item" onclick="showHelpTopic('orders')">
+                            <span class="topic-icon">📦</span>
+                            <div class="topic-info">
+                                <h4>Order Issues</h4>
+                                <p>Track, modify or cancel orders</p>
+                            </div>
+                            <span class="topic-arrow">→</span>
+                        </button>
+                        
+                        <button class="help-topic-item" onclick="showHelpTopic('payment')">
+                            <span class="topic-icon">💳</span>
+                            <div class="topic-info">
+                                <h4>Payment & Refunds</h4>
+                                <p>Payment methods, refund status</p>
+                            </div>
+                            <span class="topic-arrow">→</span>
+                        </button>
+                        
+                        <button class="help-topic-item" onclick="showHelpTopic('account')">
+                            <span class="topic-icon">👤</span>
+                            <div class="topic-info">
+                                <h4>Account & Profile</h4>
+                                <p>Login issues, profile settings</p>
+                            </div>
+                            <span class="topic-arrow">→</span>
+                        </button>
+                        
+                        <button class="help-topic-item" onclick="showHelpTopic('products')">
+                            <span class="topic-icon">🍦</span>
+                            <div class="topic-info">
+                                <h4>Product Information</h4>
+                                <p>Flavors, ingredients, allergens</p>
+                            </div>
+                            <span class="topic-arrow">→</span>
+                        </button>
+                        
+                        <button class="help-topic-item" onclick="showHelpTopic('delivery')">
+                            <span class="topic-icon">🚚</span>
+                            <div class="topic-info">
+                                <h4>Delivery & Shipping</h4>
+                                <p>Delivery times, shipping areas</p>
+                            </div>
+                            <span class="topic-arrow">→</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- FAQ Section -->
+                <div class="faq-section">
+                    <h3>Frequently Asked Questions</h3>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span>How long does delivery take?</span>
+                                <span class="faq-icon">+</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Standard delivery takes 2-4 hours within Dhaka city. Express delivery is available for 1-2 hour delivery with an additional charge. Orders are delivered in insulated packaging to maintain freshness.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span>What is your refund policy?</span>
+                                <span class="faq-icon">+</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>We offer a 100% satisfaction guarantee. If you're not satisfied with your order, contact us within 24 hours of delivery for a full refund or replacement. Quality issues are addressed immediately.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span>How do I track my order?</span>
+                                <span class="faq-icon">+</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>You can track your order in real-time through the Order History section in your profile. You'll receive notifications at each stage: Order Confirmed, Preparing, Out for Delivery, and Delivered.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span>Do you have allergen information?</span>
+                                <span class="faq-icon">+</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Yes! Each flavor has detailed allergen information available. Check the Health & Nutrition section or tap on any flavor to see ingredients, allergens, and nutritional facts. Common allergens include dairy, nuts, and eggs.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span>How do IceCoins work?</span>
+                                <span class="faq-icon">+</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Earn 10 IceCoins for every ৳100 spent. Complete challenges and scan receipts for bonus coins. Redeem 100 coins for ৳10 discount on your next purchase. Coins never expire!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="contact-info-section">
+                    <h3>Savoy Ice Cream</h3>
+                    <div class="contact-detail">
+                        <span class="detail-icon">📍</span>
+                        <p>123 Main Street, Dhaka-1000, Bangladesh</p>
+                    </div>
+                    <div class="contact-detail">
+                        <span class="detail-icon">📞</span>
+                        <p>+880 1234-567890 | +880 9876-543210</p>
+                    </div>
+                    <div class="contact-detail">
+                        <span class="detail-icon">📧</span>
+                        <p>support@savoy.com</p>
+                    </div>
+                    <div class="contact-detail">
+                        <span class="detail-icon">🕐</span>
+                        <p>Customer Service Hours: 24/7</p>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div class="social-media-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <button class="social-icon facebook" onclick="openSocial('facebook')">📘</button>
+                        <button class="social-icon instagram" onclick="openSocial('instagram')">📷</button>
+                        <button class="social-icon twitter" onclick="openSocial('twitter')">🐦</button>
+                        <button class="social-icon youtube" onclick="openSocial('youtube')">▶️</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms & Conditions Modal -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content terms-modal-content">
+            <div class="modal-header">
+                <h2>📄 Terms & Conditions</h2>
+                <button class="modal-close" onclick="closeTermsModal()">✕</button>
+            </div>
+            
+            <div class="modal-body terms-body">
+                <div class="terms-last-updated">
+                    Last Updated: October 29, 2025
+                </div>
+
+                <div class="terms-section">
+                    <h3>1. Acceptance of Terms</h3>
+                    <p>By accessing and using the Savoy Ice Cream mobile application ("App"), you accept and agree to be bound by the terms and provisions of this agreement. If you do not agree to these Terms & Conditions, please do not use this App.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h3>2. Use of Service</h3>
+                    <h4>2.1 Eligibility</h4>
+                    <p>You must be at least 13 years old to use this App. By using the App, you represent and warrant that you meet this age requirement.</p>
+                    
+                    <h4>2.2 Account Registration</h4>
+                    <p>To access certain features, you may be required to create an account. You agree to:</p>
+                    <ul>
+                        <li>Provide accurate, current, and complete information</li>
+                        <li>Maintain and update your information</li>
+                        <li>Keep your password confidential</li>
+                        <li>Notify us immediately of any unauthorized use</li>
+                    </ul>
+                </div>
+
+                <div class="terms-section">
+                    <h3>3. Orders & Payment</h3>
+                    <h4>3.1 Product Pricing</h4>
+                    <p>All prices are listed in Bangladeshi Taka (৳) and are subject to change without notice. We reserve the right to modify prices at any time.</p>
+                    
+                    <h4>3.2 Order Acceptance</h4>
+                    <p>Your order is an offer to purchase our products. We reserve the right to accept or reject any order for any reason, including product availability, errors in pricing, or payment authorization issues.</p>
+                    
+                    <h4>3.3 Payment Methods</h4>
+                    <p>We accept various payment methods including credit/debit cards, mobile banking (bKash, Nagad, Rocket), and cash on delivery. All transactions are processed securely.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h3>4. Delivery</h3>
+                    <h4>4.1 Delivery Areas</h4>
+                    <p>We currently deliver within Dhaka city and surrounding areas. Delivery times and areas are subject to change.</p>
+                    
+                    <h4>4.2 Delivery Times</h4>
+                    <p>Standard delivery: 2-4 hours. Express delivery: 1-2 hours (additional charges apply). Delivery times are estimates and may vary due to weather, traffic, or other unforeseen circumstances.</p>
+                    
+                    <h4>4.3 Product Quality</h4>
+                    <p>We take utmost care to deliver products in optimal condition. All ice cream is transported in insulated packaging. Please inspect products upon delivery.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h3>5. Returns & Refunds</h3>
+                    <h4>5.1 Quality Guarantee</h4>
+                    <p>We offer a 100% satisfaction guarantee. If you're not satisfied with your order, contact us within 24 hours of delivery.</p>
+                    
+                    <h4>5.2 Refund Process</h4>
+                    <p>Approved refunds will be processed within 5-7 business days to the original payment method. For quality issues, we may offer replacement or full refund at our discretion.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h3>6. IceCoins Loyalty Program</h3>
+                    <h4>6.1 Earning IceCoins</h4>
+                    <p>Earn 10 IceCoins for every ৳100 spent on purchases. Bonus coins can be earned through challenges, referrals, and promotional activities.</p>
+                    
+                    <h4>6.2 Redeeming IceCoins</h4>
+                    <p>100 IceCoins = ৳10 discount. IceCoins can be redeemed on future purchases. IceCoins have no expiry date but may be subject to program changes with prior notice.</p>
+                    
+                    <h4>6.3 Program Modifications</h4>
+                    <p>We reserve the right to modify, suspend, or terminate the IceCoins program at any time with 30 days notice to users.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h3>7. User Content & Community</h3>
+                    <h4>7.1 User Submissions</h4>
+                    <p>By posting content (reviews, comments, photos) on the App, you grant Savoy a non-exclusive, royalty-free license to use, reproduce, and display such content.</p>
+                    
+                    <h4>7.2 Prohibited Content</h4>
+                    <p>You agree not to post content that is:</p>
+                    <ul>
+                        <li>Offensive, abusive, or hateful</li>
+                        <li>False, misleading, or defamatory</li>
+                        <li>Infringing on intellectual property rights</li>
+                        <li>Containing spam or promotional material</li>
+                    </ul>
+                </div>
+
+                <div class="terms-section">
+                    <h3>8. Privacy & Data Protection</h3>
+                    <p>Your privacy is important to us. Please review our Privacy Policy to understand how we collect, use, and protect your personal information. By using the App, you consent to our data practices as described in the Privacy Policy.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h3>9. Intellectual Property</h3>
+                    <p>All content on the App, including text, graphics, logos, icons, images, and software, is the property of Savoy Ice Cream and protected by copyright, trademark, and other intellectual property laws.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h3>10. Limitation of Liability</h3>
+                    <p>Savoy Ice Cream shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of the App or products. Our total liability shall not exceed the amount paid for the specific order in question.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h3>11. Allergen & Health Information</h3>
+                    <p>We provide allergen and nutritional information to the best of our knowledge. However, we cannot guarantee that our products are completely free from allergens due to potential cross-contamination during manufacturing. Users with severe allergies should exercise caution.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h3>12. Modifications to Terms</h3>
+                    <p>We reserve the right to modify these Terms & Conditions at any time. Changes will be effective immediately upon posting. Your continued use of the App constitutes acceptance of modified terms.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h3>13. Governing Law</h3>
+                    <p>These Terms & Conditions are governed by the laws of Bangladesh. Any disputes shall be subject to the exclusive jurisdiction of the courts in Dhaka, Bangladesh.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h3>14. Contact Information</h3>
+                    <p>For questions about these Terms & Conditions, please contact us:</p>
+                    <ul>
+                        <li>Email: legal@savoy.com</li>
+                        <li>Phone: +880 1234-567890</li>
+                        <li>Address: 123 Main Street, Dhaka-1000, Bangladesh</li>
+                    </ul>
+                </div>
+
+                <div class="terms-acceptance">
+                    <p><strong>By using the Savoy Ice Cream App, you acknowledge that you have read, understood, and agree to be bound by these Terms & Conditions.</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content about-modal-content">
+            <div class="modal-header">
+                <h2>ℹ️ About Savoy</h2>
+                <button class="modal-close" onclick="closeAboutModal()">✕</button>
+            </div>
+            
+            <div class="modal-body about-body">
+                <div class="about-logo">
+                    <div class="logo-circle">🍦</div>
+                    <h2>Savoy Ice Cream</h2>
+                    <p class="tagline">Bringing Joy, One Scoop at a Time</p>
+                </div>
+
+                <div class="about-section">
+                    <h3>Our Story</h3>
+                    <p>Since 1982, Savoy Ice Cream has been Bangladesh's beloved ice cream brand, bringing smiles to millions of families. What started as a small ice cream parlor in Dhaka has grown into the nation's favorite frozen dessert destination.</p>
+                </div>
+
+                <div class="about-section">
+                    <h3>Our Mission</h3>
+                    <p>To create moments of joy and happiness through premium quality ice cream made with the finest ingredients, while fostering a sustainable future for our community and planet.</p>
+                </div>
+
+                <div class="about-section">
+                    <h3>Quality Promise</h3>
+                    <ul>
+                        <li>✅ 100% Natural Ingredients</li>
+                        <li>✅ No Artificial Colors or Preservatives</li>
+                        <li>✅ Fresh Milk from Local Farms</li>
+                        <li>✅ Halal Certified</li>
+                        <li>✅ Quality Tested at Every Stage</li>
+                    </ul>
+                </div>
+
+                <div class="about-stats">
+                    <div class="stat-box">
+                        <h4>40+</h4>
+                        <p>Years of Excellence</p>
+                    </div>
+                    <div class="stat-box">
+                        <h4>50+</h4>
+                        <p>Delicious Flavors</p>
+                    </div>
+                    <div class="stat-box">
+                        <h4>200+</h4>
+                        <p>Retail Outlets</p>
+                    </div>
+                    <div class="stat-box">
+                        <h4>5M+</h4>
+                        <p>Happy Customers</p>
+                    </div>
+                </div>
+
+                <div class="about-section">
+                    <h3>Sustainability Commitment</h3>
+                    <p>We're committed to reducing our environmental impact through eco-friendly packaging, solar-powered facilities, and supporting local dairy farmers with fair trade practices.</p>
+                </div>
+
+                <div class="app-info">
+                    <h4>App Version</h4>
+                    <p>SavoyConnect v2.0.0</p>
+                    <p class="app-build">Build 20251029</p>
+                </div>
+
+                <div class="about-footer">
+                    <p>© 2025 Savoy Ice Cream. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Referral Modal -->
     <div id="referralModal" class="modal">
         <div class="modal-content referral-modal-content">
@@ -4407,6 +6191,92 @@
         </div>
     </div>
 
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Share Your Feedback</h2>
+                <button class="modal-close" onclick="closeFeedbackModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <!-- Feedback Type Selection -->
+                <div class="feedback-type-section">
+                    <h3>What would you like to share?</h3>
+                    <div class="feedback-type-buttons">
+                        <button class="feedback-type-btn active" data-type="suggestion" onclick="selectFeedbackType('suggestion')">
+                            <span class="type-icon">💡</span>
+                            <span class="type-label">Suggestion</span>
+                        </button>
+                        <button class="feedback-type-btn" data-type="complaint" onclick="selectFeedbackType('complaint')">
+                            <span class="type-icon">😟</span>
+                            <span class="type-label">Complaint</span>
+                        </button>
+                        <button class="feedback-type-btn" data-type="compliment" onclick="selectFeedbackType('compliment')">
+                            <span class="type-icon">😊</span>
+                            <span class="type-label">Compliment</span>
+                        </button>
+                        <button class="feedback-type-btn" data-type="bug" onclick="selectFeedbackType('bug')">
+                            <span class="type-icon">🐛</span>
+                            <span class="type-label">Bug Report</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Rating Section -->
+                <div class="feedback-rating-section">
+                    <h3>How would you rate your experience?</h3>
+                    <div class="feedback-rating-stars">
+                        <button class="feedback-star" onclick="setFeedbackRating(1)">⭐</button>
+                        <button class="feedback-star" onclick="setFeedbackRating(2)">⭐</button>
+                        <button class="feedback-star" onclick="setFeedbackRating(3)">⭐</button>
+                        <button class="feedback-star" onclick="setFeedbackRating(4)">⭐</button>
+                        <button class="feedback-star" onclick="setFeedbackRating(5)">⭐</button>
+                    </div>
+                    <p class="rating-text" id="feedbackRatingText">Tap to rate</p>
+                </div>
+
+                <!-- Feedback Form -->
+                <div class="feedback-form">
+                    <div class="form-group">
+                        <label for="feedbackSubject">Subject</label>
+                        <input type="text" id="feedbackSubject" placeholder="Brief summary of your feedback" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="feedbackMessage">Your Feedback</label>
+                        <textarea id="feedbackMessage" rows="5" placeholder="Tell us more about your experience..." class="form-textarea"></textarea>
+                        <span class="char-count"><span id="feedbackCharCount">0</span>/500</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="feedbackEmail">Email (Optional)</label>
+                        <input type="email" id="feedbackEmail" placeholder="your@email.com" class="form-input" value="savoy.fan@email.com">
+                        <small class="form-hint">We'll only use this to follow up on your feedback</small>
+                    </div>
+
+                    <!-- Additional Options -->
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="feedbackFollowUp" checked>
+                            <span>I'd like to receive a follow-up about this feedback</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button class="btn-primary btn-full" onclick="submitFeedback()">
+                    Submit Feedback
+                </button>
+
+                <!-- Quick Feedback Stats -->
+                <div class="feedback-stats">
+                    <p class="stats-text">💙 Over 5,000 customers have shared their feedback this month</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="recipeData.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

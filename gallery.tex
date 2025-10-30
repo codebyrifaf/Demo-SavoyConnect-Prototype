@@ -1,0 +1,721 @@
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+
+% Page geometry
+\geometry{
+    left=2.5cm,
+    right=2.5cm,
+    top=3cm,
+    bottom=3cm
+}
+
+% Color definitions
+\definecolor{primaryBlue}{RGB}{0, 102, 204}
+\definecolor{accentOrange}{RGB}{255, 127, 0}
+\definecolor{darkGray}{RGB}{51, 51, 51}
+\definecolor{lightGray}{RGB}{245, 245, 245}
+\definecolor{sectionBlue}{RGB}{25, 118, 210}
+\definecolor{subsectionTeal}{RGB}{0, 150, 136}
+\definecolor{phaseGreen}{RGB}{76, 175, 80}
+
+% Title formatting
+\titleformat{\section}
+  {\color{sectionBlue}\LARGE\bfseries}
+  {\thesection}{1em}{}[\titlerule]
+
+\titleformat{\subsection}
+  {\color{subsectionTeal}\Large\bfseries}
+  {\thesubsection}{1em}{}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryBlue,
+    filecolor=accentOrange,
+    urlcolor=primaryBlue,
+    pdftitle={Savoy Gallery App Feature Breakdown},
+    pdfauthor={Rifaf Rahman}
+}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\color{primaryBlue}\textbf{Savoy Gallery App}}
+\fancyhead[R]{\color{darkGray}\thepage}
+\fancyfoot[C]{\color{darkGray}\small Feature Breakdown | \today}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+% Custom boxes
+\newtcolorbox{featurebox}[1]{
+  colback=lightGray,
+  colframe=primaryBlue,
+  fonttitle=\bfseries,
+  title=#1,
+  arc=2mm,
+  boxrule=0.5mm
+}
+
+\newtcolorbox{examplebox}{
+  colback=accentOrange!10,
+  colframe=accentOrange,
+  arc=2mm,
+  boxrule=0.5mm,
+  left=5pt,
+  right=5pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\newtcolorbox{phasebox}[1]{
+  colback=phaseGreen!10,
+  colframe=phaseGreen,
+  fonttitle=\bfseries\Large,
+  title=#1,
+  arc=3mm,
+  boxrule=1mm
+}
+
+\begin{document}
+
+% Title page
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture,overlay]
+        \fill[primaryBlue] (current page.north west) rectangle ([yshift=-8cm]current page.north east);
+    \end{tikzpicture}
+    
+    \vspace*{2cm}
+    
+    {\color{white}\Huge\bfseries Savoy Ice Cream Gallery}\\[0.5cm]
+    {\color{white}\LARGE Mobile App Feature Breakdown}\\[2cm]
+    
+    \vspace{3cm}
+    
+    \begin{tcolorbox}[colback=white,colframe=accentOrange,width=0.8\textwidth,arc=3mm,boxrule=1mm]
+        \begin{tabular}{ll}
+            \textbf{\color{primaryBlue}Prepared by:} & Rifaf Rahman \\[0.3cm]
+            \textbf{\color{primaryBlue}Company:} & Data Limited \\[0.3cm]
+            \textbf{\color{primaryBlue}Date:} & \today \\
+        \end{tabular}
+    \end{tcolorbox}
+    
+    \vfill
+    
+    {\large\color{darkGray} Complete Product Roadmap \& Technical Documentation}
+    
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% Main content
+\section{PHASE 0: Core MVP}
+\begin{phasebox}{App Launch Essentials}
+These features are essential for user trust, discovery, and first purchase. The app must launch with all of these.
+\end{phasebox}
+
+\subsection{Onboarding \& Sign-Up}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Convert every app installer into a registered user with zero friction.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item Phone number login with OTP verification
+    \item Optional Google / Apple social login
+    \item One-page intro (3 slides max): ``Explore flavors,'' ``Find nearest Savoy,'' ``Earn rewards''
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+When first opened, user sees: ``Welcome to Savoy Ice Cream — Let's make your first order sweeter!''\\
+Then a quick 3-step setup $\rightarrow$ OTP verification $\rightarrow$ Home screen with ``Welcome Offer: 10\% off first scoop.''
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Use Firebase Auth for OTP, show animated loader while verifying. Keep UI minimal (Poppins or Nunito fonts).
+
+\subsection{Store Locator}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Help users find the nearest Gallery quickly.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item Interactive map with Savoy location pins
+    \item Each store card shows: name, address, hours, contact, directions
+    \item Distance from current location
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+User opens ``Find a Gallery'' tab $\rightarrow$ sees ``Dhanmondi Gallery (1.2 km away)'' $\rightarrow$ taps $\rightarrow$ opens Google Maps navigation.
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Use Google Maps SDK. Store data from backend: \texttt{branch\_id}, \texttt{lat/lon}, \texttt{image}, \texttt{open\_hours}.
+
+\subsection{Menu \& Flavours}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Let users browse visual menu to build appetite.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item Categorized menu (e.g., ``Classic Scoops,'' ``Ice Cream Cakes,'' ``Discone Specials'')
+    \item Each item includes: image, price, description, allergens, availability
+    \item Filters: Available today, Best sellers, Limited edition
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+User opens ``Flavours'' tab $\rightarrow$ sees:
+\begin{itemize}[leftmargin=*]
+    \item Belgian Chocolate -- BDT 90/scoop
+    \item Mango Mania (Seasonal) -- ``Available till December''
+\end{itemize}
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Store product catalog in backend. Use content tags for ``New,'' ``Popular,'' etc.
+
+\subsection{Order for Pickup}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Enable customers to place pickup orders from nearest branch.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item Select branch $\rightarrow$ choose items $\rightarrow$ add to cart $\rightarrow$ choose pickup time
+    \item Payment options: bKash, Nagad, Credit/Debit card
+    \item Order confirmation with push notification
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+Rafi orders ``2 scoops of Shahi Kheer + Discone.'' Pays via bKash $\rightarrow$ receives push notification: ``Ready for pickup in 15 minutes.''
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Backend order status flow: Pending $\rightarrow$ Accepted $\rightarrow$ Ready $\rightarrow$ Completed. Integration: SSLCommerz + Firebase Cloud Messaging.
+
+\subsection{Promotions \& Coupon Engine}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Encourage new users to buy immediately.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item Auto-apply welcome offer (10\% off first order)
+    \item Promo codes like SAVOY10 or MANGOLOVE
+    \item QR-based redemption for in-store offers
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+User receives push notification: ``Flash Offer! 20\% off on Mango Mania — today only!'' Taps notification $\rightarrow$ coupon auto-applies at checkout.
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Simple JSON-based rule engine: \{\texttt{code}, \texttt{discount\_type}, \texttt{value}, \texttt{expiry}, \texttt{conditions}\}.
+
+\subsection{Loyalty \& Rewards (Points System)}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Build repeat purchase habit through gamified rewards.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item Earn points per purchase (e.g., 10 points for every BDT 100 spent)
+    \item Visual progress bar displayed on home screen
+    \item Redeem points for free scoop, toppings, or discounts
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+User sees banner: ``You're 20 points away from a free scoop!'' This motivates them to order again to reach the milestone.
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Store points in user profile table. Trigger reward milestone push notification after redemption.
+
+\subsection{Push Notifications \& Messaging}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Keep users engaged and informed throughout their journey.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Transactional:} ``Your order is ready for pickup.''
+    \item \textbf{Marketing:} ``New flavour alert — Blueberry Bliss now available!''
+    \item \textbf{Personalized:} ``Your favorite Mango Mania is back!''
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+After 5 idle days, user receives: ``Hey Rafi, your free scoop is waiting. Come claim it at Dhanmondi Gallery!''
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Segment users via Firebase topics: \texttt{nearby\_branch}, \texttt{favourite\_flavour}, \texttt{loyal\_users}.
+
+\subsection{Admin Dashboard (for Gallery Team)}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Let store managers control branch info, menu, and orders efficiently.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item Manage inventory and availability in real-time
+    \item View live orders and update order status
+    \item Push new promo notifications to customers
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+Manager at Dhanmondi marks ``Kulfi Delight – Out of stock.'' Item instantly disappears from customer-facing menu.
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Web admin panel built with React + Express. Implement role-based access control (manager/admin).
+
+\newpage
+\section{PHASE 1: Engagement \& Personalization}
+\begin{phasebox}{Growth \& Retention Features}
+These features focus on user engagement, personalization, and organic growth through referrals and recommendations.
+\end{phasebox}
+
+\subsection{Referral Program}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Acquire new users through word-of-mouth marketing.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item Invite friend and both receive BDT 50 off
+    \item Unique referral codes per user
+    \item Track referral links and conversions
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+Rafi shares code \texttt{RAFI50} $\rightarrow$ friend installs app $\rightarrow$ friend places order $\rightarrow$ both receive reward instantly.
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Generate unique referral codes per user; store referral events in analytics for tracking viral coefficient.
+
+\subsection{Personalized Recommendations}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Boost repeat orders through intelligent product suggestions.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item Suggest ``Your usual order'' based on history
+    \item Recommend similar items based on preferences
+    \item Display personalized homepage content
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+User previously bought Belgian Chocolate, sees: ``You may also like: Mocha Fusion.''
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Start with rule-based recommendations (collaborative filtering); later upgrade to ML models for better accuracy.
+
+\subsection{User Reviews \& Ratings}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Build trust and create feedback loop for product improvement.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item Rate flavours 1–5 stars with optional text/photo
+    \item Highlight top-rated items
+    \item Moderate reviews for quality control
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+Product page shows: ``Mango Mania – 4.8★ (Based on 320 reviews)''
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Allow review submission only after verified purchase to prevent spam.
+
+\subsection{Order History \& Reorder}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Simplify frequent purchases with one-tap reordering.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item View complete order history with details
+    \item One-tap reorder button for past orders
+    \item Track order status and receipts
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+User opens ``My Orders'' tab $\rightarrow$ sees previous order $\rightarrow$ taps ``Reorder same combo'' $\rightarrow$ instantly added to cart.
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Cache last order as JSON snapshot for quick retrieval and reordering.
+
+\subsection{Geo-Based Push Offers}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Drive foot traffic through contextual, location-based engagement.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item Trigger notifications when user is near a branch
+    \item Location-specific offers and promotions
+    \item Respect user privacy with opt-in permissions
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+User passes near Banani branch $\rightarrow$ receives notification: ``Stop by Savoy Banani for 10\% off today only!''
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Use background geofencing API with proper battery optimization and user consent.
+
+\newpage
+\section{PHASE 2: Expansion \& Advanced Growth}
+\begin{phasebox}{Market Expansion Features}
+These features expand service offerings, introduce subscription models, and prepare for national-scale operations.
+\end{phasebox}
+
+\subsection{Home Delivery}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Reach customers beyond physical store radius.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item Delivery partner integration (Pathao, Foodpanda, etc.)
+    \item Live order tracking with real-time map
+    \item Estimated delivery time calculations
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+User tracks order in real-time: ``Rider is 4 mins away from your location.''
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Build modular delivery module that supports multiple delivery partners via API integration.
+
+\subsection{Membership / Subscription Plans}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Lock in recurring customers with subscription benefits.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item ``Scoop Club'' membership: BDT 499/month
+    \item Benefits: 3 free scoops + 10\% discount on all orders
+    \item Multiple tier levels with increasing benefits
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+User sees promotion: ``Upgrade to Gold Tier — save up to 25\% monthly!''
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Implement recurring payment with SSLCommerz auto-renew API; track subscription status in user profile.
+
+\subsection{Event Booking / Party Orders}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Expand into high-value use cases like events and catering.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item Book birthday parties and events
+    \item Bulk ordering with custom packages
+    \item Catering requests with staff confirmation
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+User books: ``10-person ice-cream party at Dhanmondi Gallery'' for next Saturday.
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Calendar integration + form submission; backend stores event data with staff approval workflow.
+
+\subsection{Multi-language Support (Bangla + English)}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Achieve national-scale inclusivity with local language support.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item Auto-detect phone language settings
+    \item Manual language switcher in Settings
+    \item Complete UI and content translation
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+User switches in Settings $\rightarrow$ entire menu instantly converts to Bangla script.
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Use i18n library (react-i18next or Flutter Intl) with JSON translation files.
+
+\subsection{Advanced Loyalty Tiers}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Make loyalty program more engaging with tier progression.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item Tier levels: Silver, Gold, Platinum
+    \item Unlock exclusive offers at each tier
+    \item Visual tier progress indicator
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+Gold member receives: ``Early access unlocked — try our new Discone Deluxe before anyone else!''
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Tier logic based on yearly spend threshold; trigger tier upgrade celebrations.
+
+\newpage
+\section{PHASE 3: Nationwide Scale \& Brand Ecosystem}
+\begin{phasebox}{Enterprise \& Brand Experience}
+These features support nationwide scaling, franchise operations, and innovative brand experiences.
+\end{phasebox}
+
+\subsection{Franchise Portal}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Support regional Gallery owners with dedicated management tools.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item Each franchise manages staff, stock, and local campaigns
+    \item Region-specific promotions and pricing
+    \item Performance analytics per location
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+Rajshahi branch manager updates local promotion: ``Student Wednesday – 20\% off for university students.''
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Implement separate admin roles per region with hierarchical access control.
+
+\subsection{Analytics \& Insights Dashboard}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Optimize operations with data-driven insights.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item Sales heatmaps by location and time
+    \item Flavour popularity trends
+    \item Customer retention and churn analysis
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+Dashboard reveals: ``Mango Mania peaked in July with 3,500 orders, lowest in January with 420 orders.''
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Integrate Google Data Studio or Apache Superset for interactive dashboards; use BigQuery for analytics.
+
+\subsection{AR Experience (Marketing)}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Make app fun and viral through augmented reality experiences.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item Point phone at product for AR animations
+    \item Interactive flavour quiz via AR
+    \item Gamified AR rewards and challenges
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+User scans packaging $\rightarrow$ AR sprinkles fall on screen $\rightarrow$ ``Spin to win a free topping!''
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} Use ARCore (Android) / ARKit (iOS) with QR markers for product recognition.
+
+\subsection{Factory Tour Booking}
+\begin{featurebox}{Feature Overview}
+\textbf{Goal:} Strengthen brand love and transparency through factory visits.
+
+\vspace{0.3cm}
+\textbf{Core Features:}
+\begin{itemize}[leftmargin=*]
+    \item Book factory tour time slots via app
+    \item Virtual tour option for remote users
+    \item Educational content about production process
+\end{itemize}
+\end{featurebox}
+
+\begin{examplebox}
+\textbf{User Flow Example:}\\
+User books: ``Visit our Tejgaon Factory this Saturday — see how your favourite ice-cream is made!''
+\end{examplebox}
+
+\textbf{\color{subsectionTeal}Implementation Tips:} \textbf{\color{subsectionTeal}Implementation Tips:} Simple booking calendar integrated with CRM; send confirmation emails with tour details.
+
+\newpage
+\section{Suggested Tech Stack}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\rowcolor{primaryBlue!20}
+\textbf{Layer} & \textbf{Technology} \\
+\hline
+Frontend & Flutter (Android/iOS) or React Native \\
+\hline
+Backend & Node.js (Express) or Django REST Framework \\
+\hline
+Database & PostgreSQL + Redis (caching) \\
+\hline
+Authentication & Firebase Auth (OTP, Social Login) \\
+\hline
+Push Notifications & Firebase Cloud Messaging (FCM) \\
+\hline
+Payment Gateway & SSLCommerz / bKash / Nagad \\
+\hline
+Analytics & Mixpanel / Firebase Analytics \\
+\hline
+Admin Dashboard & React web dashboard \\
+\hline
+Maps & Google Maps SDK \\
+\hline
+Hosting & AWS (EC2 + S3) or Google Cloud Platform \\
+\hline
+\end{tabular}
+\caption{Recommended technology stack for Savoy Gallery App}
+\end{table}
+
+\vspace{1cm}
+
+\section{Example Notification \& Copy Ideas}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|p{9cm}|}
+\hline
+\rowcolor{accentOrange!20}
+\textbf{Scenario} & \textbf{Message Example} \\
+\hline
+Welcome & ``Hey Rafi! Welcome to Savoy Gallery — enjoy 10\% off your first order!'' \\
+\hline
+New Flavour & ``Blueberry Bliss just dropped — taste it before it melts away!'' \\
+\hline
+Loyalty Milestone & ``1 scoop away from your next reward. Treat yourself today!'' \\
+\hline
+Referral Success & ``Your friend loved your invite! You both earned 50 points'' \\
+\hline
+Location-Based & ``It's a hot afternoon — perfect time for a Savoy break near you!'' \\
+\hline
+Order Ready & ``Your order is ready for pickup at Dhanmondi Gallery!'' \\
+\hline
+Limited Time Offer & ``Flash Sale! 30\% off for the next 2 hours only'' \\
+\hline
+Re-engagement & ``We miss you! Here's 20\% off to welcome you back'' \\
+\hline
+\end{tabular}
+\caption{Sample notification messages for different user scenarios}
+\end{table}
+
+\newpage
+\section*{Summary}
+\addcontentsline{toc}{section}{Summary}
+
+This document outlines a comprehensive \textbf{3-phase roadmap} for the Savoy Ice Cream Gallery mobile app:
+
+\vspace{0.5cm}
+
+\begin{tcolorbox}[colback=primaryBlue!10,colframe=primaryBlue,arc=3mm,boxrule=1mm]
+\textbf{\large\color{primaryBlue}Phase Breakdown:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{PHASE 0 (Core MVP):} 8 essential features for app launch
+    \item \textbf{PHASE 1 (Engagement):} 5 features for growth and retention
+    \item \textbf{PHASE 2 (Expansion):} 5 features for market expansion
+    \item \textbf{PHASE 3 (Scale):} 4 features for nationwide operations
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.5cm}
+
+\begin{tcolorbox}[colback=phaseGreen!10,colframe=phaseGreen,arc=3mm,boxrule=1mm]
+\textbf{\large\color{phaseGreen}Key Success Factors:}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{User-Centric Design:} Focus on seamless user experience
+    \item \textbf{Data-Driven:} Analytics and insights at every phase
+    \item \textbf{Scalable Architecture:} Built for growth from day one
+    \item \textbf{Local Context:} Bangladesh-specific payment and language support
+\end{itemize}
+\end{tcolorbox}
+
+\end{document}
+
+\newpage
+\section*{Bonus: Suggested Tech Stack}
+\begin{tabular}{|l|l|}
+\hline
+Layer & Technology \\
+\hline
+Frontend & Flutter (Android/iOS) or React Native \\
+Backend & Node.js (Express) or Django REST \\
+Database & PostgreSQL + Redis \\
+Auth & Firebase Auth \\
+Push & Firebase Cloud Messaging \\
+Payment & SSLCommerz / bKash / Nagad \\
+Analytics & Mixpanel / Firebase Analytics \\
+Admin & React web dashboard \\
+Hosting & AWS (EC2 + S3) or GCP \\
+\hline
+\end{tabular}
+
+\newpage
+\section*{Example Notification \& Copy Ideas}
+\begin{tabular}{|l|p{10cm}|}
+\hline
+Scenario & Message Example \\
+\hline
+Welcome & ``Hey Rafi! Welcome to Savoy Gallery — enjoy 10\% off your first order!'' \\
+New Flavour & ``Blueberry Bliss just dropped — taste it before it melts away!'' \\
+Loyalty & ``1 scoop away from your next reward. Treat yourself today!'' \\
+Referral & ``Your friend loved your invite! You both earned 50 points'' \\
+Reminder & ``It’s a hot afternoon — perfect time for a Savoy break near you!'' \\
+\hline
+\end{tabular}
+
+\end{document}

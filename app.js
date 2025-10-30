@@ -14,6 +14,11 @@ function navigateTo(screenId) {
         // Update bottom nav active state if applicable
         updateBottomNav(screenId);
         
+        // Update recipe suggestions when navigating to home
+        if (screenId === 'home') {
+            updateRecipeSuggestions();
+        }
+        
         // Scroll to top of content
         const content = targetScreen.querySelector('.content');
         if (content) {
@@ -80,6 +85,20 @@ function simulateScan() {
 
 // Add interaction feedback
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize recipe history
+    loadRecipeHistory();
+    updateRecipeSuggestions();
+    
+    // FOR TESTING: Simulate recipe viewing history (REMOVE THIS IN PRODUCTION)
+    // Uncomment the lines below to see the suggestions immediately
+    recipeViewHistory.ingredients['mango'] = {
+        count: 5,
+        lastViewed: new Date().toISOString(),
+        viewedRecipes: ['mango-smoothie', 'mango-salsa']
+    };
+    saveRecipeHistory();
+    updateRecipeSuggestions();
+    
     // Add click animation to all buttons
     const buttons = document.querySelectorAll('button, .action-card, .flavor-card, .reward-card');
     buttons.forEach(button => {
@@ -782,6 +801,7 @@ const flavorData = {
         tagline: 'Rich & Creamy',
         badge: '🔥 Trending',
         badgeClass: 'badge-trending',
+        mainIngredient: 'chocolate',
         story: 'Crafted with premium Belgian chocolate and fresh cream, Chocolate Delight has been a customer favorite since 1995. Our master ice cream makers spent months perfecting this recipe, combining rich cocoa with just the right amount of sweetness to create a truly indulgent experience.',
         ingredients: ['🥛 Fresh Milk', '🍫 Belgian Chocolate', '🧈 Pure Cream', '🍬 Natural Sugar', '🧂 Sea Salt', '🌿 Vanilla Extract'],
         nutrition: {
@@ -799,6 +819,7 @@ const flavorData = {
         tagline: 'Fresh & Sweet',
         badge: '🔥 Trending',
         badgeClass: 'badge-trending',
+        mainIngredient: 'strawberry',
         story: 'Made with handpicked strawberries from local farms, Strawberry Bliss captures the essence of summer in every scoop. We use only the ripest berries, carefully selected at peak season and blended into our signature cream base for an authentic fruit experience.',
         ingredients: ['🥛 Fresh Milk', '🍓 Fresh Strawberries', '🧈 Cream', '🍬 Cane Sugar', '🍋 Lemon Zest', '🌸 Natural Flavoring'],
         nutrition: {
@@ -816,6 +837,7 @@ const flavorData = {
         tagline: 'Pure & Simple',
         badge: '',
         badgeClass: '',
+        mainIngredient: 'vanilla',
         story: 'Our Vanilla Classic is made with real Madagascar vanilla beans, creating a pure and timeless flavor. This recipe has remained unchanged for over 30 years, staying true to the traditional ice cream experience that generations have loved.',
         ingredients: ['🥛 Whole Milk', '🌿 Madagascar Vanilla', '🧈 Heavy Cream', '🍬 Pure Sugar', '🥚 Egg Yolks'],
         nutrition: {
@@ -833,6 +855,7 @@ const flavorData = {
         tagline: 'Tropical Twist',
         badge: '🔥 Trending',
         badgeClass: 'badge-trending',
+        mainIngredient: 'mango',
         story: 'Inspired by tropical paradise, Mango Tango features the finest Alphonso mangoes imported from India. Each batch is made with real mango pulp, delivering an explosion of tropical flavor that transports you to sunny beaches with every bite.',
         ingredients: ['🥛 Coconut Milk', '🥭 Alphonso Mango', '🍯 Natural Honey', '🍋 Lime Juice', '🌴 Tropical Essence'],
         nutrition: {
@@ -850,6 +873,7 @@ const flavorData = {
         tagline: 'Classic Favorite',
         badge: '',
         badgeClass: '',
+        mainIngredient: 'cookies',
         story: 'A beloved classic since 1985, our Cookies & Cream combines our smooth vanilla base with chunks of chocolate sandwich cookies. We use premium cookies that maintain their crunch, creating the perfect texture contrast in every spoonful.',
         ingredients: ['🥛 Fresh Milk', '🍪 Chocolate Cookies', '🧈 Cream', '🍬 Sugar', '🌿 Vanilla', '🍫 Cocoa Powder'],
         nutrition: {
@@ -867,6 +891,7 @@ const flavorData = {
         tagline: 'Cool & Refreshing',
         badge: '🔥 Trending',
         badgeClass: 'badge-trending',
+        mainIngredient: 'mint',
         story: 'Our Mint Chocolate features real peppermint extract and dark chocolate chips for a refreshing yet indulgent experience. The perfect balance of cool mint and rich chocolate has made this a year-round favorite among our customers.',
         ingredients: ['🥛 Fresh Milk', '🌿 Peppermint Extract', '🍫 Dark Chocolate Chips', '🧈 Cream', '🍬 Sugar', '🌱 Natural Mint'],
         nutrition: {
@@ -884,6 +909,7 @@ const flavorData = {
         tagline: 'Nutty & Rich',
         badge: '🚀 Upcoming',
         badgeClass: 'badge-upcoming',
+        mainIngredient: 'pistachio',
         story: 'Coming this November! Made with premium California pistachios, this luxurious flavor offers a rich, nutty taste with a smooth, creamy texture. We grind fresh pistachios daily to ensure maximum flavor and natural color without any artificial additives.',
         ingredients: ['🥛 Whole Milk', '🥜 California Pistachios', '🧈 Heavy Cream', '🍯 Honey', '🌿 Almond Extract', '🧂 Pink Salt'],
         nutrition: {
@@ -901,6 +927,7 @@ const flavorData = {
         tagline: 'Sweet & Buttery',
         badge: '🚀 Upcoming',
         badgeClass: 'badge-upcoming',
+        mainIngredient: 'caramel',
         story: 'Arriving in December! Our Caramel Swirl features ribbons of homemade salted caramel throughout a rich vanilla base. The caramel is slow-cooked to perfection, creating deep caramelized notes that complement the smooth ice cream.',
         ingredients: ['🥛 Fresh Milk', '🍮 Salted Caramel', '🧈 Butter', '🍬 Brown Sugar', '🌿 Vanilla Bean', '🧂 Sea Salt'],
         nutrition: {
@@ -918,6 +945,7 @@ const flavorData = {
         tagline: 'Berry Explosion',
         badge: '🚀 Upcoming',
         badgeClass: 'badge-upcoming',
+        mainIngredient: 'blueberry',
         story: 'Coming Soon! Packed with fresh blueberries and a hint of lemon, this flavor celebrates the vibrant taste of summer berries. Each batch contains over 30% real blueberries, making it one of our most fruit-forward creations.',
         ingredients: ['🥛 Fresh Milk', '🫐 Wild Blueberries', '🧈 Cream', '🍯 Natural Honey', '🍋 Lemon Zest', '🌸 Lavender Hint'],
         nutrition: {
@@ -935,6 +963,7 @@ const flavorData = {
         tagline: 'Floral & Exotic',
         badge: '🚀 Upcoming',
         badgeClass: 'badge-upcoming',
+        mainIngredient: 'lychee',
         story: 'An exotic fusion coming this winter! Delicate rose water meets sweet lychee fruit in this sophisticated flavor. Inspired by Asian dessert traditions, this unique combination offers a refreshing and elegant ice cream experience.',
         ingredients: ['🥛 Coconut Milk', '🌸 Rose Water', '🍈 Fresh Lychee', '🍯 Honey', '🌺 Rose Petals', '💧 Natural Essence'],
         nutrition: {
@@ -952,6 +981,7 @@ const flavorData = {
         tagline: 'Creamy & Tropical',
         badge: '',
         badgeClass: '',
+        mainIngredient: 'coconut',
         story: 'Transport yourself to a tropical island with every scoop of Coconut Dream. Made with real coconut milk and shredded coconut, this dairy-free option delivers authentic coconut flavor while maintaining a creamy, indulgent texture.',
         ingredients: ['🥥 Coconut Milk', '🌴 Shredded Coconut', '🍯 Agave Nectar', '🌿 Vanilla', '🧂 Sea Salt'],
         nutrition: {
@@ -969,6 +999,7 @@ const flavorData = {
         tagline: 'Tangy & Light',
         badge: '',
         badgeClass: '',
+        mainIngredient: 'lemon',
         story: 'A refreshing palate cleanser, our Lemon Sorbet is made with fresh lemon juice and zest. This dairy-free option is perfect for hot days, offering a bright, citrusy flavor that is both tart and sweet.',
         ingredients: ['🍋 Fresh Lemon Juice', '💧 Filtered Water', '🍬 Cane Sugar', '🍋 Lemon Zest', '🌿 Mint Extract'],
         nutrition: {
@@ -986,6 +1017,7 @@ const flavorData = {
         tagline: 'Fruity Delight',
         badge: '',
         badgeClass: '',
+        mainIngredient: 'cherry',
         story: 'Named after the legendary musician, Cherry Garcia combines sweet cherries with dark chocolate chunks in a rich vanilla base. This flavor has been a fan favorite since the 1990s, offering a perfect blend of fruit and chocolate.',
         ingredients: ['🥛 Fresh Milk', '🍒 Dark Cherries', '🍫 Chocolate Chunks', '🧈 Cream', '🍬 Sugar', '🌿 Vanilla'],
         nutrition: {
@@ -1003,6 +1035,7 @@ const flavorData = {
         tagline: 'Bold & Energizing',
         badge: '',
         badgeClass: '',
+        mainIngredient: 'coffee',
         story: 'For coffee lovers, Coffee Crunch delivers a rich espresso flavor with crunchy toffee bits. Made with premium Arabica coffee beans, this flavor provides the perfect pick-me-up in ice cream form.',
         ingredients: ['🥛 Fresh Milk', '☕ Espresso', '🍬 Toffee Bits', '🧈 Cream', '🍫 Cocoa', '🌿 Coffee Extract'],
         nutrition: {
@@ -1066,6 +1099,46 @@ function showFlavorDetail(flavorId) {
 
     // Update availability
     document.getElementById('availabilityText').textContent = flavor.availability;
+
+    // Set current flavor for recipes
+    currentFlavorForRecipes = flavorId;
+    
+    // Update recipe inspiration section
+    if (flavor && flavor.mainIngredient && typeof recipeDatabase !== 'undefined') {
+        const recipes = recipeDatabase[flavor.mainIngredient];
+        if (recipes && recipes.length > 0) {
+            // Show recipe section
+            const recipeSection = document.getElementById('recipeInspirationSection');
+            if (recipeSection) {
+                recipeSection.style.display = 'block';
+                
+                // Update ingredient name
+                const ingredientName = flavor.mainIngredient.charAt(0).toUpperCase() + flavor.mainIngredient.slice(1);
+                const mainIngredientNameEl = document.getElementById('mainIngredientName');
+                if (mainIngredientNameEl) {
+                    mainIngredientNameEl.textContent = ingredientName;
+                }
+                
+                // Update recipe inspiration text
+                const inspirationText = document.getElementById('recipeInspirationText');
+                if (inspirationText) {
+                    inspirationText.innerHTML = `Explore <strong>${recipes.length}</strong> delicious recipes you can make with <strong>${ingredientName}</strong>`;
+                }
+            }
+        } else {
+            // Hide recipe section if no recipes available
+            const recipeSection = document.getElementById('recipeInspirationSection');
+            if (recipeSection) {
+                recipeSection.style.display = 'none';
+            }
+        }
+    } else {
+        // Hide recipe section if no main ingredient
+        const recipeSection = document.getElementById('recipeInspirationSection');
+        if (recipeSection) {
+            recipeSection.style.display = 'none';
+        }
+    }
 
     // Navigate to detail screen
     navigateTo('flavor-detail');
@@ -1131,6 +1204,723 @@ function showCampaignDetail(campaignId) {
 // Filter campaigns (notifications toggle)
 function filterCampaigns() {
     showNotification('Campaign notifications enabled!', 'success');
+}
+
+// ========================================
+// RECIPE INSPIRATION FUNCTIONS
+// ========================================
+
+// Global variable to track current flavor for recipes
+let currentFlavorForRecipes = null;
+let currentRecipeDetail = null;
+
+// Comprehensive All Recipes Database
+const allRecipesDatabase = {
+    'mango-lassi': {
+        id: 'mango-lassi',
+        name: 'Classic Mango Lassi',
+        category: 'Beverages',
+        image: '🥭',
+        prepTime: '10 min',
+        servings: '2',
+        difficulty: 'Easy',
+        description: 'A refreshing traditional yogurt-based drink blended with ripe mangoes and Savoy Mango ice cream',
+        ingredients: [
+            '2 cups Savoy Mango Ice Cream',
+            '1 cup plain yogurt',
+            '1 ripe mango, diced',
+            '1/2 cup milk',
+            '2 tablespoons honey',
+            'Ice cubes',
+            'Cardamom powder for garnish'
+        ],
+        instructions: [
+            'Add Savoy Mango ice cream, yogurt, fresh mango, milk, and honey to a blender',
+            'Blend until smooth and creamy',
+            'Add ice cubes and blend again for 10 seconds',
+            'Pour into glasses',
+            'Garnish with a pinch of cardamom powder',
+            'Serve immediately and enjoy!'
+        ],
+        tips: 'For a thicker consistency, use frozen mango chunks. Add more ice cream for extra creaminess.'
+    },
+    'chocolate-brownie': {
+        id: 'chocolate-brownie',
+        name: 'Chocolate Brownie Sundae',
+        category: 'Desserts',
+        image: '🍫',
+        prepTime: '25 min',
+        servings: '4',
+        difficulty: 'Medium',
+        description: 'Warm chocolate brownies topped with vanilla ice cream, chocolate sauce, and nuts',
+        ingredients: [
+            '4 chocolate brownies (homemade or store-bought)',
+            '4 scoops Savoy Vanilla Ice Cream',
+            '1/2 cup chocolate sauce',
+            '1/4 cup chopped walnuts',
+            '1/4 cup chocolate chips',
+            'Whipped cream',
+            'Fresh cherries for garnish'
+        ],
+        instructions: [
+            'Warm the brownies in the oven at 350°F for 5 minutes',
+            'Place each warm brownie in a serving bowl',
+            'Top each brownie with a generous scoop of Savoy Vanilla ice cream',
+            'Drizzle with warm chocolate sauce',
+            'Sprinkle chopped walnuts and chocolate chips',
+            'Add whipped cream and a cherry on top',
+            'Serve immediately while brownie is warm'
+        ],
+        tips: 'The contrast between warm brownie and cold ice cream creates the perfect texture. Use premium chocolate sauce for best results.'
+    },
+    'strawberry-shake': {
+        id: 'strawberry-shake',
+        name: 'Strawberry Milkshake',
+        category: 'Shakes',
+        image: '🍓',
+        prepTime: '5 min',
+        servings: '2',
+        difficulty: 'Easy',
+        description: 'Creamy milkshake made with fresh strawberries and Savoy Strawberry ice cream',
+        ingredients: [
+            '3 cups Savoy Strawberry Ice Cream',
+            '1 cup fresh strawberries',
+            '1 cup whole milk',
+            '2 tablespoons sugar',
+            'Whipped cream for topping',
+            'Fresh strawberry for garnish'
+        ],
+        instructions: [
+            'Hull and slice fresh strawberries',
+            'Add ice cream, strawberries, milk, and sugar to blender',
+            'Blend on high speed until smooth and thick',
+            'Pour into tall glasses',
+            'Top with whipped cream',
+            'Garnish with a fresh strawberry',
+            'Serve with a straw and enjoy!'
+        ],
+        tips: 'For extra strawberry flavor, add a tablespoon of strawberry syrup. Freeze the glasses beforehand for an extra cold shake.'
+    },
+    'ice-cream-sandwich': {
+        id: 'ice-cream-sandwich',
+        name: 'Ice Cream Sandwich',
+        category: 'Treats',
+        image: '🍪',
+        prepTime: '30 min',
+        servings: '6',
+        difficulty: 'Medium',
+        description: 'Chocolate chip cookies sandwiched with your favorite Savoy ice cream flavor',
+        ingredients: [
+            '12 chocolate chip cookies (homemade or store-bought)',
+            '3 cups Savoy Ice Cream (any flavor)',
+            'Mini chocolate chips for rolling',
+            'Sprinkles (optional)',
+            'Cocoa powder for dusting'
+        ],
+        instructions: [
+            'Let ice cream soften at room temperature for 5 minutes',
+            'Place a generous scoop of ice cream on the flat side of one cookie',
+            'Top with another cookie to create a sandwich',
+            'Roll the edges in mini chocolate chips or sprinkles',
+            'Wrap each sandwich in plastic wrap',
+            'Freeze for at least 2 hours before serving',
+            'Dust with cocoa powder before serving'
+        ],
+        tips: 'Make these ahead and keep frozen for easy desserts. Try different ice cream and cookie combinations!'
+    },
+    'banana-split': {
+        id: 'banana-split',
+        name: 'Classic Banana Split',
+        category: 'Desserts',
+        image: '🍌',
+        prepTime: '15 min',
+        servings: '1',
+        difficulty: 'Easy',
+        description: 'Split banana topped with three scoops of ice cream, chocolate sauce, and whipped cream',
+        ingredients: [
+            '1 ripe banana',
+            '1 scoop Savoy Vanilla Ice Cream',
+            '1 scoop Savoy Chocolate Ice Cream',
+            '1 scoop Savoy Strawberry Ice Cream',
+            'Chocolate sauce',
+            'Strawberry sauce',
+            'Whipped cream',
+            'Chopped nuts',
+            'Cherry on top'
+        ],
+        instructions: [
+            'Peel banana and slice lengthwise',
+            'Place banana halves along sides of a long dish',
+            'Add three scoops of ice cream in a row between the bananas',
+            'Drizzle chocolate sauce over vanilla, strawberry sauce over strawberry',
+            'Add generous dollops of whipped cream',
+            'Sprinkle with chopped nuts',
+            'Top with a cherry',
+            'Serve immediately with a long spoon'
+        ],
+        tips: 'Use a ripe but firm banana for best texture. Get creative with different ice cream flavor combinations!'
+    },
+    'affogato': {
+        id: 'affogato',
+        name: 'Affogato',
+        category: 'Beverages',
+        image: '☕',
+        prepTime: '5 min',
+        servings: '1',
+        difficulty: 'Easy',
+        description: 'Vanilla ice cream drowned in a shot of hot espresso - an Italian classic',
+        ingredients: [
+            '2 scoops Savoy Vanilla Ice Cream',
+            '1 shot (30ml) hot espresso',
+            'Cocoa powder for dusting',
+            'Biscotti or amaretti cookies (optional)'
+        ],
+        instructions: [
+            'Place vanilla ice cream scoops in a serving glass or cup',
+            'Brew a fresh shot of hot espresso',
+            'Pour the hot espresso over the ice cream',
+            'Dust lightly with cocoa powder',
+            'Serve immediately with a spoon',
+            'Optional: serve with biscotti on the side'
+        ],
+        tips: 'The espresso should be very hot to create that perfect hot-cold contrast. Serve immediately before ice cream melts completely.'
+    },
+    'fruit-parfait': {
+        id: 'fruit-parfait',
+        name: 'Fruit Parfait',
+        category: 'Desserts',
+        image: '🍓',
+        prepTime: '10 min',
+        servings: '2',
+        difficulty: 'Easy',
+        description: 'Layered dessert with fresh fruits, granola, and vanilla ice cream',
+        ingredients: [
+            '2 cups Savoy Vanilla Ice Cream',
+            '1 cup mixed berries (strawberries, blueberries, raspberries)',
+            '1/2 cup granola',
+            '2 tablespoons honey',
+            '1/4 cup Greek yogurt',
+            'Fresh mint leaves for garnish'
+        ],
+        instructions: [
+            'In clear glasses, add a layer of granola at the bottom',
+            'Add a scoop of vanilla ice cream',
+            'Layer fresh berries on top',
+            'Add another layer of ice cream',
+            'Top with more berries and granola',
+            'Drizzle honey over the top',
+            'Garnish with mint leaves',
+            'Serve immediately'
+        ],
+        tips: 'Use seasonal fruits for best flavor. Layer in clear glasses for beautiful presentation.'
+    },
+    'oreo-shake': {
+        id: 'oreo-shake',
+        name: 'Oreo Milkshake',
+        category: 'Shakes',
+        image: '🍪',
+        prepTime: '5 min',
+        servings: '2',
+        difficulty: 'Easy',
+        description: 'Thick and creamy shake loaded with crushed Oreos and vanilla ice cream',
+        ingredients: [
+            '3 cups Savoy Vanilla Ice Cream',
+            '8 Oreo cookies (plus extra for topping)',
+            '1 cup milk',
+            'Whipped cream',
+            'Chocolate syrup for drizzling'
+        ],
+        instructions: [
+            'Crush 6 Oreo cookies into small pieces',
+            'Add ice cream, crushed Oreos, and milk to blender',
+            'Blend until thick and creamy',
+            'Pour into glasses',
+            'Top with whipped cream',
+            'Crush remaining Oreos and sprinkle on top',
+            'Drizzle with chocolate syrup',
+            'Serve with a thick straw'
+        ],
+        tips: 'For extra thickness, use less milk. Save some cookie chunks for texture instead of blending them completely.'
+    },
+    'ice-cream-float': {
+        id: 'ice-cream-float',
+        name: 'Ice Cream Float',
+        category: 'Beverages',
+        image: '🥤',
+        prepTime: '3 min',
+        servings: '1',
+        difficulty: 'Easy',
+        description: 'Fizzy soda topped with a scoop of vanilla ice cream for a classic refreshment',
+        ingredients: [
+            '2 scoops Savoy Vanilla Ice Cream',
+            '1 cup root beer or cola',
+            'Whipped cream (optional)',
+            'Cherry for garnish'
+        ],
+        instructions: [
+            'Fill a tall glass halfway with cold soda',
+            'Gently add scoops of vanilla ice cream',
+            'Pour remaining soda slowly to avoid overflow',
+            'Top with whipped cream if desired',
+            'Add a cherry on top',
+            'Serve immediately with a straw and spoon'
+        ],
+        tips: 'Pour soda slowly to prevent excessive foam. Try different soda flavors like orange, grape, or cream soda.'
+    },
+    'waffle-sundae': {
+        id: 'waffle-sundae',
+        name: 'Waffle Cone Sundae',
+        category: 'Treats',
+        image: '🧇',
+        prepTime: '20 min',
+        servings: '2',
+        difficulty: 'Medium',
+        description: 'Crispy waffle cone bowl filled with ice cream, toppings, and drizzles',
+        ingredients: [
+            '2 waffle cone bowls',
+            '4 scoops Savoy Ice Cream (mixed flavors)',
+            'Chocolate sauce',
+            'Caramel sauce',
+            'Whipped cream',
+            'Sprinkles',
+            'Chopped nuts',
+            'Fresh fruit'
+        ],
+        instructions: [
+            'Warm waffle cone bowls slightly for extra crispness',
+            'Place bowls on serving plates',
+            'Add 2 scoops of ice cream to each bowl',
+            'Drizzle with chocolate and caramel sauce',
+            'Top with whipped cream',
+            'Add sprinkles, nuts, and fresh fruit',
+            'Serve immediately before waffle softens'
+        ],
+        tips: 'Prepare all toppings in advance. Serve quickly as waffle bowls can become soggy.'
+    },
+    'smoothie-bowl': {
+        id: 'smoothie-bowl',
+        name: 'Mango Smoothie Bowl',
+        category: 'Desserts',
+        image: '🥭',
+        prepTime: '15 min',
+        servings: '2',
+        difficulty: 'Easy',
+        description: 'Thick mango smoothie bowl topped with fresh fruits, granola, and coconut',
+        ingredients: [
+            '2 cups Savoy Mango Ice Cream',
+            '1 frozen banana',
+            '1 cup frozen mango chunks',
+            '1/2 cup coconut milk',
+            'Granola for topping',
+            'Fresh fruits (berries, kiwi, banana slices)',
+            'Shredded coconut',
+            'Chia seeds',
+            'Honey drizzle'
+        ],
+        instructions: [
+            'Blend ice cream, frozen banana, mango, and coconut milk until thick',
+            'Pour into bowls',
+            'Arrange fresh fruit slices on top',
+            'Add granola clusters',
+            'Sprinkle with shredded coconut and chia seeds',
+            'Drizzle with honey',
+            'Serve immediately with a spoon'
+        ],
+        tips: 'Keep smoothie thick - add liquid sparingly. Get creative with toppings for Instagram-worthy bowls!'
+    },
+    'lava-cake': {
+        id: 'lava-cake',
+        name: 'Chocolate Lava Cake',
+        category: 'Desserts',
+        image: '🍫',
+        prepTime: '35 min',
+        servings: '4',
+        difficulty: 'Hard',
+        description: 'Warm molten chocolate cake served with a scoop of vanilla ice cream',
+        ingredients: [
+            '1/2 cup butter',
+            '4 oz dark chocolate',
+            '2 eggs',
+            '2 egg yolks',
+            '1/4 cup sugar',
+            '2 tablespoons flour',
+            '4 scoops Savoy Vanilla Ice Cream',
+            'Powdered sugar for dusting',
+            'Fresh berries'
+        ],
+        instructions: [
+            'Preheat oven to 425°F. Grease ramekins',
+            'Melt butter and chocolate together',
+            'Whisk eggs, yolks, and sugar until thick',
+            'Fold in chocolate mixture and flour',
+            'Pour batter into ramekins',
+            'Bake for 12-14 minutes until edges are firm but center jiggles',
+            'Let cool 1 minute, then invert onto plates',
+            'Add a scoop of vanilla ice cream',
+            'Dust with powdered sugar and garnish with berries',
+            'Serve immediately'
+        ],
+        tips: 'Timing is crucial - underbake slightly for molten center. The ice cream melting into the warm cake is the magic!'
+    }
+};
+
+// Recipe viewing history tracker
+let recipeViewHistory = {
+    ingredients: {},  // Track views per ingredient
+    recipes: []       // Track individual recipe views
+};
+
+// Load recipe history from localStorage
+function loadRecipeHistory() {
+    const saved = localStorage.getItem('recipeViewHistory');
+    if (saved) {
+        recipeViewHistory = JSON.parse(saved);
+    }
+}
+
+// Save recipe history to localStorage
+function saveRecipeHistory() {
+    localStorage.setItem('recipeViewHistory', JSON.stringify(recipeViewHistory));
+}
+
+// Track recipe view
+function trackRecipeView(ingredient, recipeId) {
+    // Track ingredient views
+    if (!recipeViewHistory.ingredients[ingredient]) {
+        recipeViewHistory.ingredients[ingredient] = {
+            count: 0,
+            lastViewed: null,
+            viewedRecipes: []
+        };
+    }
+    
+    recipeViewHistory.ingredients[ingredient].count++;
+    recipeViewHistory.ingredients[ingredient].lastViewed = new Date().toISOString();
+    
+    if (!recipeViewHistory.ingredients[ingredient].viewedRecipes.includes(recipeId)) {
+        recipeViewHistory.ingredients[ingredient].viewedRecipes.push(recipeId);
+    }
+    
+    // Track individual recipe views
+    const existingView = recipeViewHistory.recipes.find(r => r.id === recipeId);
+    if (existingView) {
+        existingView.count++;
+        existingView.lastViewed = new Date().toISOString();
+    } else {
+        recipeViewHistory.recipes.push({
+            id: recipeId,
+            ingredient: ingredient,
+            count: 1,
+            lastViewed: new Date().toISOString()
+        });
+    }
+    
+    saveRecipeHistory();
+}
+
+// Get recipe suggestions based on viewing history
+function getRecipeSuggestions() {
+    const suggestions = [];
+    
+    // Find most viewed ingredient
+    let mostViewedIngredient = null;
+    let maxViews = 0;
+    
+    for (const [ingredient, data] of Object.entries(recipeViewHistory.ingredients)) {
+        if (data.count > maxViews) {
+            maxViews = data.count;
+            mostViewedIngredient = ingredient;
+        }
+    }
+    
+    if (mostViewedIngredient && maxViews >= 2) {
+        const allRecipes = recipeDatabase[mostViewedIngredient] || [];
+        const viewedRecipes = recipeViewHistory.ingredients[mostViewedIngredient].viewedRecipes;
+        
+        // Get recipes not yet viewed
+        const newRecipes = allRecipes.filter(recipe => !viewedRecipes.includes(recipe.id));
+        
+        if (newRecipes.length > 0) {
+            suggestions.push({
+                ingredient: mostViewedIngredient,
+                viewCount: maxViews,
+                newRecipes: newRecipes.slice(0, 3) // Show up to 3 suggestions
+            });
+        }
+    }
+    
+    return suggestions;
+}
+
+// Update recipe suggestions on home screen
+function updateRecipeSuggestions() {
+    const suggestions = getRecipeSuggestions();
+    const container = document.getElementById('recipeSuggestionsContainer');
+    
+    if (!container) return;
+    
+    if (suggestions.length === 0) {
+        container.style.display = 'none';
+        return;
+    }
+    
+    const suggestion = suggestions[0]; // Show first suggestion
+    container.style.display = 'block';
+    
+    // Update suggestion content
+    const ingredientName = suggestion.ingredient.charAt(0).toUpperCase() + suggestion.ingredient.slice(1);
+    document.getElementById('suggestionIngredientName').textContent = ingredientName;
+    document.getElementById('suggestionViewCount').textContent = suggestion.viewCount;
+    
+    // Populate suggestion cards
+    const cardsContainer = document.getElementById('recipeSuggestionCards');
+    cardsContainer.innerHTML = '';
+    
+    suggestion.newRecipes.forEach(recipe => {
+        const card = document.createElement('div');
+        card.className = 'recipe-suggestion-card';
+        card.onclick = () => {
+            currentFlavorForRecipes = Object.keys(flavorData).find(key => 
+                flavorData[key].mainIngredient === suggestion.ingredient
+            );
+            showRecipeDetail(recipe.id, suggestion.ingredient);
+        };
+        
+        card.innerHTML = `
+            <div class="suggestion-card-image">${recipe.image}</div>
+            <div class="suggestion-card-content">
+                <h4>${recipe.name}</h4>
+                <p>${recipe.category}</p>
+                <div class="suggestion-card-meta">
+                    <span>⏱️ ${recipe.prepTime}</span>
+                    <span class="badge-new">New!</span>
+                </div>
+            </div>
+        `;
+        
+        cardsContainer.appendChild(card);
+    });
+}
+
+// Show flavor recipes - triggered from flavor detail screen
+function showFlavorRecipes() {
+    if (!currentFlavorForRecipes) {
+        showNotification('No flavor selected', 'error');
+        return;
+    }
+
+    const flavor = flavorData[currentFlavorForRecipes];
+    if (!flavor || !flavor.mainIngredient) {
+        showNotification('No recipes available for this flavor', 'info');
+        return;
+    }
+
+    const ingredient = flavor.mainIngredient;
+    const recipes = recipeDatabase[ingredient] || [];
+
+    if (recipes.length === 0) {
+        showNotification('No recipes available yet', 'info');
+        return;
+    }
+
+    // Update recipe exploration screen
+    document.getElementById('recipeHeaderIcon').textContent = flavor.icon;
+    document.getElementById('recipeIngredientName').textContent = `${ingredient.charAt(0).toUpperCase() + ingredient.slice(1)} Recipes`;
+    document.getElementById('recipeDescription').textContent = `Delicious recipes inspired by ${flavor.name}`;
+    document.getElementById('recipeCount').textContent = recipes.length;
+
+    // Clear and populate recipe cards
+    const recipeCardsGrid = document.getElementById('recipeCardsGrid');
+    recipeCardsGrid.innerHTML = '';
+
+    recipes.forEach(recipe => {
+        const recipeCard = document.createElement('div');
+        recipeCard.className = 'recipe-card';
+        recipeCard.onclick = () => showRecipeDetail(recipe.id, ingredient);
+        
+        recipeCard.innerHTML = `
+            <div class="recipe-card-image">${recipe.image}</div>
+            <div class="recipe-card-content">
+                <h3>${recipe.name}</h3>
+                <p>${recipe.description}</p>
+                <div class="recipe-card-meta">
+                    <span class="recipe-meta-badge">⏱️ ${recipe.prepTime}</span>
+                    <span class="recipe-meta-badge">🍽️ ${recipe.servings}</span>
+                    <span class="recipe-meta-badge difficulty-${recipe.difficulty.toLowerCase()}">${recipe.difficulty}</span>
+                </div>
+                <span class="recipe-category-tag">${recipe.category}</span>
+            </div>
+        `;
+        
+        recipeCardsGrid.appendChild(recipeCard);
+    });
+
+    // Navigate to recipe exploration screen
+    navigateTo('recipe-exploration');
+    showNotification(`Found ${recipes.length} ${ingredient} recipes!`, 'success');
+}
+
+// Show recipe detail
+function showRecipeDetail(recipeId, ingredient) {
+    const recipes = recipeDatabase[ingredient] || [];
+    const recipe = recipes.find(r => r.id === recipeId);
+    
+    if (!recipe) {
+        showNotification('Recipe not found', 'error');
+        return;
+    }
+
+    currentRecipeDetail = recipe;
+    
+    // Track recipe view for personalized suggestions
+    trackRecipeView(ingredient, recipeId);
+
+    // Update recipe detail screen
+    document.getElementById('recipeDetailImage').textContent = recipe.image;
+    document.getElementById('recipeDetailName').textContent = recipe.name;
+    document.getElementById('recipeDetailPrepTime').textContent = recipe.prepTime;
+    document.getElementById('recipeDetailServings').textContent = recipe.servings;
+    document.getElementById('recipeDetailDifficulty').textContent = recipe.difficulty;
+    document.getElementById('recipeDetailCategory').textContent = recipe.category;
+    document.getElementById('recipeDetailDescription').textContent = recipe.description;
+
+    // Update ingredients
+    const ingredientsList = document.getElementById('recipeDetailIngredients');
+    ingredientsList.innerHTML = recipe.ingredients.map(ing => 
+        `<li>${ing}</li>`
+    ).join('');
+
+    // Update instructions
+    const instructionsList = document.getElementById('recipeDetailInstructions');
+    instructionsList.innerHTML = recipe.instructions.map((inst, index) => 
+        `<li>${inst}</li>`
+    ).join('');
+
+    // Update tips
+    if (recipe.tips) {
+        document.getElementById('recipeDetailTips').textContent = recipe.tips;
+        document.getElementById('recipeTipsSection').style.display = 'block';
+    } else {
+        document.getElementById('recipeTipsSection').style.display = 'none';
+    }
+
+    // Update pairing info
+    if (currentFlavorForRecipes && flavorData[currentFlavorForRecipes]) {
+        document.getElementById('pairingFlavorName').textContent = flavorData[currentFlavorForRecipes].name;
+    }
+
+    // Navigate to recipe detail screen
+    navigateTo('recipe-detail');
+    showNotification(`Viewing: ${recipe.name}`, 'info');
+}
+
+// Back to flavor detail from recipe screens
+function backToFlavorDetail() {
+    if (currentFlavorForRecipes) {
+        navigateTo('flavor-detail');
+    } else {
+        navigateTo('explore');
+    }
+}
+
+// Save recipe
+function saveRecipe() {
+    if (!currentRecipeDetail) return;
+    
+    showNotification(`❤️ ${currentRecipeDetail.name} saved to your favorites!`, 'success');
+}
+
+// Share recipe
+function shareRecipe() {
+    if (!currentRecipeDetail) return;
+    
+    showNotification(`Sharing ${currentRecipeDetail.name}...`, 'info');
+    setTimeout(() => {
+        alert(`Share "${currentRecipeDetail.name}"\n\nThis would open your device's share menu to share this recipe with friends!`);
+    }, 500);
+}
+
+// Share all recipes
+function shareRecipes() {
+    showNotification('Sharing recipes...', 'info');
+    setTimeout(() => {
+        alert('This would let you share this recipe collection with friends!');
+    }, 500);
+}
+
+// Filter recipes by category in All Recipes screen
+function filterRecipeCategory(category) {
+    const cards = document.querySelectorAll('.full-recipe-card');
+    const chips = document.querySelectorAll('.category-chip');
+    
+    // Update active chip
+    chips.forEach(chip => chip.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Filter cards
+    cards.forEach(card => {
+        if (category === 'all') {
+            card.style.display = 'block';
+        } else {
+            if (card.getAttribute('data-category') === category) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        }
+    });
+}
+
+// Open recipe from All Recipes list
+function openRecipeFromList(recipeId) {
+    const recipe = allRecipesDatabase[recipeId];
+    
+    if (!recipe) {
+        showNotification('Recipe not found', 'error');
+        return;
+    }
+
+    currentRecipeDetail = recipe;
+    
+    // Update recipe detail screen
+    document.getElementById('recipeDetailImage').textContent = recipe.image;
+    document.getElementById('recipeDetailName').textContent = recipe.name;
+    document.getElementById('recipeDetailPrepTime').textContent = recipe.prepTime;
+    document.getElementById('recipeDetailServings').textContent = recipe.servings;
+    document.getElementById('recipeDetailDifficulty').textContent = recipe.difficulty;
+    document.getElementById('recipeDetailCategory').textContent = recipe.category;
+    document.getElementById('recipeDetailDescription').textContent = recipe.description;
+
+    // Update ingredients
+    const ingredientsList = document.getElementById('recipeDetailIngredients');
+    ingredientsList.innerHTML = recipe.ingredients.map(ing => 
+        `<li>${ing}</li>`
+    ).join('');
+
+    // Update instructions
+    const instructionsList = document.getElementById('recipeDetailInstructions');
+    instructionsList.innerHTML = recipe.instructions.map((inst, index) => 
+        `<li>${inst}</li>`
+    ).join('');
+
+    // Update tips
+    if (recipe.tips) {
+        document.getElementById('recipeDetailTips').textContent = recipe.tips;
+        document.getElementById('recipeTipsSection').style.display = 'block';
+    } else {
+        document.getElementById('recipeTipsSection').style.display = 'none';
+    }
+
+    // Navigate to recipe detail screen
+    showNotification(`Loading ${recipe.name}...`, 'info');
+    setTimeout(() => {
+        navigateTo('recipe-detail');
+    }, 300);
+}
+
+// Open recipe search
+function openRecipeSearch() {
+    showNotification('Recipe search coming soon!', 'info');
 }
 
 // ========================================
@@ -1800,6 +2590,7 @@ function switchEngageTab(tabName) {
     // Show selected tab content
     const contentMap = {
         'challenges': 'engageChallenges',
+        'leaderboard': 'engageLeaderboard',
         'community': 'engageCommunity',
         'games': 'engageGames'
     };
@@ -1813,6 +2604,36 @@ function switchEngageTab(tabName) {
     event.target.closest('.engage-tab').classList.add('active');
 }
 
+// Leaderboard period switching
+function switchLeaderboardPeriod(period) {
+    // Remove active class from all period buttons
+    document.querySelectorAll('.period-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Add active class to clicked button
+    event.target.classList.add('active');
+    
+    // In a real app, this would fetch data for the selected period
+    // For now, show notification
+    const periodNames = {
+        'weekly': 'Weekly',
+        'monthly': 'Monthly',
+        'alltime': 'All-Time'
+    };
+    
+    showNotification(`📊 Showing ${periodNames[period]} Rankings`);
+    
+    // Simulate data update with animation
+    const leaderboardList = document.querySelector('.leaderboard-list');
+    if (leaderboardList) {
+        leaderboardList.style.opacity = '0.5';
+        setTimeout(() => {
+            leaderboardList.style.opacity = '1';
+        }, 300);
+    }
+}
+
 // ========================================
 // GAMING FUNCTIONS
 // ========================================
@@ -1824,7 +2645,6 @@ function playGame(gameId) {
         'flavor-match': 'Flavor Match 3',
         'ice-cream-runner': 'Ice Cream Runner',
         'trivia-champion': 'Savoy Trivia',
-        'spin-wheel': 'Spin & Win',
         'scratch-card': 'Scratch & Reveal',
         'memory-game': 'Memory Match',
         'puzzle': 'Ice Cream Puzzle'
@@ -2044,6 +2864,328 @@ function closeOrderModal() {
     modal.style.display = 'none';
     document.body.style.overflow = 'auto';
 }
+
+// Order History Modal Functions
+function openOrderHistoryModal() {
+    const modal = document.getElementById('orderHistoryModal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeOrderHistoryModal() {
+    const modal = document.getElementById('orderHistoryModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+function filterOrders(status) {
+    const tabs = document.querySelectorAll('.order-filter-tab');
+    const orders = document.querySelectorAll('.order-history-card');
+    const emptyState = document.getElementById('emptyOrdersState');
+    
+    // Update active tab
+    tabs.forEach(tab => tab.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Filter orders
+    let visibleCount = 0;
+    orders.forEach(order => {
+        const orderStatus = order.getAttribute('data-status');
+        if (status === 'all' || orderStatus === status) {
+            order.style.display = 'block';
+            visibleCount++;
+        } else {
+            order.style.display = 'none';
+        }
+    });
+    
+    // Show/hide empty state
+    if (visibleCount === 0) {
+        emptyState.style.display = 'flex';
+    } else {
+        emptyState.style.display = 'none';
+    }
+}
+
+function viewOrderDetail(orderId) {
+    alert(`Viewing details for order ${orderId}`);
+    // You can expand this to show a detailed order view
+}
+
+function reorderItems(orderId) {
+    alert(`Reordering items from ${orderId}`);
+    closeOrderHistoryModal();
+    openOrderModal();
+    // You can expand this to auto-fill the order form with previous order items
+}
+
+// Customer Care Modal Functions
+function openCustomerCareModal() {
+    const modal = document.getElementById('customerCareModal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCustomerCareModal() {
+    const modal = document.getElementById('customerCareModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+function initiateCall() {
+    window.location.href = 'tel:+8801234567890';
+}
+
+function initiateWhatsApp() {
+    window.open('https://wa.me/8801234567890', '_blank');
+}
+
+function initiateEmail() {
+    window.location.href = 'mailto:support@savoy.com';
+}
+
+function openLiveChat() {
+    alert('Live chat feature coming soon! For now, please use WhatsApp or call us.');
+}
+
+function showHelpTopic(topic) {
+    alert(`Opening help for: ${topic}`);
+}
+
+function toggleFAQ(element) {
+    const faqItem = element.parentElement;
+    const answer = faqItem.querySelector('.faq-answer');
+    const icon = element.querySelector('.faq-icon');
+    
+    // Close all other FAQs
+    document.querySelectorAll('.faq-item').forEach(item => {
+        if (item !== faqItem) {
+            item.classList.remove('active');
+            item.querySelector('.faq-icon').textContent = '+';
+        }
+    });
+    
+    // Toggle current FAQ
+    faqItem.classList.toggle('active');
+    icon.textContent = faqItem.classList.contains('active') ? '−' : '+';
+}
+
+function openSocial(platform) {
+    const urls = {
+        facebook: 'https://facebook.com/savoyicecream',
+        instagram: 'https://instagram.com/savoyicecream',
+        twitter: 'https://twitter.com/savoyicecream',
+        youtube: 'https://youtube.com/savoyicecream'
+    };
+    window.open(urls[platform], '_blank');
+}
+
+// Terms & Conditions Modal Functions
+function openTermsModal() {
+    const modal = document.getElementById('termsModal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeTermsModal() {
+    const modal = document.getElementById('termsModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// About Modal Functions
+function openAboutModal() {
+    const modal = document.getElementById('aboutModal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeAboutModal() {
+    const modal = document.getElementById('aboutModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// Payment Methods Modal Functions
+function openPaymentMethodsModal() {
+    const modal = document.getElementById('paymentMethodsModal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closePaymentMethodsModal() {
+    const modal = document.getElementById('paymentMethodsModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+function openAddCardForm() {
+    const modal = document.getElementById('addCardModal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeAddCardForm() {
+    const modal = document.getElementById('addCardModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+    // Reset form
+    document.getElementById('addCardForm').reset();
+}
+
+function saveNewCard(event) {
+    event.preventDefault();
+    alert('Card added successfully!');
+    closeAddCardForm();
+    // In a real app, this would save the card details securely
+}
+
+function editCard(cardId) {
+    alert(`Editing card: ${cardId}`);
+    // Open edit form with card details
+}
+
+function deleteCard(cardId) {
+    if (confirm('Are you sure you want to delete this card?')) {
+        alert(`Card ${cardId} deleted`);
+        // Remove card from list
+    }
+}
+
+function setDefaultCard(cardId) {
+    alert(`Card ${cardId} set as default`);
+    // Update UI to show new default card
+}
+
+function togglePaymentMethod(method) {
+    console.log(`Payment method ${method} toggled`);
+}
+
+function connectMobileBanking(provider) {
+    alert(`Opening ${provider} connection...`);
+    // Open provider-specific connection flow
+}
+
+// Flavor Review Functions
+function openFlavorReviewModal() {
+    const modal = document.getElementById('flavorReviewModal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeFlavorReviewModal() {
+    const modal = document.getElementById('flavorReviewModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+    // Reset form
+    document.getElementById('flavorReviewForm').reset();
+    // Reset star rating
+    const stars = document.querySelectorAll('#flavorStarRatingInput .star-input');
+    stars.forEach(star => star.classList.remove('selected'));
+}
+
+function setFlavorRating(rating) {
+    document.getElementById('flavorRatingValue').value = rating;
+    const stars = document.querySelectorAll('#flavorStarRatingInput .star-input');
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.classList.add('selected');
+        } else {
+            star.classList.remove('selected');
+        }
+    });
+}
+
+function submitFlavorReview(event) {
+    event.preventDefault();
+    const rating = document.getElementById('flavorRatingValue').value;
+    const title = document.getElementById('flavorReviewTitle').value;
+    const review = document.getElementById('flavorReviewText').value;
+    
+    if (!rating) {
+        alert('Please select a rating');
+        return;
+    }
+    
+    alert(`Review submitted!\nRating: ${rating} stars\nTitle: ${title}\nReview: ${review}`);
+    closeFlavorReviewModal();
+    
+    // In a real app, this would send the review to a server
+}
+
+function filterFlavorReviews(filter) {
+    const reviews = document.querySelectorAll('.flavor-review-card');
+    const filterBtns = document.querySelectorAll('.review-filters .filter-chip');
+    
+    // Update active filter button
+    filterBtns.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Filter reviews
+    reviews.forEach(review => {
+        const rating = review.getAttribute('data-rating');
+        
+        if (filter === 'all') {
+            review.style.display = 'block';
+        } else if (filter === 'with-photos') {
+            // Show reviews with photos (implement photo feature)
+            review.style.display = 'none';
+        } else if (filter === 'recent') {
+            // Show recent reviews (first 3)
+            review.style.display = 'block';
+        } else if (rating === filter) {
+            review.style.display = 'block';
+        } else {
+            review.style.display = 'none';
+        }
+    });
+}
+
+function likeReview(reviewId) {
+    const btn = event.currentTarget;
+    const countSpan = btn.querySelector('.action-count');
+    let count = parseInt(countSpan.textContent);
+    
+    if (btn.classList.contains('liked')) {
+        btn.classList.remove('liked');
+        count--;
+    } else {
+        btn.classList.add('liked');
+        count++;
+    }
+    
+    countSpan.textContent = count;
+}
+
+function reportReview(reviewId) {
+    if (confirm('Are you sure you want to report this review?')) {
+        alert(`Review ${reviewId} reported. Thank you for helping us maintain quality.`);
+    }
+}
+
+function toggleReviewMenu(btn) {
+    alert('Review menu options: Edit, Delete, Share');
+}
+
+function loadMoreFlavorReviews() {
+    alert('Loading more reviews...');
+    // In a real app, this would load more reviews from the server
+}
+
+// Character counter for flavor review
+document.addEventListener('DOMContentLoaded', function() {
+    const flavorReviewText = document.getElementById('flavorReviewText');
+    if (flavorReviewText) {
+        flavorReviewText.addEventListener('input', function() {
+            const charCount = document.getElementById('flavorCharCount');
+            if (charCount) {
+                charCount.textContent = this.value.length;
+            }
+        });
+    }
+});
+
+// Daily Spin-the-Wheel feature removed
 
 function switchOrderType(type) {
     // Reset cart when switching types
@@ -2809,6 +3951,161 @@ if (typeof module !== 'undefined' && module.exports) {
     };
 }
 
+// ========================================
+// FEEDBACK FUNCTIONS
+// ========================================
+
+let selectedFeedbackType = 'suggestion';
+let feedbackRating = 0;
+
+// Open feedback modal
+function openFeedbackModal() {
+    const modal = document.getElementById('feedbackModal');
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Reset form
+        resetFeedbackForm();
+    }
+}
+
+// Close feedback modal
+function closeFeedbackModal() {
+    const modal = document.getElementById('feedbackModal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Select feedback type
+function selectFeedbackType(type) {
+    selectedFeedbackType = type;
+    
+    // Update button states
+    const buttons = document.querySelectorAll('.feedback-type-btn');
+    buttons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-type') === type) {
+            btn.classList.add('active');
+        }
+    });
+}
+
+// Set feedback rating
+function setFeedbackRating(rating) {
+    feedbackRating = rating;
+    
+    // Update star display
+    const stars = document.querySelectorAll('.feedback-star');
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.classList.add('active');
+            star.textContent = '⭐';
+        } else {
+            star.classList.remove('active');
+            star.textContent = '⭐';
+        }
+    });
+    
+    // Update rating text
+    const ratingTexts = ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+    document.getElementById('feedbackRatingText').textContent = ratingTexts[rating] || 'Tap to rate';
+}
+
+// Character counter for feedback message
+document.addEventListener('DOMContentLoaded', () => {
+    const feedbackMessage = document.getElementById('feedbackMessage');
+    if (feedbackMessage) {
+        feedbackMessage.addEventListener('input', (e) => {
+            const count = e.target.value.length;
+            const counter = document.getElementById('feedbackCharCount');
+            if (counter) {
+                counter.textContent = count;
+                if (count > 500) {
+                    counter.style.color = 'var(--color-error)';
+                } else {
+                    counter.style.color = 'var(--color-neutral-600)';
+                }
+            }
+        });
+    }
+});
+
+// Submit feedback
+function submitFeedback() {
+    const subject = document.getElementById('feedbackSubject').value.trim();
+    const message = document.getElementById('feedbackMessage').value.trim();
+    const email = document.getElementById('feedbackEmail').value.trim();
+    const followUp = document.getElementById('feedbackFollowUp').checked;
+    
+    // Validation
+    if (!subject) {
+        showNotification('Please enter a subject', 'error');
+        return;
+    }
+    
+    if (!message) {
+        showNotification('Please enter your feedback', 'error');
+        return;
+    }
+    
+    if (message.length > 500) {
+        showNotification('Message is too long (max 500 characters)', 'error');
+        return;
+    }
+    
+    if (feedbackRating === 0) {
+        showNotification('Please rate your experience', 'error');
+        return;
+    }
+    
+    // Simulate submission
+    showNotification('Submitting feedback...', 'info');
+    
+    setTimeout(() => {
+        closeFeedbackModal();
+        showNotification('✅ Thank you for your feedback!', 'success');
+        
+        // Show a follow-up message
+        setTimeout(() => {
+            alert(`Thank you for sharing your feedback!\n\nType: ${selectedFeedbackType}\nRating: ${feedbackRating} stars\nSubject: ${subject}\n\nWe truly appreciate your input and will review it carefully. ${followUp ? 'We\'ll follow up with you soon!' : ''}`);
+        }, 1000);
+        
+        // Reset form for next use
+        resetFeedbackForm();
+    }, 1500);
+}
+
+// Reset feedback form
+function resetFeedbackForm() {
+    // Reset type selection
+    selectedFeedbackType = 'suggestion';
+    const buttons = document.querySelectorAll('.feedback-type-btn');
+    buttons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-type') === 'suggestion') {
+            btn.classList.add('active');
+        }
+    });
+    
+    // Reset rating
+    feedbackRating = 0;
+    const stars = document.querySelectorAll('.feedback-star');
+    stars.forEach(star => {
+        star.classList.remove('active');
+        star.textContent = '⭐';
+    });
+    document.getElementById('feedbackRatingText').textContent = 'Tap to rate';
+    
+    // Reset form fields
+    document.getElementById('feedbackSubject').value = '';
+    document.getElementById('feedbackMessage').value = '';
+    document.getElementById('feedbackCharCount').textContent = '0';
+    document.getElementById('feedbackFollowUp').checked = true;
+}
+
 // Make functions globally accessible for inline onclick handlers
 window.navigateTo = navigateTo;
 window.updateBottomNav = updateBottomNav;
@@ -2851,6 +4148,7 @@ window.submitPost = submitPost;
 window.selectEmoji = selectEmoji;
 window.addHashtag = addHashtag;
 window.switchEngageTab = switchEngageTab;
+window.switchLeaderboardPeriod = switchLeaderboardPeriod;
 window.playGame = playGame;
 window.closeGameReward = closeGameReward;
 window.openPassportModal = openPassportModal;
@@ -2883,3 +4181,19 @@ window.addFlavorToBox = addFlavorToBox;
 window.selectBoxDesign = selectBoxDesign;
 window.selectStore = selectStore;
 window.preOrderCustomBox = preOrderCustomBox;
+// Recipe functions
+window.showFlavorRecipes = showFlavorRecipes;
+window.showRecipeDetail = showRecipeDetail;
+window.backToFlavorDetail = backToFlavorDetail;
+window.saveRecipe = saveRecipe;
+window.shareRecipe = shareRecipe;
+window.shareRecipes = shareRecipes;
+window.filterRecipeCategory = filterRecipeCategory;
+window.openRecipeFromList = openRecipeFromList;
+window.openRecipeSearch = openRecipeSearch;
+// Feedback functions
+window.openFeedbackModal = openFeedbackModal;
+window.closeFeedbackModal = closeFeedbackModal;
+window.selectFeedbackType = selectFeedbackType;
+window.setFeedbackRating = setFeedbackRating;
+window.submitFeedback = submitFeedback;
