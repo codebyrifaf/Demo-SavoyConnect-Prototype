@@ -282,6 +282,8 @@ function switchEngageTab(tabName) {
             setTimeout(initLeaderboardAnimations, 100);
         } else if (tabName === 'community') {
             setTimeout(initCommunityAnimations, 100);
+        } else if (tabName === 'games') {
+            setTimeout(initGamesAnimations, 100);
         }
     }
 }
@@ -329,6 +331,28 @@ function likePost(button) {
             icon.style.animation = 'likeHeart 0.6s ease';
         }, 10);
     }
+}
+
+// Initialize games animations
+function initGamesAnimations() {
+    animateGamesStats();
+}
+
+// Animate games stats counters
+function animateGamesStats() {
+    const stats = [
+        { id: 'game-rank', value: 247 },
+        { id: 'game-coins-won', value: 1450 },
+        { id: 'game-achievements', value: 12 },
+        { id: 'game-challenges-won', value: 8 }
+    ];
+    
+    stats.forEach(stat => {
+        const element = document.getElementById(stat.id);
+        if (element) {
+            animateValue(element, 0, stat.value, 1500);
+        }
+    });
 }
 
 // Add interaction feedback

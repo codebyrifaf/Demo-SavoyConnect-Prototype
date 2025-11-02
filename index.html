@@ -3005,177 +3005,235 @@
                 <!-- Games Tab Content -->
                 <div id="engageGames" class="engage-tab-content">
                     <!-- Featured Gaming Competition Banner -->
-                    <div class="game-competition-banner">
-                        <div class="competition-badge">🏆 LIVE NOW</div>
-                        <h3>Halloween Ice Cream Hunt 2025</h3>
-                        <p>Collect 50 virtual ice cream cones to win 5,000 IceCoins!</p>
-                        <div class="competition-timer">
-                            <span class="timer-icon">⏰</span>
-                            <span class="timer-text">Ends in: 3 days 14 hours</span>
+                    <div class="game-competition-banner-animated">
+                        <div class="competition-glow-bg"></div>
+                        <div class="competition-badge-animated">
+                            <span class="badge-pulse">🏆</span>
+                            LIVE NOW
                         </div>
-                        <button class="btn-competition" onclick="playGame('halloween-hunt')">Join Competition</button>
+                        <h3 class="competition-title-animated">Halloween Ice Cream Hunt 2025</h3>
+                        <p class="competition-desc-animated">Collect 50 virtual ice cream cones to win 5,000 IceCoins!</p>
+                        <div class="competition-timer-animated">
+                            <span class="timer-icon-animated">⏰</span>
+                            <span class="timer-text-animated">Ends in: <strong>3d 14h</strong></span>
+                        </div>
+                        <button class="btn-competition-animated" onclick="playGame('halloween-hunt')">
+                            <span class="btn-sparkle">✨</span>
+                            Join Competition
+                            <span class="btn-arrow">→</span>
+                        </button>
                     </div>
 
                     <!-- User Gaming Stats Card -->
-                    <div class="gaming-stats-card">
-                        <div class="stats-header">
-                            <h3>🎮 Your Gaming Stats</h3>
-                            <span class="stats-rank">Rank: #247</span>
+                    <div class="gaming-stats-card-animated">
+                        <div class="stats-header-animated">
+                            <div class="stats-title-group">
+                                <span class="stats-icon-animated">🎮</span>
+                                <h3>Your Gaming Stats</h3>
+                            </div>
+                            <span class="stats-rank-animated">
+                                <span class="rank-icon">🏅</span>
+                                Rank: #<span id="game-rank">247</span>
+                            </span>
                         </div>
-                        <div class="stats-grid">
-                            <div class="stat-item">
-                                <span class="stat-value">1,450</span>
-                                <span class="stat-label">💎 IceCoins Won</span>
+                        <div class="stats-grid-animated">
+                            <div class="stat-item-animated">
+                                <div class="stat-icon-game">💎</div>
+                                <span class="stat-value-animated" id="game-coins-won">1450</span>
+                                <span class="stat-label-animated">IceCoins Won</span>
                             </div>
-                            <div class="stat-item">
-                                <span class="stat-value">12</span>
-                                <span class="stat-label">🏆 Achievements</span>
+                            <div class="stat-item-animated">
+                                <div class="stat-icon-game">🏆</div>
+                                <span class="stat-value-animated" id="game-achievements">12</span>
+                                <span class="stat-label-animated">Achievements</span>
                             </div>
-                            <div class="stat-item">
-                                <span class="stat-value">8</span>
-                                <span class="stat-label">🎯 Challenges Won</span>
+                            <div class="stat-item-animated">
+                                <div class="stat-icon-game">🎯</div>
+                                <span class="stat-value-animated" id="game-challenges-won">8</span>
+                                <span class="stat-label-animated">Challenges Won</span>
                             </div>
-                            <div class="stat-item">
-                                <span class="stat-value">25%</span>
-                                <span class="stat-label">🎁 Discount</span>
+                            <div class="stat-item-animated">
+                                <div class="stat-icon-game">🎁</div>
+                                <span class="stat-value-animated">25%</span>
+                                <span class="stat-label-animated">Discount</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Online Games Section -->
-                    <div class="games-section">
-                        <h3>🌐 Online Games</h3>
-                        <div class="games-grid">
-                            <div class="game-card" onclick="playGame('ice-cream-maker')">
-                                <div class="game-icon">🍦</div>
-                                <div class="game-info">
+                    <div class="games-section-animated">
+                        <h3 class="games-section-title">🌐 Online Games</h3>
+                        <div class="games-grid-animated">
+                            <div class="game-card-animated game-online" onclick="playGame('ice-cream-maker')">
+                                <div class="game-card-glow"></div>
+                                <div class="game-icon-animated">🍦</div>
+                                <div class="game-info-animated">
                                     <h4>Ice Cream Maker</h4>
                                     <p>Create & sell ice creams</p>
-                                    <div class="game-rewards">
-                                        <span class="reward-badge">💎 50 IceCoins</span>
+                                    <div class="game-rewards-animated">
+                                        <span class="reward-badge-animated reward-coins">💎 50</span>
                                     </div>
                                 </div>
-                                <div class="game-players">👥 2.4K online</div>
+                                <div class="game-players-animated">
+                                    <span class="players-icon">👥</span>
+                                    <span class="players-count">2.4K</span>
+                                    <span class="online-dot"></span>
+                                </div>
                             </div>
 
-                            <div class="game-card" onclick="playGame('flavor-match')">
-                                <div class="game-icon">🎯</div>
-                                <div class="game-info">
+                            <div class="game-card-animated game-online game-hot" onclick="playGame('flavor-match')">
+                                <div class="game-card-glow"></div>
+                                <div class="hot-badge">🔥 HOT</div>
+                                <div class="game-icon-animated">🎯</div>
+                                <div class="game-info-animated">
                                     <h4>Flavor Match 3</h4>
                                     <p>Match ice cream flavors</p>
-                                    <div class="game-rewards">
-                                        <span class="reward-badge">💎 30 IceCoins</span>
+                                    <div class="game-rewards-animated">
+                                        <span class="reward-badge-animated reward-coins">💎 30</span>
                                     </div>
                                 </div>
-                                <div class="game-players">👥 1.8K online</div>
+                                <div class="game-players-animated">
+                                    <span class="players-icon">👥</span>
+                                    <span class="players-count">1.8K</span>
+                                    <span class="online-dot"></span>
+                                </div>
                             </div>
 
-                            <div class="game-card" onclick="playGame('ice-cream-runner')">
-                                <div class="game-icon">🏃</div>
-                                <div class="game-info">
+                            <div class="game-card-animated game-online" onclick="playGame('ice-cream-runner')">
+                                <div class="game-card-glow"></div>
+                                <div class="game-icon-animated">🏃</div>
+                                <div class="game-info-animated">
                                     <h4>Ice Cream Runner</h4>
                                     <p>Collect cones, avoid obstacles</p>
-                                    <div class="game-rewards">
-                                        <span class="reward-badge">💎 40 IceCoins</span>
-                                        <span class="reward-badge">🎁 10% Off</span>
+                                    <div class="game-rewards-animated">
+                                        <span class="reward-badge-animated reward-coins">💎 40</span>
+                                        <span class="reward-badge-animated reward-discount">🎁 10%</span>
                                     </div>
                                 </div>
-                                <div class="game-players">👥 3.1K online</div>
+                                <div class="game-players-animated">
+                                    <span class="players-icon">👥</span>
+                                    <span class="players-count">3.1K</span>
+                                    <span class="online-dot"></span>
+                                </div>
                             </div>
 
-                            <div class="game-card" onclick="playGame('trivia-champion')">
-                                <div class="game-icon">🧠</div>
-                                <div class="game-info">
+                            <div class="game-card-animated game-online" onclick="playGame('trivia-champion')">
+                                <div class="game-card-glow"></div>
+                                <div class="game-icon-animated">🧠</div>
+                                <div class="game-info-animated">
                                     <h4>Savoy Trivia</h4>
                                     <p>Test your ice cream knowledge</p>
-                                    <div class="game-rewards">
-                                        <span class="reward-badge">💎 60 IceCoins</span>
+                                    <div class="game-rewards-animated">
+                                        <span class="reward-badge-animated reward-coins">💎 60</span>
                                     </div>
                                 </div>
-                                <div class="game-players">👥 956 online</div>
+                                <div class="game-players-animated">
+                                    <span class="players-icon">👥</span>
+                                    <span class="players-count">956</span>
+                                    <span class="online-dot"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Offline Games Section -->
-                    <div class="games-section">
-                        <h3>📱 Offline Games</h3>
-                        <div class="games-grid">
-                            
-
-                            <div class="game-card" onclick="playGame('scratch-card')">
-                                <div class="game-icon">🎫</div>
-                                <div class="game-info">
+                    <div class="games-section-animated">
+                        <h3 class="games-section-title">📱 Offline Games</h3>
+                        <div class="games-grid-animated">
+                            <div class="game-card-animated game-offline" onclick="playGame('scratch-card')">
+                                <div class="game-card-glow"></div>
+                                <div class="game-icon-animated">🎫</div>
+                                <div class="game-info-animated">
                                     <h4>Scratch & Reveal</h4>
                                     <p>Scratch to win prizes</p>
-                                    <div class="game-rewards">
-                                        <span class="reward-badge">💎 Up to 500</span>
+                                    <div class="game-rewards-animated">
+                                        <span class="reward-badge-animated reward-coins">💎 500</span>
                                     </div>
                                 </div>
-                                <div class="game-status">✅ Available</div>
+                                <div class="game-status-animated status-available">
+                                    <span class="status-icon">✅</span>
+                                    Available
+                                </div>
                             </div>
 
-                            <div class="game-card" onclick="playGame('memory-game')">
-                                <div class="game-icon">🧩</div>
-                                <div class="game-info">
+                            <div class="game-card-animated game-offline" onclick="playGame('memory-game')">
+                                <div class="game-card-glow"></div>
+                                <div class="game-icon-animated">🧩</div>
+                                <div class="game-info-animated">
                                     <h4>Memory Match</h4>
                                     <p>Match flavor pairs</p>
-                                    <div class="game-rewards">
-                                        <span class="reward-badge">💎 25 IceCoins</span>
+                                    <div class="game-rewards-animated">
+                                        <span class="reward-badge-animated reward-coins">💎 25</span>
                                     </div>
                                 </div>
-                                <div class="game-status">✅ Available</div>
+                                <div class="game-status-animated status-available">
+                                    <span class="status-icon">✅</span>
+                                    Available
+                                </div>
                             </div>
 
-                            <div class="game-card" onclick="playGame('puzzle')">
-                                <div class="game-icon">🧩</div>
-                                <div class="game-info">
+                            <div class="game-card-animated game-offline" onclick="playGame('puzzle')">
+                                <div class="game-card-glow"></div>
+                                <div class="game-icon-animated">🧩</div>
+                                <div class="game-info-animated">
                                     <h4>Ice Cream Puzzle</h4>
                                     <p>Complete the picture</p>
-                                    <div class="game-rewards">
-                                        <span class="reward-badge">💎 35 IceCoins</span>
+                                    <div class="game-rewards-animated">
+                                        <span class="reward-badge-animated reward-coins">💎 35</span>
                                     </div>
                                 </div>
-                                <div class="game-status">✅ Available</div>
+                                <div class="game-status-animated status-available">
+                                    <span class="status-icon">✅</span>
+                                    Available
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Recent Achievements -->
-                    <div class="achievements-section">
-                        <h3>🏆 Recent Achievements</h3>
-                        <div class="achievement-list">
-                            <div class="achievement-item unlocked">
-                                <div class="achievement-icon">🌟</div>
-                                <div class="achievement-info">
+                    <div class="achievements-section-animated">
+                        <h3 class="achievements-title-animated">🏆 Recent Achievements</h3>
+                        <div class="achievement-list-animated">
+                            <div class="achievement-item-animated achievement-unlocked">
+                                <div class="achievement-icon-animated">🌟</div>
+                                <div class="achievement-info-animated">
                                     <h4>First Victory</h4>
                                     <p>Won your first game</p>
                                 </div>
-                                <div class="achievement-reward">+100 💎</div>
+                                <div class="achievement-reward-animated">+100 💎</div>
+                                <div class="achievement-shine"></div>
                             </div>
-                            <div class="achievement-item unlocked">
-                                <div class="achievement-icon">🔥</div>
-                                <div class="achievement-info">
+                            <div class="achievement-item-animated achievement-unlocked">
+                                <div class="achievement-icon-animated">🔥</div>
+                                <div class="achievement-info-animated">
                                     <h4>Hot Streak</h4>
                                     <p>Won 5 games in a row</p>
                                 </div>
-                                <div class="achievement-reward">+250 💎</div>
+                                <div class="achievement-reward-animated">+250 💎</div>
+                                <div class="achievement-shine"></div>
                             </div>
-                            <div class="achievement-item locked">
-                                <div class="achievement-icon">👑</div>
-                                <div class="achievement-info">
+                            <div class="achievement-item-animated achievement-locked">
+                                <div class="achievement-icon-animated">👑</div>
+                                <div class="achievement-info-animated">
                                     <h4>Game Master</h4>
                                     <p>Win 50 games total</p>
                                 </div>
-                                <div class="achievement-progress">12/50</div>
+                                <div class="achievement-progress-animated">
+                                    <span class="progress-text">12/50</span>
+                                    <div class="progress-bar-achievement">
+                                        <div class="progress-fill-achievement" style="width: 24%;"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="achievement-item locked">
-                                <div class="achievement-icon">💯</div>
-                                <div class="achievement-info">
+                            <div class="achievement-item-animated achievement-locked">
+                                <div class="achievement-icon-animated">💯</div>
+                                <div class="achievement-info-animated">
                                     <h4>Perfectionist</h4>
                                     <p>Get 100% in any game</p>
                                 </div>
-                                <div class="achievement-progress">🔒</div>
+                                <div class="achievement-progress-animated">
+                                    <span class="lock-icon">🔒</span>
+                                </div>
                             </div>
                         </div>
                     </div>
