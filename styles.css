@@ -241,6 +241,33 @@ body {
     cursor: pointer;
 }
 
+.btn-small-secondary {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: linear-gradient(135deg, var(--color-primary) 0%, #8b5cf6 100%);
+    color: white;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.25);
+    transition: all 0.3s ease;
+}
+
+.btn-small-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #7c6fdc 0%, #9d6ff9 100%);
+}
+
+.btn-small-secondary:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(102, 126, 234, 0.3);
+}
+
 /* Top Bar */
 .top-bar {
     padding: var(--spacing-lg);
@@ -275,23 +302,111 @@ body {
 /* Hero Carousel */
 .hero-carousel {
     margin-bottom: var(--spacing-lg);
+    position: relative;
+}
+
+.carousel-item {
+    display: none;
+}
+
+.carousel-item.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .promo-card {
-    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
     padding: var(--spacing-xl);
-    border-radius: var(--radius-lg);
+    border-radius: 24px;
     color: white;
     text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.promo-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-20%, -20%); }
+}
+
+.promo-card-1 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.promo-card-2 {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.promo-card-3 {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.promo-card-4 {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
 }
 
 .promo-card h3 {
     font-size: var(--font-size-l);
     margin-bottom: var(--spacing-sm);
+    font-weight: var(--font-weight-bold);
+    position: relative;
+    z-index: 1;
 }
 
 .promo-card p {
     font-size: var(--font-size-base);
+    opacity: 0.95;
+    position: relative;
+    z-index: 1;
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: var(--spacing-md);
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-neutral-300);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot:hover {
+    background: var(--color-neutral-400);
+    transform: scale(1.2);
+}
+
+.dot.active {
+    width: 24px;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
 }
 
 /* Sections */
@@ -4433,35 +4548,86 @@ body {
 /* Passport Button in Top Bar */
 .passport-btn {
     position: relative;
-    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     border: none;
-    border-radius: var(--radius-lg);
-    padding: 8px 12px;
+    border-radius: 30px;
+    padding: 10px 16px;
     cursor: pointer;
-    transition: all 0.3s;
-    box-shadow: 0 4px 12px rgba(11, 95, 255, 0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    overflow: hidden;
+}
+
+.passport-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.passport-btn:hover::before {
+    left: 100%;
 }
 
 .passport-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(11, 95, 255, 0.4);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(79, 172, 254, 0.6);
+    background: linear-gradient(135deg, #5fb5fe 0%, #20f5ff 100%);
+}
+
+.passport-btn:active {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
 }
 
 .passport-icon {
-    font-size: 24px;
+    font-size: 26px;
     line-height: 1;
+    animation: iconPulse 2s ease-in-out infinite;
+    transition: transform 0.3s ease;
+}
+
+.passport-btn:hover .passport-icon {
+    transform: rotate(20deg) scale(1.1);
+    animation: none;
+}
+
+@keyframes iconPulse {
+    0%, 100% { 
+        transform: scale(1);
+        filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+    }
+    50% { 
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+    }
 }
 
 .passport-badge {
-    background: white;
-    color: var(--color-primary);
-    padding: 2px 8px;
-    border-radius: var(--radius-pill);
-    font-size: 12px;
+    background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+    color: #2563eb;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 14px;
     font-weight: var(--font-weight-bold);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.5px;
+}
+
+.passport-btn:hover .passport-badge {
+    transform: scale(1.08);
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    background: linear-gradient(135deg, #ffffff 0%, #dbeafe 100%);
+    border-color: rgba(255, 255, 255, 0.8);
 }
 
 /* Passport Modal */
@@ -7353,15 +7519,18 @@ body {
 .legacy-banner {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: var(--radius-xl);
-    padding: var(--spacing-lg);
+    padding: var(--spacing-xl);
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: var(--spacing-md);
+    text-align: center;
+    gap: var(--spacing-lg);
     position: relative;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
     cursor: pointer;
     transition: all 0.3s;
+    min-height: 180px;
 }
 
 .legacy-banner:hover {
@@ -7370,43 +7539,51 @@ body {
 }
 
 .legacy-banner-icon {
-    font-size: 50px;
+    font-size: 80px;
     animation: float 3s ease-in-out infinite;
+    
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
 }
 
 .legacy-banner-content {
     flex: 1;
     color: white;
+    width: 100%;
 }
 
 .legacy-banner-content h3 {
-    margin: 0 0 4px;
-    font-size: var(--font-size-lg);
+    margin: 0 0 var(--spacing-sm);
+    font-size: 22px;
     font-weight: var(--font-weight-bold);
+    line-height: 1.2;
 }
 
 .legacy-banner-content p {
-    margin: 0;
-    font-size: var(--font-size-sm);
+    margin: 0 0 var(--spacing-md);
+    font-size: var(--font-size-base);
     opacity: 0.95;
+    line-height: 1.4;
 }
 
 .btn-legacy {
     background: white;
     color: #667eea;
     border: none;
-    padding: var(--spacing-md) var(--spacing-lg);
-    border-radius: var(--radius-md);
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-radius: var(--radius-full);
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-bold);
     cursor: pointer;
     transition: all 0.2s;
     white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .btn-legacy:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
 /* Legacy Modal */
@@ -7789,6 +7966,187 @@ body {
     font-size: var(--font-size-lg);
     margin-bottom: var(--spacing-md);
     color: var(--color-neutral-900);
+}
+
+/* Delivery Method Tabs */
+.delivery-method-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+}
+
+.delivery-method-tab {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: white;
+    border: 2px solid var(--color-neutral-300);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.delivery-method-tab .method-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.delivery-method-tab .method-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.delivery-method-tab .method-title {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-900);
+}
+
+.delivery-method-tab .method-subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-600);
+}
+
+.delivery-method-tab.active {
+    border-color: var(--color-primary);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+}
+
+.delivery-method-tab:hover:not(.active) {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+}
+
+/* Delivery Method Badge */
+.delivery-method-badge {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.delivery-method-badge .badge-icon {
+    font-size: 18px;
+}
+
+/* Delivery Form Content */
+.delivery-form-content {
+    display: none;
+}
+
+.delivery-form-content.active {
+    display: block;
+}
+
+/* Pickup Store Info */
+.pickup-store-info {
+    margin-top: var(--spacing-md);
+}
+
+.store-info-card {
+    background: white;
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.store-info-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.store-info-header .store-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+}
+
+.store-info-header h4 {
+    margin: 0 0 var(--spacing-xs);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-900);
+}
+
+.store-info-header p {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-600);
+}
+
+.store-info-details {
+    margin-bottom: var(--spacing-md);
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-xs) 0;
+    font-size: var(--font-size-sm);
+}
+
+.info-row .info-label {
+    color: var(--color-neutral-600);
+}
+
+.info-row .info-value {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-900);
+}
+
+/* Pickup Reminder */
+.pickup-reminder {
+    display: flex;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.pickup-reminder .reminder-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.pickup-reminder .reminder-text strong {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-neutral-900);
+}
+
+.pickup-reminder .reminder-text p {
+    margin: var(--spacing-xs) 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-700);
+}
+
+/* Summary Method Info */
+.summary-method-info {
+    margin-top: var(--spacing-md);
+    text-align: center;
+}
+
+.method-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
 }
 
 .form-row {

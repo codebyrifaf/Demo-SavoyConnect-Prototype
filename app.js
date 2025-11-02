@@ -56,25 +56,46 @@ function updateBottomNav(screenId) {
 
 // Carousel functionality
 let currentSlide = 0;
-const slides = document.querySelectorAll('.carousel-item');
+let carouselInterval;
 
-function showSlide(index) {
+function goToSlide(index) {
+    const slides = document.querySelectorAll('.carousel-item');
+    const dots = document.querySelectorAll('.dot');
+    
     slides.forEach((slide, i) => {
         slide.classList.remove('active');
         if (i === index) {
             slide.classList.add('active');
         }
     });
+    
+    dots.forEach((dot, i) => {
+        dot.classList.remove('active');
+        if (i === index) {
+            dot.classList.add('active');
+        }
+    });
+    
+    currentSlide = index;
 }
 
 function nextSlide() {
-    currentSlide = (currentSlide + 1) % slides.length;
-    showSlide(currentSlide);
+    const slides = document.querySelectorAll('.carousel-item');
+    if (slides.length > 0) {
+        currentSlide = (currentSlide + 1) % slides.length;
+        goToSlide(currentSlide);
+    }
 }
 
-// Auto-advance carousel every 5 seconds
-if (slides.length > 1) {
-    setInterval(nextSlide, 5000);
+function startCarousel() {
+    const slides = document.querySelectorAll('.carousel-item');
+    if (slides.length > 1) {
+        carouselInterval = setInterval(nextSlide, 3000);
+    }
+}
+
+function stopCarousel() {
+    clearInterval(carouselInterval);
 }
 
 // Simulate QR code scan
@@ -302,6 +323,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check if user is logged in (for demo purposes, always start at splash)
     const currentScreen = 'splash';
     navigateTo(currentScreen);
+    
+    // Start carousel auto-play after initialization
+    setTimeout(() => {
+        startCarousel();
+        
+        // Pause carousel on hover
+        const carousel = document.querySelector('.hero-carousel');
+        if (carousel) {
+            carousel.addEventListener('mouseenter', stopCarousel);
+            carousel.addEventListener('mouseleave', startCarousel);
+        }
+    }, 2000);
 });
 
 // ========================================
@@ -2865,6 +2898,140 @@ function closeOrderModal() {
     document.body.style.overflow = 'auto';
 }
 
+// Delivery Method Switching
+let currentDeliveryMethod = 'delivery'; // 'delivery' or 'pickup'
+
+function switchDeliveryMethod(method) {
+    currentDeliveryMethod = method;
+    
+    // Update tabs
+    const deliveryTab = document.getElementById('deliveryTab');
+    const pickupTab = document.getElementById('pickupTab');
+    
+    if (method === 'delivery') {
+        deliveryTab.classList.add('active');
+        pickupTab.classList.remove('active');
+        
+        // Show delivery form, hide pickup form
+        document.getElementById('orderForm').style.display = 'block';
+        document.getElementById('pickupForm').style.display = 'none';
+        
+        // Update summary
+        document.getElementById('deliveryFeeLabel').textContent = 'Delivery Fee:';
+        document.getElementById('deliveryFeeRow').style.display = 'flex';
+        document.getElementById('pickupSavingsRow').style.display = 'none';
+        document.getElementById('summaryMethodBadge').innerHTML = '🏍️ Home Delivery';
+        
+    } else {
+        pickupTab.classList.add('active');
+        deliveryTab.classList.remove('active');
+        
+        // Show pickup form, hide delivery form
+        document.getElementById('orderForm').style.display = 'none';
+        document.getElementById('pickupForm').style.display = 'block';
+        
+        // Update summary - no delivery fee for pickup
+        document.getElementById('deliveryFeeRow').style.display = 'none';
+        document.getElementById('pickupSavingsRow').style.display = 'flex';
+        document.getElementById('summaryMethodBadge').innerHTML = '🏪 Store Pickup';
+        
+        // Set minimum date to tomorrow for pickup
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        document.getElementById('pickupDate').min = tomorrow.toISOString().split('T')[0];
+    }
+    
+    // Recalculate order summary
+    updateOrderSummary();
+}
+
+// Pickup Store Selection Handler
+document.addEventListener('DOMContentLoaded', function() {
+    const pickupStoreSelect = document.getElementById('pickupStore');
+    if (pickupStoreSelect) {
+        pickupStoreSelect.addEventListener('change', function() {
+            const storeValue = this.value;
+            const storeInfo = document.getElementById('pickupStoreInfo');
+            
+            if (storeValue) {
+                // Show store info
+                storeInfo.style.display = 'block';
+                
+                // Store data (in production, this would come from API)
+                const storeData = {
+                    'depot-main': {
+                        icon: '🏭',
+                        name: 'Savoy Main Depot',
+                        address: '123 Main Street, Dhaka 1205',
+                        distance: '0.5 km',
+                        hours: '9:00 AM - 9:00 PM',
+                        phone: '+880 1712-345678'
+                    },
+                    'retailer-dhanmondi': {
+                        icon: '🏪',
+                        name: 'Sweet Corner Retailer',
+                        address: '45 Dhanmondi Road, Dhaka',
+                        distance: '1.2 km',
+                        hours: '10:00 AM - 10:00 PM',
+                        phone: '+880 1812-345679'
+                    },
+                    'retailer-gulshan': {
+                        icon: '🏪',
+                        name: 'Ice Cream Paradise',
+                        address: '78 Gulshan Avenue, Dhaka',
+                        distance: '2.3 km',
+                        hours: '10:00 AM - 11:00 PM',
+                        phone: '+880 1912-345680'
+                    },
+                    'retailer-banani': {
+                        icon: '🏪',
+                        name: 'Frozen Treats',
+                        address: '12 Banani Road, Dhaka',
+                        distance: '3.1 km',
+                        hours: '11:00 AM - 10:00 PM',
+                        phone: '+880 1612-345681'
+                    },
+                    'depot-uttara': {
+                        icon: '🏭',
+                        name: 'Savoy Uttara Depot',
+                        address: '56 Uttara Sector 7, Dhaka',
+                        distance: '5.8 km',
+                        hours: '9:00 AM - 9:00 PM',
+                        phone: '+880 1512-345682'
+                    },
+                    'freezer-mirpur': {
+                        icon: '❄️',
+                        name: 'Savoy Freezer - Mirpur',
+                        address: '34 Mirpur Road, Dhaka',
+                        distance: '4.2 km',
+                        hours: '8:00 AM - 8:00 PM',
+                        phone: '+880 1412-345683'
+                    }
+                };
+                
+                const store = storeData[storeValue];
+                if (store) {
+                    document.getElementById('selectedStoreIcon').textContent = store.icon;
+                    document.getElementById('selectedStoreName').textContent = store.name;
+                    document.getElementById('selectedStoreAddress').textContent = store.address;
+                    document.getElementById('selectedStoreDistance').textContent = store.distance;
+                    document.getElementById('selectedStoreHours').textContent = store.hours;
+                    document.getElementById('selectedStorePhone').textContent = store.phone;
+                }
+            } else {
+                storeInfo.style.display = 'none';
+            }
+        });
+    }
+});
+
+function viewStoreOnMap() {
+    showNotification('📍 Opening store location on map...');
+    // In production, this would open the map view with store location
+    navigateTo('store-locator');
+    closeOrderModal();
+}
+
 // Order History Modal Functions
 function openOrderHistoryModal() {
     const modal = document.getElementById('orderHistoryModal');
@@ -3270,24 +3437,36 @@ function updateOrderSummary() {
         document.getElementById('totalPieces').textContent = totalQuantity; // Total liters
     }
     
-    const deliveryFee = subtotal >= FREE_DELIVERY_THRESHOLD ? 0 : DELIVERY_FEE;
-    const totalAmount = subtotal + deliveryFee;
+    // Calculate delivery fee based on method
+    let deliveryFee = 0;
+    let totalAmount = subtotal;
+    
+    if (currentDeliveryMethod === 'delivery') {
+        // Home delivery - check if free delivery threshold met
+        deliveryFee = subtotal >= FREE_DELIVERY_THRESHOLD ? 0 : DELIVERY_FEE;
+        totalAmount = subtotal + deliveryFee;
+        
+        // Update delivery fee display
+        document.getElementById('summaryDelivery').textContent = subtotal >= FREE_DELIVERY_THRESHOLD ? '৳0' : `৳${DELIVERY_FEE}`;
+        
+        // Show/hide free delivery message
+        const freeDeliveryRow = document.getElementById('freeDeliveryRow');
+        if (subtotal >= FREE_DELIVERY_THRESHOLD) {
+            freeDeliveryRow.style.display = 'flex';
+        } else {
+            freeDeliveryRow.style.display = 'none';
+        }
+    } else {
+        // Store pickup - no delivery fee
+        totalAmount = subtotal;
+    }
     
     // Update summary header
     document.getElementById('totalAmount').textContent = `৳${totalAmount.toLocaleString()}`;
     
     // Update final summary
     document.getElementById('summarySubtotal').textContent = `৳${subtotal.toLocaleString()}`;
-    document.getElementById('summaryDelivery').textContent = subtotal >= FREE_DELIVERY_THRESHOLD ? '৳0' : `৳${DELIVERY_FEE}`;
     document.getElementById('summaryTotal').textContent = `৳${totalAmount.toLocaleString()}`;
-    
-    // Show/hide free delivery message
-    const freeDeliveryRow = document.getElementById('freeDeliveryRow');
-    if (subtotal >= FREE_DELIVERY_THRESHOLD) {
-        freeDeliveryRow.style.display = 'flex';
-    } else {
-        freeDeliveryRow.style.display = 'none';
-    }
     
     // Enable/disable place order button based on order type
     const placeOrderBtn = document.getElementById('placeOrderBtn');
@@ -3309,8 +3488,14 @@ function updateOrderSummary() {
 }
 
 function placeOrder() {
-    // Validate form
-    const form = document.getElementById('orderForm');
+    // Validate appropriate form based on delivery method
+    let form;
+    if (currentDeliveryMethod === 'delivery') {
+        form = document.getElementById('orderForm');
+    } else {
+        form = document.getElementById('pickupForm');
+    }
+    
     if (!form.checkValidity()) {
         form.reportValidity();
         return;
@@ -3321,20 +3506,51 @@ function placeOrder() {
     
     // Validate minimum order based on type
     if (currentOrderType === 'pieces' && totalQuantity < PIECES_PER_BOX) {
-        showNotification('⚠️ Minimum order is 24 pieces (1 box)');
+        showNotification('⚠️ Minimum order is 24 pieces (1 box)', 'error');
         return;
     } else if (currentOrderType === 'liters' && totalQuantity < 1) {
-        showNotification('⚠️ Minimum order is 1 liter');
+        showNotification('⚠️ Minimum order is 1 liter', 'error');
         return;
     }
     
-    // Get form data
-    const deliveryAddress = document.getElementById('deliveryAddress').value;
-    const contactName = document.getElementById('contactName').value;
-    const contactPhone = document.getElementById('contactPhone').value;
-    const deliveryDate = document.getElementById('deliveryDate').value;
-    const deliveryTime = document.getElementById('deliveryTime').value;
-    const orderNotes = document.getElementById('orderNotes').value;
+    // Get form data based on delivery method
+    let deliveryInfo = '';
+    let contactName, contactPhone, orderDate, timeSlot, notes;
+    
+    if (currentDeliveryMethod === 'delivery') {
+        const deliveryAddress = document.getElementById('deliveryAddress').value;
+        contactName = document.getElementById('contactName').value;
+        contactPhone = document.getElementById('contactPhone').value;
+        orderDate = document.getElementById('deliveryDate').value;
+        timeSlot = document.getElementById('deliveryTime').value;
+        notes = document.getElementById('orderNotes').value;
+        
+        deliveryInfo = `📍 Delivery To:
+${contactName}
+${deliveryAddress}
+${contactPhone}
+
+📅 Delivery: ${orderDate} (${timeSlot})`;
+    } else {
+        const pickupStore = document.getElementById('pickupStore');
+        const selectedStoreText = pickupStore.options[pickupStore.selectedIndex].text;
+        contactName = document.getElementById('pickupName').value;
+        contactPhone = document.getElementById('pickupPhone').value;
+        orderDate = document.getElementById('pickupDate').value;
+        timeSlot = document.getElementById('pickupTime').value;
+        notes = document.getElementById('pickupNotes').value;
+        
+        deliveryInfo = `🏪 Pickup From:
+${selectedStoreText}
+
+👤 Pickup By:
+${contactName}
+${contactPhone}
+
+📅 Pickup: ${orderDate} (${timeSlot})
+
+ℹ️ Remember to bring ID for verification`;
+    }
     
     // Calculate totals
     let subtotal = 0;
@@ -3349,7 +3565,20 @@ function placeOrder() {
         orderTypeLabel = `${totalQuantity} liter(s)`;
     }
     
-    const deliveryFee = subtotal >= FREE_DELIVERY_THRESHOLD ? 0 : DELIVERY_FEE;
+    // Calculate total based on delivery method
+    let deliveryFee = 0;
+    let feeInfo = '';
+    if (currentDeliveryMethod === 'delivery') {
+        deliveryFee = subtotal >= FREE_DELIVERY_THRESHOLD ? 0 : DELIVERY_FEE;
+        if (deliveryFee === 0) {
+            feeInfo = `\n🎉 Free Delivery Applied!`;
+        } else {
+            feeInfo = `\n🏍️ Delivery Fee: ৳${deliveryFee}`;
+        }
+    } else {
+        feeInfo = `\n💰 No Delivery Fee (Store Pickup)`;
+    }
+    
     const totalAmount = subtotal + deliveryFee;
     
     // Create order summary
@@ -3364,14 +3593,20 @@ function placeOrder() {
     });
     
     // Show confirmation
+    const methodIcon = currentDeliveryMethod === 'delivery' ? '🏍️' : '🏪';
+    const methodText = currentDeliveryMethod === 'delivery' ? 'Home Delivery' : 'Store Pickup';
+    
     const orderSummary = `
 🎉 Order Placed Successfully!
+
+${methodIcon} ${methodText}
 
 📦 Order Details:
 ${flavorsSummary}
 Total: ${orderTypeLabel}
 
-💰 Amount: ৳${totalAmount.toLocaleString()}
+💰 Subtotal: ৳${subtotal.toLocaleString()}${feeInfo}
+💳 Total Amount: ৳${totalAmount.toLocaleString()}
 
 📍 Delivery To:
 ${contactName}

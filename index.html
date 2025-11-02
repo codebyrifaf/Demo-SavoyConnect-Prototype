@@ -118,10 +118,34 @@
                 <!-- Hero Carousel -->
                 <div class="hero-carousel">
                     <div class="carousel-item active">
-                        <div class="promo-card">
+                        <div class="promo-card promo-card-1">
                             <h3>🎉 Double IceCoins Week!</h3>
                             <p>Earn 2x points on all purchases</p>
                         </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="promo-card promo-card-2">
+                            <h3>🍦 Summer Flavors Are Here!</h3>
+                            <p>Try our new tropical mango & coconut bliss</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="promo-card promo-card-3">
+                            <h3>🎁 Refer & Earn 500 IceCoins!</h3>
+                            <p>Share the love, get rewards instantly</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="promo-card promo-card-4">
+                            <h3>⚡ Flash Sale: 30% Off!</h3>
+                            <p>On all family packs - Limited time only</p>
+                        </div>
+                    </div>
+                    <div class="carousel-dots">
+                        <span class="dot active" onclick="goToSlide(0)"></span>
+                        <span class="dot" onclick="goToSlide(1)"></span>
+                        <span class="dot" onclick="goToSlide(2)"></span>
+                        <span class="dot" onclick="goToSlide(3)"></span>
                     </div>
                 </div>
 
@@ -541,7 +565,7 @@
             </div>
             <div class="bottom-nav">
                 <button class="nav-item" onclick="navigateTo('home')">
-                    <span class="nav-icon">🏠</span>
+                    <span class="nav-icon">🏠︎</span>
                     <span>Home</span>
                 </button>
                 <button class="nav-item" onclick="navigateTo('wallet')">
@@ -1276,7 +1300,7 @@
                 <div class="section">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md);">
                         <h3 class="section-title" style="margin-bottom: 0;">My Health Profile</h3>
-                        <button class="btn-small-secondary" onclick="openHealthProfileModal()">Edit Profile</button>
+                        <button class="btn-small-secondary" onclick="openHealthProfileModal()">✏️ Edit Profile</button>
                     </div>
                     
                     <div class="health-profile-card" id="healthProfileDisplay">
@@ -4834,8 +4858,33 @@
 
                 <!-- Delivery Details -->
                 <div class="delivery-section">
-                    <h3>Delivery Details</h3>
-                    <form id="orderForm">
+                    <h3>Fulfillment Method</h3>
+                    
+                    <!-- Delivery Method Selection -->
+                    <div class="delivery-method-tabs">
+                        <button class="delivery-method-tab active" onclick="switchDeliveryMethod('delivery')" id="deliveryTab">
+                            <span class="method-icon">🏍️</span>
+                            <div class="method-info">
+                                <span class="method-title">Home Delivery</span>
+                                <span class="method-subtitle">By Rider</span>
+                            </div>
+                        </button>
+                        <button class="delivery-method-tab" onclick="switchDeliveryMethod('pickup')" id="pickupTab">
+                            <span class="method-icon">🏪</span>
+                            <div class="method-info">
+                                <span class="method-title">Store Pickup</span>
+                                <span class="method-subtitle">Self Collection</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Home Delivery Form -->
+                    <form id="orderForm" class="delivery-form-content active">
+                        <div class="delivery-method-badge">
+                            <span class="badge-icon">🏍️</span>
+                            <span>Delivery by Rider • Free delivery above ৳5,000</span>
+                        </div>
+
                         <div class="form-group">
                             <label for="deliveryAddress">Delivery Address *</label>
                             <textarea id="deliveryAddress" rows="3" placeholder="Enter your complete delivery address..." required></textarea>
@@ -4871,6 +4920,97 @@
                             <textarea id="orderNotes" rows="2" placeholder="Any special requests or notes..."></textarea>
                         </div>
                     </form>
+
+                    <!-- Store Pickup Form -->
+                    <form id="pickupForm" class="delivery-form-content" style="display: none;">
+                        <div class="delivery-method-badge" style="background: linear-gradient(135deg, #10B981 0%, #34D399 100%);">
+                            <span class="badge-icon">🏪</span>
+                            <span>Store Pickup • No delivery charges • Ready in 2-4 hours</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pickupStore">Select Pickup Store *</label>
+                            <select id="pickupStore" required>
+                                <option value="">Choose a store...</option>
+                                <option value="depot-main">🏭 Savoy Main Depot - Dhaka (0.5 km)</option>
+                                <option value="retailer-dhanmondi">🏪 Sweet Corner Retailer - Dhanmondi (1.2 km)</option>
+                                <option value="retailer-gulshan">🏪 Ice Cream Paradise - Gulshan (2.3 km)</option>
+                                <option value="retailer-banani">🏪 Frozen Treats - Banani (3.1 km)</option>
+                                <option value="depot-uttara">🏭 Savoy Uttara Depot (5.8 km)</option>
+                                <option value="freezer-mirpur">❄️ Savoy Freezer - Mirpur (4.2 km)</option>
+                            </select>
+                        </div>
+
+                        <div class="pickup-store-info" id="pickupStoreInfo" style="display: none;">
+                            <div class="store-info-card">
+                                <div class="store-info-header">
+                                    <span class="store-icon" id="selectedStoreIcon">🏭</span>
+                                    <div>
+                                        <h4 id="selectedStoreName">Savoy Main Depot</h4>
+                                        <p id="selectedStoreAddress">123 Main Street, Dhaka</p>
+                                    </div>
+                                </div>
+                                <div class="store-info-details">
+                                    <div class="info-row">
+                                        <span class="info-label">📍 Distance:</span>
+                                        <span class="info-value" id="selectedStoreDistance">0.5 km</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">🕒 Hours:</span>
+                                        <span class="info-value" id="selectedStoreHours">9:00 AM - 9:00 PM</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">📞 Phone:</span>
+                                        <span class="info-value" id="selectedStorePhone">+880 1XXX-XXXXXX</span>
+                                    </div>
+                                </div>
+                                <button class="btn-small-secondary" onclick="viewStoreOnMap()" type="button">
+                                    📍 View on Map
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pickupName">Your Name *</label>
+                                <input type="text" id="pickupName" placeholder="Name for pickup" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pickupPhone">Phone Number *</label>
+                                <input type="tel" id="pickupPhone" placeholder="+880 1XXX-XXXXXX" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pickupDate">Preferred Pickup Date *</label>
+                            <input type="date" id="pickupDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pickupTime">Preferred Pickup Time</label>
+                            <select id="pickupTime" required>
+                                <option value="">Select time slot...</option>
+                                <option value="morning">Morning (9 AM - 12 PM)</option>
+                                <option value="afternoon">Afternoon (12 PM - 4 PM)</option>
+                                <option value="evening">Evening (4 PM - 8 PM)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pickupNotes">Special Instructions (Optional)</label>
+                            <textarea id="pickupNotes" rows="2" placeholder="Any special requests..."></textarea>
+                        </div>
+
+                        <div class="pickup-reminder">
+                            <div class="reminder-icon">ℹ️</div>
+                            <div class="reminder-text">
+                                <strong>Pickup Reminder:</strong>
+                                <p>• Bring a valid ID for order verification</p>
+                                <p>• Order will be held for 24 hours after ready time</p>
+                                <p>• You'll receive SMS notification when order is ready</p>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
                 <!-- Order Summary -->
@@ -4880,17 +5020,24 @@
                         <span>Subtotal:</span>
                         <span id="summarySubtotal">৳0</span>
                     </div>
-                    <div class="summary-row">
-                        <span>Delivery Fee:</span>
+                    <div class="summary-row" id="deliveryFeeRow">
+                        <span id="deliveryFeeLabel">Delivery Fee:</span>
                         <span id="summaryDelivery">৳200</span>
                     </div>
                     <div class="summary-row discount" id="freeDeliveryRow" style="display: none;">
                         <span>🎉 Free Delivery Discount:</span>
                         <span>-৳200</span>
                     </div>
+                    <div class="summary-row success" id="pickupSavingsRow" style="display: none;">
+                        <span>💰 Store Pickup Savings:</span>
+                        <span>-৳200</span>
+                    </div>
                     <div class="summary-row total">
                         <span>Total Amount:</span>
                         <span id="summaryTotal">৳0</span>
+                    </div>
+                    <div class="summary-method-info" id="summaryMethodInfo">
+                        <span class="method-badge" id="summaryMethodBadge">🏍️ Home Delivery</span>
                     </div>
                 </div>
 
