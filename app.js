@@ -104,6 +104,192 @@ function simulateScan() {
     navigateTo('wallet');
 }
 
+// ========================================
+// ANIMATED WALLET FUNCTIONS
+// ========================================
+
+// Shake coins animation
+function shakeCoins() {
+    const walletCard = document.querySelector('.wallet-card-animated');
+    if (walletCard) {
+        walletCard.style.animation = 'none';
+        setTimeout(() => {
+            walletCard.style.animation = 'shake 0.5s ease';
+        }, 10);
+    }
+}
+
+// Animate counter numbers
+function animateValue(element, start, end, duration) {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const value = Math.floor(progress * (end - start) + start);
+        element.textContent = value;
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        }
+    };
+    window.requestAnimationFrame(step);
+}
+
+// Initialize wallet animations when screen is shown
+function initWalletAnimations() {
+    // Animate stat numbers
+    const statNumbers = document.querySelectorAll('.stat-number');
+    statNumbers.forEach((stat) => {
+        const target = parseInt(stat.getAttribute('data-target'));
+        if (target) {
+            animateValue(stat, 0, target, 2000);
+        }
+    });
+    
+    // Animate balance number
+    const balanceElement = document.getElementById('walletBalance');
+    if (balanceElement) {
+        const balanceValue = parseInt(balanceElement.textContent.replace(/,/g, ''));
+        animateValue(balanceElement, 0, balanceValue, 2500);
+    }
+}
+
+// ========================================
+// ANIMATED PROFILE FUNCTIONS
+// ========================================
+
+// Change avatar animation
+function changeAvatar() {
+    const avatars = ['👤', '😎', '🤓', '😊', '🎨', '🚀', '⭐', '🎮', '🍦', '💎'];
+    const avatarElement = document.querySelector('.profile-avatar-animated');
+    if (avatarElement) {
+        const currentAvatar = avatarElement.textContent;
+        let newAvatar = currentAvatar;
+        while (newAvatar === currentAvatar) {
+            newAvatar = avatars[Math.floor(Math.random() * avatars.length)];
+        }
+        
+        // Animate transition
+        avatarElement.style.transform = 'scale(0)';
+        setTimeout(() => {
+            avatarElement.textContent = newAvatar;
+            avatarElement.style.transform = 'scale(1)';
+        }, 200);
+    }
+}
+
+// Animate profile stats
+function animateProfileStats() {
+    const statNumbers = document.querySelectorAll('.profile-stats-animated .stat-number');
+    statNumbers.forEach((stat) => {
+        const target = parseInt(stat.getAttribute('data-target'));
+        if (target) {
+            animateValue(stat, 0, target, 2000);
+        }
+    });
+}
+
+// Animate metric values with decimal support
+function animateMetricValue(element, start, end, duration, suffix = '') {
+    const isDecimal = end.toString().includes('.');
+    let startTimestamp = null;
+    const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        let value = progress * (end - start) + start;
+        
+        if (isDecimal) {
+            value = value.toFixed(1);
+        } else {
+            value = Math.floor(value);
+        }
+        
+        element.textContent = value + (suffix ? ' ' + suffix : '');
+        
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        }
+    };
+    window.requestAnimationFrame(step);
+}
+
+// Animate impact metrics
+function animateImpactMetrics() {
+    const metrics = document.querySelectorAll('.metric-value');
+    metrics.forEach((metric, index) => {
+        const valueAttr = metric.getAttribute('data-value');
+        if (valueAttr) {
+            const value = parseFloat(valueAttr);
+            const text = metric.textContent;
+            const suffix = text.replace(/[\d.]/g, '').trim();
+            
+            setTimeout(() => {
+                animateMetricValue(metric, 0, value, 2000, suffix);
+            }, index * 200);
+        }
+    });
+}
+
+// Initialize profile animations
+function initProfileAnimations() {
+    animateProfileStats();
+    setTimeout(animateImpactMetrics, 500);
+}
+
+// Initialize challenge animations
+function initChallengeAnimations() {
+    animateChallengeStats();
+    animateChallengeProgress();
+}
+
+// Animate challenge stats counters
+function animateChallengeStats() {
+    const stats = [
+        { id: 'stat-active', value: 12 },
+        { id: 'stat-completed', value: 8 },
+        { id: 'stat-earned', value: 800 }
+    ];
+    
+    stats.forEach(stat => {
+        const element = document.getElementById(stat.id);
+        if (element) {
+            animateValue(element, 0, stat.value, 1500);
+        }
+    });
+}
+
+// Animate challenge progress bars
+function animateChallengeProgress() {
+    const progressFills = document.querySelectorAll('.progress-fill-animated');
+    progressFills.forEach(fill => {
+        const targetWidth = fill.getAttribute('data-progress') + '%';
+        fill.style.width = '0%';
+        setTimeout(() => {
+            fill.style.width = targetWidth;
+        }, 100);
+    });
+}
+
+// Expand challenge card for more details
+function expandChallenge(challengeId) {
+    const card = document.getElementById(challengeId);
+    if (card) {
+        card.classList.toggle('expanded');
+    }
+}
+
+// Call animations when navigating
+const originalNavigateTo = navigateTo;
+navigateTo = function(screenId) {
+    originalNavigateTo(screenId);
+    if (screenId === 'wallet') {
+        setTimeout(initWalletAnimations, 300);
+    } else if (screenId === 'profile') {
+        setTimeout(initProfileAnimations, 300);
+    } else if (screenId === 'engage') {
+        setTimeout(initChallengeAnimations, 300);
+    }
+};
+
 // Add interaction feedback
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize recipe history

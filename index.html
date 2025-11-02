@@ -1614,74 +1614,203 @@
                 <h2>IceCoins Wallet</h2>
             </div>
             <div class="content">
-                <!-- IceCoins Summary -->
-                <div class="wallet-card">
-                    <div class="wallet-header">
-                        <span class="wallet-icon">💎</span>
+                <!-- Animated IceCoins Summary -->
+                <div class="wallet-card-animated" onclick="shakeCoins()">
+                    <div class="floating-coins-bg">
+                        <span class="floating-coin" style="--delay: 0s; --x: 10%;">💎</span>
+                        <span class="floating-coin" style="--delay: 0.5s; --x: 30%;">💎</span>
+                        <span class="floating-coin" style="--delay: 1s; --x: 50%;">💎</span>
+                        <span class="floating-coin" style="--delay: 1.5s; --x: 70%;">💎</span>
+                        <span class="floating-coin" style="--delay: 2s; --x: 90%;">💎</span>
+                    </div>
+                    <div class="wallet-header-animated">
+                        <span class="wallet-icon-animated">💎</span>
                         <div>
                             <h3>Your IceCoins</h3>
                             <p class="wallet-subtitle">Savoy Rewards</p>
                         </div>
                     </div>
-                    <div class="wallet-balance">
-                        <h1>2,450</h1>
+                    <div class="wallet-balance-animated">
+                        <h1 class="balance-number" id="walletBalance">2,450</h1>
                         <p>IceCoins</p>
+                        <div class="balance-sparkles">✨ ✨ ✨</div>
+                    </div>
+                    <div class="wallet-progress-ring">
+                        <svg width="120" height="120" class="progress-ring">
+                            <circle class="progress-ring-circle" stroke="#e0e0e0" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                            <circle class="progress-ring-circle progress-ring-fill" stroke="url(#gradient)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60" style="stroke-dasharray: 326.73; stroke-dashoffset: 81.68;"/>
+                            <defs>
+                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div class="progress-center">
+                            <span class="progress-text">75%</span>
+                            <span class="progress-label">to reward</span>
+                        </div>
                     </div>
                     <div class="wallet-actions">
-                        <button class="btn-secondary" onclick="navigateTo('scan')">Earn More</button>
-                        <button class="btn-primary" onclick="navigateTo('rewards')">Redeem</button>
+                        <button class="btn-earn" onclick="navigateTo('scan')">
+                            <span class="btn-icon-pulse">⚡</span>
+                            <span>Earn More</span>
+                        </button>
+                        <button class="btn-redeem" onclick="navigateTo('rewards')">
+                            <span class="btn-icon-pulse">🎁</span>
+                            <span>Redeem</span>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Recent Transactions -->
+                <!-- Quick Stats with Animation -->
+                <div class="section">
+                    <h3 class="section-title">Your Impact</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">🏆</div>
+                            <div class="stat-number" data-target="2450">0</div>
+                            <div class="stat-label">Total Earned</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🎁</div>
+                            <div class="stat-number" data-target="12">0</div>
+                            <div class="stat-label">Rewards Claimed</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🔥</div>
+                            <div class="stat-number" data-target="28">0</div>
+                            <div class="stat-label">Day Streak</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Tier Progress -->
+                <div class="section">
+                    <h3 class="section-title">Loyalty Tier</h3>
+                    <div class="tier-card">
+                        <div class="tier-badges">
+                            <div class="tier-badge active" data-tier="bronze">
+                                <span class="tier-emoji">🥉</span>
+                                <span class="tier-name">Bronze</span>
+                            </div>
+                            <div class="tier-connector active"></div>
+                            <div class="tier-badge active" data-tier="silver">
+                                <span class="tier-emoji">🥈</span>
+                                <span class="tier-name">Silver</span>
+                            </div>
+                            <div class="tier-connector current"></div>
+                            <div class="tier-badge current" data-tier="gold">
+                                <span class="tier-emoji">🥇</span>
+                                <span class="tier-name">Gold</span>
+                            </div>
+                            <div class="tier-connector"></div>
+                            <div class="tier-badge" data-tier="platinum">
+                                <span class="tier-emoji">💎</span>
+                                <span class="tier-name">Platinum</span>
+                            </div>
+                        </div>
+                        <div class="tier-progress-bar">
+                            <div class="tier-progress-fill" style="width: 65%;">
+                                <span class="progress-indicator">65%</span>
+                            </div>
+                        </div>
+                        <p class="tier-message">🎉 Only 500 more coins to reach Platinum!</p>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions with Animation -->
                 <div class="section">
                     <h3 class="section-title">Recent Activity</h3>
-                    <div class="transaction-list">
-                        <div class="transaction-item">
-                            <span class="transaction-icon">+</span>
+                    <div class="transaction-list-animated">
+                        <div class="transaction-item-animated">
+                            <div class="transaction-icon-wrapper positive">
+                                <span class="transaction-icon">+</span>
+                            </div>
                             <div class="transaction-info">
                                 <h4>Purchase Reward</h4>
                                 <p>Chocolate Sundae</p>
+                                <span class="transaction-time">2 hours ago</span>
                             </div>
                             <span class="transaction-amount positive">+50</span>
                         </div>
-                        <div class="transaction-item">
-                            <span class="transaction-icon">-</span>
+                        <div class="transaction-item-animated">
+                            <div class="transaction-icon-wrapper negative">
+                                <span class="transaction-icon">-</span>
+                            </div>
                             <div class="transaction-info">
                                 <h4>Reward Redeemed</h4>
                                 <p>Free Cone</p>
+                                <span class="transaction-time">1 day ago</span>
                             </div>
                             <span class="transaction-amount negative">-200</span>
                         </div>
-                        <div class="transaction-item">
-                            <span class="transaction-icon">+</span>
+                        <div class="transaction-item-animated">
+                            <div class="transaction-icon-wrapper positive">
+                                <span class="transaction-icon">+</span>
+                            </div>
                             <div class="transaction-info">
                                 <h4>Challenge Complete</h4>
                                 <p>Try 3 New Flavors</p>
+                                <span class="transaction-time">2 days ago</span>
                             </div>
                             <span class="transaction-amount positive">+100</span>
+                        </div>
+                        <div class="transaction-item-animated">
+                            <div class="transaction-icon-wrapper positive">
+                                <span class="transaction-icon">🎁</span>
+                            </div>
+                            <div class="transaction-info">
+                                <h4>Referral Bonus</h4>
+                                <p>Friend joined!</p>
+                                <span class="transaction-time">3 days ago</span>
+                            </div>
+                            <span class="transaction-amount positive">+150</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Available Rewards -->
+                <!-- Available Rewards with Hover Effects -->
                 <div class="section">
                     <h3 class="section-title">Available Rewards</h3>
-                    <div class="rewards-grid">
-                        <div class="reward-card" onclick="navigateTo('rewards')">
-                            <div class="reward-icon">🍦</div>
+                    <div class="rewards-grid-animated">
+                        <div class="reward-card-animated affordable" onclick="navigateTo('rewards')">
+                            <div class="reward-glow"></div>
+                            <div class="reward-icon-animated">🍦</div>
                             <h4>Free Scoop</h4>
                             <p class="reward-cost">200 coins</p>
+                            <button class="btn-claim">Claim Now</button>
                         </div>
-                        <div class="reward-card">
-                            <div class="reward-icon">🎂</div>
+                        <div class="reward-card-animated affordable">
+                            <div class="reward-glow"></div>
+                            <div class="reward-icon-animated">🎂</div>
                             <h4>Birthday Cake</h4>
                             <p class="reward-cost">500 coins</p>
+                            <button class="btn-claim">Claim Now</button>
                         </div>
-                        <div class="reward-card">
-                            <div class="reward-icon">🎁</div>
+                        <div class="reward-card-animated affordable">
+                            <div class="reward-icon-animated">🎁</div>
                             <h4>Mystery Box</h4>
                             <p class="reward-cost">1000 coins</p>
+                            <button class="btn-claim">Claim Now</button>
+                        </div>
+                        <div class="reward-card-animated affordable">
+                            <div class="reward-icon-animated">🏆</div>
+                            <h4>Premium Pack</h4>
+                            <p class="reward-cost">1500 coins</p>
+                            <button class="btn-claim">Claim Now</button>
+                        </div>
+                        <div class="reward-card-animated locked">
+                            <div class="reward-icon-animated">💎</div>
+                            <h4>Platinum Exclusive</h4>
+                            <p class="reward-cost">3000 coins</p>
+                            <span class="locked-badge">🔒 Unlock at Platinum</span>
+                        </div>
+                        <div class="reward-card-animated locked">
+                            <div class="reward-icon-animated">👑</div>
+                            <h4>VIP Experience</h4>
+                            <p class="reward-cost">5000 coins</p>
+                            <span class="locked-badge">🔒 Unlock at Platinum</span>
                         </div>
                     </div>
                 </div>
@@ -2090,7 +2219,6 @@
                                 <div class="progress-bar">
                                     <div class="progress-fill" style="width: 60%"></div>
                                 </div>
-                                <span>3/5 completed</span>
                             </div>
                             <div class="challenge-reward">
                                 <span>Reward: 250 IceCoins 💎</span>
@@ -2108,7 +2236,6 @@
                                 <div class="progress-bar">
                                     <div class="progress-fill" style="width: 33%"></div>
                                 </div>
-                                <span>1/3 completed</span>
                             </div>
                             <div class="challenge-reward">
                                 <span>Reward: 150 IceCoins 💎</span>
@@ -2126,7 +2253,6 @@
                                 <div class="progress-bar">
                                     <div class="progress-fill" style="width: 80%"></div>
                                 </div>
-                                <span>4/5 completed</span>
                             </div>
                             <div class="challenge-reward">
                                 <span>Reward: 300 IceCoins 💎</span>
@@ -2144,7 +2270,6 @@
                                 <div class="progress-bar">
                                     <div class="progress-fill" style="width: 0%"></div>
                                 </div>
-                                <span>0/1 completed</span>
                             </div>
                             <div class="challenge-reward">
                                 <span>Reward: 100 IceCoins 💎</span>
