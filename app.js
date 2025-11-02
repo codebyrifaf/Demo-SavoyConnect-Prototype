@@ -153,88 +153,6 @@ function initWalletAnimations() {
     }
 }
 
-// ========================================
-// ANIMATED PROFILE FUNCTIONS
-// ========================================
-
-// Change avatar animation
-function changeAvatar() {
-    const avatars = ['👤', '😎', '🤓', '😊', '🎨', '🚀', '⭐', '🎮', '🍦', '💎'];
-    const avatarElement = document.querySelector('.profile-avatar-animated');
-    if (avatarElement) {
-        const currentAvatar = avatarElement.textContent;
-        let newAvatar = currentAvatar;
-        while (newAvatar === currentAvatar) {
-            newAvatar = avatars[Math.floor(Math.random() * avatars.length)];
-        }
-        
-        // Animate transition
-        avatarElement.style.transform = 'scale(0)';
-        setTimeout(() => {
-            avatarElement.textContent = newAvatar;
-            avatarElement.style.transform = 'scale(1)';
-        }, 200);
-    }
-}
-
-// Animate profile stats
-function animateProfileStats() {
-    const statNumbers = document.querySelectorAll('.profile-stats-animated .stat-number');
-    statNumbers.forEach((stat) => {
-        const target = parseInt(stat.getAttribute('data-target'));
-        if (target) {
-            animateValue(stat, 0, target, 2000);
-        }
-    });
-}
-
-// Animate metric values with decimal support
-function animateMetricValue(element, start, end, duration, suffix = '') {
-    const isDecimal = end.toString().includes('.');
-    let startTimestamp = null;
-    const step = (timestamp) => {
-        if (!startTimestamp) startTimestamp = timestamp;
-        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-        let value = progress * (end - start) + start;
-        
-        if (isDecimal) {
-            value = value.toFixed(1);
-        } else {
-            value = Math.floor(value);
-        }
-        
-        element.textContent = value + (suffix ? ' ' + suffix : '');
-        
-        if (progress < 1) {
-            window.requestAnimationFrame(step);
-        }
-    };
-    window.requestAnimationFrame(step);
-}
-
-// Animate impact metrics
-function animateImpactMetrics() {
-    const metrics = document.querySelectorAll('.metric-value');
-    metrics.forEach((metric, index) => {
-        const valueAttr = metric.getAttribute('data-value');
-        if (valueAttr) {
-            const value = parseFloat(valueAttr);
-            const text = metric.textContent;
-            const suffix = text.replace(/[\d.]/g, '').trim();
-            
-            setTimeout(() => {
-                animateMetricValue(metric, 0, value, 2000, suffix);
-            }, index * 200);
-        }
-    });
-}
-
-// Initialize profile animations
-function initProfileAnimations() {
-    animateProfileStats();
-    setTimeout(animateImpactMetrics, 500);
-}
-
 // Initialize challenge animations
 function initChallengeAnimations() {
     animateChallengeStats();
@@ -270,25 +188,148 @@ function animateChallengeProgress() {
 }
 
 // Expand challenge card for more details
-function expandChallenge(challengeId) {
-    const card = document.getElementById(challengeId);
-    if (card) {
-        card.classList.toggle('expanded');
+function expandChallenge(card) {
+    // Add a subtle scale animation on click
+    card.style.transform = 'scale(0.98)';
+    setTimeout(() => {
+        card.style.transform = '';
+    }, 150);
+}
+
+// Initialize leaderboard animations
+function initLeaderboardAnimations() {
+    animateLeaderboardStats();
+    animateLeaderboardProgress();
+}
+
+// Animate leaderboard stats counters
+function animateLeaderboardStats() {
+    const userCoins = document.getElementById('user-coins');
+    if (userCoins) {
+        animateValue(userCoins, 0, 2450, 1500);
+    }
+    
+    const rankCoins = [
+        { id: 'rank-1-coins', value: 5640 },
+        { id: 'rank-2-coins', value: 4280 },
+        { id: 'rank-3-coins', value: 3850 }
+    ];
+    
+    rankCoins.forEach(coin => {
+        const element = document.getElementById(coin.id);
+        if (element) {
+            animateValue(element, 0, coin.value, 1800);
+        }
+    });
+}
+
+// Animate leaderboard progress bar
+function animateLeaderboardProgress() {
+    const progressFill = document.querySelector('.progress-fill-glow');
+    if (progressFill) {
+        const targetWidth = progressFill.getAttribute('data-progress') + '%';
+        progressFill.style.width = '0%';
+        setTimeout(() => {
+            progressFill.style.width = targetWidth;
+        }, 200);
     }
 }
 
-// Call animations when navigating
+// Switch leaderboard period with animation
+function switchLeaderboardPeriod(period) {
+    // Remove active class from all buttons
+    const buttons = document.querySelectorAll('.period-btn-animated');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    
+    // Add active class to clicked button
+    event.target.closest('.period-btn-animated').classList.add('active');
+    
+    // Trigger animation refresh
+    setTimeout(initLeaderboardAnimations, 200);
+}
+
+// Call wallet, challenge, and leaderboard animations when navigating
 const originalNavigateTo = navigateTo;
 navigateTo = function(screenId) {
     originalNavigateTo(screenId);
     if (screenId === 'wallet') {
         setTimeout(initWalletAnimations, 300);
-    } else if (screenId === 'profile') {
-        setTimeout(initProfileAnimations, 300);
-    } else if (screenId === 'engage') {
+    } else if (screenId === 'challenges') {
         setTimeout(initChallengeAnimations, 300);
     }
 };
+
+// Initialize leaderboard animations when switching to leaderboard tab
+function switchEngageTab(tabName) {
+    // Remove active from all tabs
+    const tabs = document.querySelectorAll('.engage-tab');
+    tabs.forEach(tab => tab.classList.remove('active'));
+    event.target.closest('.engage-tab').classList.add('active');
+    
+    // Hide all content
+    const contents = document.querySelectorAll('.engage-tab-content');
+    contents.forEach(content => content.classList.remove('active'));
+    
+    // Show selected content
+    const selectedContent = document.getElementById('engage' + tabName.charAt(0).toUpperCase() + tabName.slice(1));
+    if (selectedContent) {
+        selectedContent.classList.add('active');
+        
+        // Trigger animations based on tab
+        if (tabName === 'challenges') {
+            setTimeout(initChallengeAnimations, 100);
+        } else if (tabName === 'leaderboard') {
+            setTimeout(initLeaderboardAnimations, 100);
+        } else if (tabName === 'community') {
+            setTimeout(initCommunityAnimations, 100);
+        }
+    }
+}
+
+// Initialize community animations
+function initCommunityAnimations() {
+    animateCommunityStats();
+}
+
+// Animate community stats counters
+function animateCommunityStats() {
+    const stats = [
+        { id: 'community-members', value: 2847 },
+        { id: 'community-posts', value: 156 },
+        { id: 'community-trending', value: 24 }
+    ];
+    
+    stats.forEach(stat => {
+        const element = document.getElementById(stat.id);
+        if (element) {
+            animateValue(element, 0, stat.value, 1500);
+        }
+    });
+}
+
+// Like post function
+function likePost(button) {
+    const isLiked = button.classList.contains('liked');
+    const countElement = button.querySelector('.action-count-animated');
+    const currentCount = parseInt(countElement.textContent) || 0;
+    
+    if (isLiked) {
+        // Unlike
+        button.classList.remove('liked');
+        countElement.textContent = currentCount - 1;
+    } else {
+        // Like
+        button.classList.add('liked');
+        countElement.textContent = currentCount + 1;
+        
+        // Trigger heart animation
+        const icon = button.querySelector('.action-icon-animated');
+        icon.style.animation = 'none';
+        setTimeout(() => {
+            icon.style.animation = 'likeHeart 0.6s ease';
+        }, 10);
+    }
+}
 
 // Add interaction feedback
 document.addEventListener('DOMContentLoaded', () => {

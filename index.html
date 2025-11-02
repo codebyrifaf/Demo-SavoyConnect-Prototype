@@ -2206,73 +2206,230 @@
             <div class="content engage-content">
                 <!-- Challenges Tab Content -->
                 <div id="engageChallenges" class="engage-tab-content active">
-                    <div class="challenge-list">
-                        <div class="challenge-card">
-                            <div class="challenge-header">
-                                <span class="challenge-icon">🎯</span>
-                                <div>
+                    <!-- Challenge Stats Banner -->
+                    <div class="challenge-stats-banner">
+                        <div class="stat-item-challenge">
+                            <div class="stat-icon-challenge">🎯</div>
+                            <div class="stat-number-challenge" id="stat-active">12</div>
+                            <div class="stat-label-challenge">Active</div>
+                        </div>
+                        <div class="stat-divider-challenge"></div>
+                        <div class="stat-item-challenge">
+                            <div class="stat-icon-challenge">✅</div>
+                            <div class="stat-number-challenge" id="stat-completed">8</div>
+                            <div class="stat-label-challenge">Completed</div>
+                        </div>
+                        <div class="stat-divider-challenge"></div>
+                        <div class="stat-item-challenge">
+                            <div class="stat-icon-challenge">💎</div>
+                            <div class="stat-number-challenge" id="stat-earned">800</div>
+                            <div class="stat-label-challenge">Earned</div>
+                        </div>
+                    </div>
+
+                    <!-- Animated Challenge List -->
+                    <div class="challenge-list-animated">
+                        <!-- Challenge Card 1 - Flavor Explorer -->
+                        <div class="challenge-card-animated near-complete" onclick="expandChallenge(this)">
+                            <div class="challenge-gradient-bg"></div>
+                            <div class="challenge-shine"></div>
+                            <div class="challenge-header-animated">
+                                <div class="challenge-icon-wrapper near-complete">
+                                    <span class="challenge-icon-animated">�</span>
+                                    <div class="icon-pulse"></div>
+                                </div>
+                                <div class="challenge-info">
                                     <h3>Flavor Explorer</h3>
                                     <p>Try 5 new flavors this month</p>
+                                    <span class="challenge-timer">⏱️ 12 days left</span>
+                                </div>
+                                <div class="challenge-status near-complete">
+                                    <span class="status-percentage">60%</span>
                                 </div>
                             </div>
-                            <div class="challenge-progress">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 60%"></div>
+                            <div class="challenge-progress-animated">
+                                <div class="progress-track">
+                                    <div class="progress-fill-animated" style="width: 60%" data-progress="60">
+                                        <div class="progress-glow"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-steps">
+                                    <div class="step completed">✓</div>
+                                    <div class="step completed">✓</div>
+                                    <div class="step completed">✓</div>
+                                    <div class="step active">4</div>
+                                    <div class="step">5</div>
                                 </div>
                             </div>
-                            <div class="challenge-reward">
-                                <span>Reward: 250 IceCoins 💎</span>
+                            <div class="challenge-reward-animated">
+                                <div class="reward-badge">
+                                    <span class="reward-icon">💎</span>
+                                    <span class="reward-amount">250</span>
+                                    <span class="reward-label">IceCoins</span>
+                                </div>
+                                <button class="btn-claim-challenge">Continue →</button>
                             </div>
                         </div>
-                        <div class="challenge-card">
-                            <div class="challenge-header">
-                                <span class="challenge-icon">📸</span>
-                                <div>
+
+                        <!-- Challenge Card 2 - Social Star -->
+                        <div class="challenge-card-animated in-progress" onclick="expandChallenge(this)">
+                            <div class="challenge-gradient-bg"></div>
+                            <div class="challenge-shine"></div>
+                            <div class="challenge-header-animated">
+                                <div class="challenge-icon-wrapper in-progress">
+                                    <span class="challenge-icon-animated">📸</span>
+                                    <div class="icon-pulse"></div>
+                                </div>
+                                <div class="challenge-info">
                                     <h3>Social Star</h3>
-                                    <p>Share 3 ice cream photos</p>
+                                    <p>Share 3 ice cream photos on social media</p>
+                                    <span class="challenge-timer">⏱️ 18 days left</span>
+                                </div>
+                                <div class="challenge-status in-progress">
+                                    <span class="status-percentage">33%</span>
                                 </div>
                             </div>
-                            <div class="challenge-progress">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 33%"></div>
+                            <div class="challenge-progress-animated">
+                                <div class="progress-track">
+                                    <div class="progress-fill-animated" style="width: 33%" data-progress="33">
+                                        <div class="progress-glow"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-steps">
+                                    <div class="step completed">✓</div>
+                                    <div class="step active">2</div>
+                                    <div class="step">3</div>
                                 </div>
                             </div>
-                            <div class="challenge-reward">
-                                <span>Reward: 150 IceCoins 💎</span>
+                            <div class="challenge-reward-animated">
+                                <div class="reward-badge">
+                                    <span class="reward-icon">💎</span>
+                                    <span class="reward-amount">150</span>
+                                    <span class="reward-label">IceCoins</span>
+                                </div>
+                                <button class="btn-claim-challenge">Share Now →</button>
                             </div>
                         </div>
-                        <div class="challenge-card">
-                            <div class="challenge-header">
-                                <span class="challenge-icon">🌱</span>
-                                <div>
+
+                        <!-- Challenge Card 3 - Eco Warrior (Almost Complete) -->
+                        <div class="challenge-card-animated almost-complete" onclick="expandChallenge(this)">
+                            <div class="challenge-gradient-bg"></div>
+                            <div class="challenge-shine"></div>
+                            <div class="celebration-confetti">🎉</div>
+                            <div class="challenge-header-animated">
+                                <div class="challenge-icon-wrapper almost-complete">
+                                    <span class="challenge-icon-animated">🌱</span>
+                                    <div class="icon-pulse"></div>
+                                </div>
+                                <div class="challenge-info">
                                     <h3>Eco Warrior</h3>
-                                    <p>Use your own cup 5 times</p>
+                                    <p>Use your reusable cup 5 times</p>
+                                    <span class="challenge-timer">⏱️ 20 days left</span>
+                                </div>
+                                <div class="challenge-status almost-complete">
+                                    <span class="status-percentage">80%</span>
                                 </div>
                             </div>
-                            <div class="challenge-progress">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 80%"></div>
+                            <div class="challenge-progress-animated">
+                                <div class="progress-track">
+                                    <div class="progress-fill-animated" style="width: 80%" data-progress="80">
+                                        <div class="progress-glow"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-steps">
+                                    <div class="step completed">✓</div>
+                                    <div class="step completed">✓</div>
+                                    <div class="step completed">✓</div>
+                                    <div class="step completed">✓</div>
+                                    <div class="step active">5</div>
                                 </div>
                             </div>
-                            <div class="challenge-reward">
-                                <span>Reward: 300 IceCoins 💎</span>
+                            <div class="challenge-reward-animated">
+                                <div class="reward-badge">
+                                    <span class="reward-icon">💎</span>
+                                    <span class="reward-amount">300</span>
+                                    <span class="reward-label">IceCoins</span>
+                                </div>
+                                <button class="btn-claim-challenge pulse">Almost There! →</button>
                             </div>
                         </div>
-                        <div class="challenge-card">
-                            <div class="challenge-header">
-                                <span class="challenge-icon">🎲</span>
-                                <div>
+
+                        <!-- Challenge Card 4 - Mystery Flavor -->
+                        <div class="challenge-card-animated not-started" onclick="expandChallenge(this)">
+                            <div class="challenge-gradient-bg"></div>
+                            <div class="challenge-shine"></div>
+                            <div class="challenge-header-animated">
+                                <div class="challenge-icon-wrapper not-started">
+                                    <span class="challenge-icon-animated">🎲</span>
+                                    <div class="icon-pulse"></div>
+                                </div>
+                                <div class="challenge-info">
                                     <h3>Mystery Flavor</h3>
                                     <p>Try our surprise flavor of the week</p>
+                                    <span class="challenge-timer">⏱️ 5 days left</span>
+                                </div>
+                                <div class="challenge-status">
+                                    <span class="status-badge">NEW</span>
                                 </div>
                             </div>
-                            <div class="challenge-progress">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 0%"></div>
+                            <div class="challenge-progress-animated">
+                                <div class="progress-track">
+                                    <div class="progress-fill-animated" style="width: 0%" data-progress="0">
+                                        <div class="progress-glow"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-steps">
+                                    <div class="step">1</div>
                                 </div>
                             </div>
-                            <div class="challenge-reward">
-                                <span>Reward: 100 IceCoins 💎</span>
+                            <div class="challenge-reward-animated">
+                                <div class="reward-badge">
+                                    <span class="reward-icon">💎</span>
+                                    <span class="reward-amount">100</span>
+                                    <span class="reward-label">IceCoins</span>
+                                </div>
+                                <button class="btn-claim-challenge">Start Challenge →</button>
+                            </div>
+                        </div>
+
+                        <!-- Challenge Card 5 - Weekend Warrior -->
+                        <div class="challenge-card-animated weekly-special" onclick="expandChallenge(this)">
+                            <div class="challenge-gradient-bg special"></div>
+                            <div class="challenge-shine"></div>
+                            <div class="special-badge">⭐ WEEKLY SPECIAL</div>
+                            <div class="challenge-header-animated">
+                                <div class="challenge-icon-wrapper weekly">
+                                    <span class="challenge-icon-animated">🏆</span>
+                                    <div class="icon-pulse"></div>
+                                </div>
+                                <div class="challenge-info">
+                                    <h3>Weekend Warrior</h3>
+                                    <p>Make 3 purchases this weekend</p>
+                                    <span class="challenge-timer">⏱️ 2 days left</span>
+                                </div>
+                                <div class="challenge-status weekly">
+                                    <span class="status-percentage">67%</span>
+                                </div>
+                            </div>
+                            <div class="challenge-progress-animated">
+                                <div class="progress-track special">
+                                    <div class="progress-fill-animated special" style="width: 67%" data-progress="67">
+                                        <div class="progress-glow"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-steps">
+                                    <div class="step completed">✓</div>
+                                    <div class="step completed">✓</div>
+                                    <div class="step active">3</div>
+                                </div>
+                            </div>
+                            <div class="challenge-reward-animated">
+                                <div class="reward-badge premium">
+                                    <span class="reward-icon">💎</span>
+                                    <span class="reward-amount">500</span>
+                                    <span class="reward-label">IceCoins + 🎁 Bonus</span>
+                                </div>
+                                <button class="btn-claim-challenge special">Finish Strong →</button>
                             </div>
                         </div>
                     </div>
@@ -2281,103 +2438,125 @@
                 <!-- Leaderboard Tab Content -->
                 <div id="engageLeaderboard" class="engage-tab-content">
                     <!-- Leaderboard Header -->
-                    <div class="leaderboard-header">
-                        <div class="leaderboard-title">
-                            <h2>🏆 Top Earners</h2>
+                    <div class="leaderboard-header-animated">
+                        <div class="leaderboard-trophy-icon">🏆</div>
+                        <div class="leaderboard-title-animated">
+                            <h2>Top Earners</h2>
                             <p>Compete and climb the rankings!</p>
                         </div>
+                        <div class="leaderboard-sparkles">✨</div>
                     </div>
 
                     <!-- Period Toggle -->
-                    <div class="leaderboard-period-toggle">
-                        <button class="period-btn active" onclick="switchLeaderboardPeriod('weekly')">
+                    <div class="leaderboard-period-toggle-animated">
+                        <button class="period-btn-animated active" onclick="switchLeaderboardPeriod('weekly')">
                             <span class="period-icon">📅</span>
                             <span>This Week</span>
                         </button>
-                        <button class="period-btn" onclick="switchLeaderboardPeriod('monthly')">
+                        <button class="period-btn-animated" onclick="switchLeaderboardPeriod('monthly')">
                             <span class="period-icon">📆</span>
                             <span>This Month</span>
                         </button>
-                        <button class="period-btn" onclick="switchLeaderboardPeriod('alltime')">
+                        <button class="period-btn-animated" onclick="switchLeaderboardPeriod('alltime')">
                             <span class="period-icon">⏳</span>
                             <span>All Time</span>
                         </button>
                     </div>
 
                     <!-- Current User Position Card -->
-                    <div class="user-position-card">
-                        <div class="position-badge">
-                            <div class="position-rank">#8</div>
-                            <div class="position-label">Rifaf Rahman</div>
+                    <div class="user-position-card-animated">
+                        <div class="position-card-bg"></div>
+                        <div class="position-badge-animated">
+                            <div class="position-rank-animated">#8</div>
+                            <div class="position-label-animated">RIFAF RAHMAN</div>
                         </div>
-                        <div class="position-stats">
-                            <div class="position-stat">
-                                <span class="stat-icon">💎</span>
-                                <div>
-                                    <div class="stat-value">2,450</div>
-                                    <div class="stat-label">IceCoins Earned</div>
+                        <div class="position-stats-grid">
+                            <div class="position-stat-animated">
+                                <span class="stat-icon-large">💎</span>
+                                <div class="stat-details">
+                                    <div class="stat-value-large" id="user-coins">2,450</div>
+                                    <div class="stat-label-small">IceCoins Earned</div>
                                 </div>
                             </div>
-                            <div class="position-stat">
-                                <span class="stat-icon">📈</span>
-                                <div>
-                                    <div class="stat-value">+3</div>
-                                    <div class="stat-label">Rank Change</div>
+                            <div class="position-divider"></div>
+                            <div class="position-stat-animated">
+                                <span class="stat-icon-large trend-up">📈</span>
+                                <div class="stat-details">
+                                    <div class="stat-value-large trend-positive">+3</div>
+                                    <div class="stat-label-small">Rank Change</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="position-progress">
-                            <p>Just 150 IceCoins away from rank #7!</p>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 85%"></div>
+                        <div class="position-progress-animated">
+                            <p class="progress-text">Just 150 IceCoins away from rank #7!</p>
+                            <div class="progress-bar-animated">
+                                <div class="progress-fill-glow" style="width: 85%" data-progress="85">
+                                    <span class="progress-percentage">85%</span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Top 3 Podium -->
-                    <div class="leaderboard-podium">
-                        <div class="podium-card podium-2">
-                            <div class="podium-crown">🥈</div>
-                            <div class="podium-avatar">👨</div>
-                            <div class="podium-rank">#2</div>
-                            <div class="podium-name">Karim Ahmed</div>
-                            <div class="podium-coins">
-                                <span class="coin-icon">💎</span>
-                                <span class="coin-amount">4,280</span>
+                    <div class="leaderboard-podium-animated">
+                        <!-- Second Place -->
+                        <div class="podium-card-animated podium-2">
+                            <div class="podium-glow podium-glow-silver"></div>
+                            <div class="podium-crown-animated">🥈</div>
+                            <div class="podium-avatar-animated">
+                                <span class="avatar-icon">👨</span>
+                                <div class="avatar-ring ring-silver"></div>
                             </div>
-                            <div class="podium-tier-badge tier-gold">Gold</div>
+                            <div class="podium-rank-badge rank-2">#2</div>
+                            <div class="podium-name-animated">Karim Ahmed</div>
+                            <div class="podium-coins-animated">
+                                <span class="coin-icon-podium">💎</span>
+                                <span class="coin-amount-podium" id="rank-2-coins">4,280</span>
+                            </div>
+                            <div class="podium-tier-badge-animated tier-gold">Gold</div>
                         </div>
 
-                        <div class="podium-card podium-1">
-                            <div class="podium-crown">👑</div>
-                            <div class="podium-avatar">👩</div>
-                            <div class="podium-rank">#1</div>
-                            <div class="podium-name">Sarah Khan</div>
-                            <div class="podium-coins">
-                                <span class="coin-icon">💎</span>
-                                <span class="coin-amount">5,640</span>
+                        <!-- First Place -->
+                        <div class="podium-card-animated podium-1">
+                            <div class="podium-glow podium-glow-gold"></div>
+                            <div class="podium-crown-animated crown-winner">👑</div>
+                            <div class="podium-confetti">🎊✨🎉</div>
+                            <div class="podium-avatar-animated avatar-winner">
+                                <span class="avatar-icon">👩</span>
+                                <div class="avatar-ring ring-gold"></div>
                             </div>
-                            <div class="podium-tier-badge tier-platinum">Platinum</div>
+                            <div class="podium-rank-badge rank-1">#1</div>
+                            <div class="podium-name-animated">Sarah Khan</div>
+                            <div class="podium-coins-animated">
+                                <span class="coin-icon-podium">💎</span>
+                                <span class="coin-amount-podium winner" id="rank-1-coins">5,640</span>
+                            </div>
+                            <div class="podium-tier-badge-animated tier-platinum">Platinum</div>
                         </div>
 
-                        <div class="podium-card podium-3">
-                            <div class="podium-crown">🥉</div>
-                            <div class="podium-avatar">👨</div>
-                            <div class="podium-rank">#3</div>
-                            <div class="podium-name">Rafi Hassan</div>
-                            <div class="podium-coins">
-                                <span class="coin-icon">💎</span>
-                                <span class="coin-amount">3,850</span>
+                        <!-- Third Place -->
+                        <div class="podium-card-animated podium-3">
+                            <div class="podium-glow podium-glow-bronze"></div>
+                            <div class="podium-crown-animated">🥉</div>
+                            <div class="podium-avatar-animated">
+                                <span class="avatar-icon">👨</span>
+                                <div class="avatar-ring ring-bronze"></div>
                             </div>
-                            <div class="podium-tier-badge tier-gold">Gold</div>
+                            <div class="podium-rank-badge rank-3">#3</div>
+                            <div class="podium-name-animated">Rafi Hassan</div>
+                            <div class="podium-coins-animated">
+                                <span class="coin-icon-podium">💎</span>
+                                <span class="coin-amount-podium" id="rank-3-coins">3,850</span>
+                            </div>
+                            <div class="podium-tier-badge-animated tier-gold">Gold</div>
                         </div>
                     </div>
 
                     <!-- Leaderboard List -->
-                    <div class="leaderboard-list">
-                        <h3 class="list-title">Full Rankings</h3>
+                    <div class="leaderboard-list-animated">
+                        <h3 class="list-title-animated">Full Rankings</h3>
                         
-                        <div class="leaderboard-item rank-4">
+                        <div class="leaderboard-item-animated rank-4">
                             <div class="item-rank">4</div>
                             <div class="item-avatar">👩</div>
                             <div class="item-info">
@@ -2393,97 +2572,98 @@
                             </div>
                         </div>
 
-                        <div class="leaderboard-item rank-5">
-                            <div class="item-rank">5</div>
-                            <div class="item-avatar">👨</div>
-                            <div class="item-info">
-                                <div class="item-name">Tahmid Ali</div>
-                                <div class="item-tier">
-                                    <span class="tier-badge tier-silver">Silver</span>
-                                    <span class="item-streak">🔥 3 day streak</span>
+                        <div class="leaderboard-item-animated rank-5">
+                            <div class="item-rank-animated">5</div>
+                            <div class="item-avatar-animated">👨</div>
+                            <div class="item-info-animated">
+                                <div class="item-name-animated">Tahmid Ali</div>
+                                <div class="item-tier-row">
+                                    <span class="tier-badge-animated tier-silver">Silver</span>
+                                    <span class="item-streak-animated">🔥 3 day streak</span>
                                 </div>
                             </div>
-                            <div class="item-coins">
-                                <span class="coin-icon">💎</span>
-                                <span class="coin-amount">2,890</span>
+                            <div class="item-coins-animated">
+                                <span class="coin-icon-list">💎</span>
+                                <span class="coin-amount-list">2,890</span>
                             </div>
                         </div>
 
-                        <div class="leaderboard-item rank-6">
-                            <div class="item-rank">6</div>
-                            <div class="item-avatar">👩</div>
-                            <div class="item-info">
-                                <div class="item-name">Farida Islam</div>
-                                <div class="item-tier">
-                                    <span class="tier-badge tier-silver">Silver</span>
+                        <div class="leaderboard-item-animated rank-6">
+                            <div class="item-rank-animated">6</div>
+                            <div class="item-avatar-animated">👩</div>
+                            <div class="item-info-animated">
+                                <div class="item-name-animated">Farida Islam</div>
+                                <div class="item-tier-row">
+                                    <span class="tier-badge-animated tier-silver">Silver</span>
                                 </div>
                             </div>
-                            <div class="item-coins">
-                                <span class="coin-icon">💎</span>
-                                <span class="coin-amount">2,710</span>
+                            <div class="item-coins-animated">
+                                <span class="coin-icon-list">💎</span>
+                                <span class="coin-amount-list">2,710</span>
                             </div>
                         </div>
 
-                        <div class="leaderboard-item rank-7">
-                            <div class="item-rank">7</div>
-                            <div class="item-avatar">👨</div>
-                            <div class="item-info">
-                                <div class="item-name">Imran Chowdhury</div>
-                                <div class="item-tier">
-                                    <span class="tier-badge tier-silver">Silver</span>
-                                    <span class="item-trend up">↑ 2</span>
+                        <div class="leaderboard-item-animated rank-7">
+                            <div class="item-rank-animated">7</div>
+                            <div class="item-avatar-animated">👨</div>
+                            <div class="item-info-animated">
+                                <div class="item-name-animated">Imran Chowdhury</div>
+                                <div class="item-tier-row">
+                                    <span class="tier-badge-animated tier-silver">Silver</span>
+                                    <span class="item-trend-animated trend-up">↑ 2</span>
                                 </div>
                             </div>
-                            <div class="item-coins">
-                                <span class="coin-icon">💎</span>
-                                <span class="coin-amount">2,600</span>
+                            <div class="item-coins-animated">
+                                <span class="coin-icon-list">💎</span>
+                                <span class="coin-amount-list">2,600</span>
                             </div>
                         </div>
 
-                        <div class="leaderboard-item rank-you">
-                            <div class="item-rank">8</div>
-                            <div class="item-avatar">👤</div>
-                            <div class="item-info">
-                                <div class="item-name">You (Rifaf Rahman)</div>
-                                <div class="item-tier">
-                                    <span class="tier-badge tier-silver">Silver</span>
-                                    <span class="item-trend up">↑ 3</span>
+                        <div class="leaderboard-item-animated rank-you">
+                            <div class="you-highlight"></div>
+                            <div class="item-rank-animated rank-you-badge">8</div>
+                            <div class="item-avatar-animated avatar-you">👤</div>
+                            <div class="item-info-animated">
+                                <div class="item-name-animated name-you">You (Rifaf Rahman)</div>
+                                <div class="item-tier-row">
+                                    <span class="tier-badge-animated tier-silver">Silver</span>
+                                    <span class="item-trend-animated trend-up">↑ 3</span>
                                 </div>
                             </div>
-                            <div class="item-coins">
-                                <span class="coin-icon">💎</span>
-                                <span class="coin-amount">2,450</span>
+                            <div class="item-coins-animated">
+                                <span class="coin-icon-list">💎</span>
+                                <span class="coin-amount-list">2,450</span>
                             </div>
                         </div>
 
-                        <div class="leaderboard-item rank-9">
-                            <div class="item-rank">9</div>
-                            <div class="item-avatar">👩</div>
-                            <div class="item-info">
-                                <div class="item-name">Priya Das</div>
-                                <div class="item-tier">
-                                    <span class="tier-badge tier-silver">Silver</span>
-                                    <span class="item-trend down">↓ 1</span>
+                        <div class="leaderboard-item-animated rank-9">
+                            <div class="item-rank-animated">9</div>
+                            <div class="item-avatar-animated">👩</div>
+                            <div class="item-info-animated">
+                                <div class="item-name-animated">Priya Das</div>
+                                <div class="item-tier-row">
+                                    <span class="tier-badge-animated tier-silver">Silver</span>
+                                    <span class="item-trend-animated trend-down">↓ 1</span>
                                 </div>
                             </div>
-                            <div class="item-coins">
-                                <span class="coin-icon">💎</span>
-                                <span class="coin-amount">2,340</span>
+                            <div class="item-coins-animated">
+                                <span class="coin-icon-list">💎</span>
+                                <span class="coin-amount-list">2,340</span>
                             </div>
                         </div>
 
-                        <div class="leaderboard-item rank-10">
-                            <div class="item-rank">10</div>
-                            <div class="item-avatar">👨</div>
-                            <div class="item-info">
-                                <div class="item-name">Shakib Hossain</div>
-                                <div class="item-tier">
-                                    <span class="tier-badge tier-bronze">Bronze</span>
+                        <div class="leaderboard-item-animated rank-10">
+                            <div class="item-rank-animated">10</div>
+                            <div class="item-avatar-animated">👨</div>
+                            <div class="item-info-animated">
+                                <div class="item-name-animated">Shakib Hossain</div>
+                                <div class="item-tier-row">
+                                    <span class="tier-badge-animated tier-bronze">Bronze</span>
                                 </div>
                             </div>
-                            <div class="item-coins">
-                                <span class="coin-icon">💎</span>
-                                <span class="coin-amount">2,180</span>
+                            <div class="item-coins-animated">
+                                <span class="coin-icon-list">💎</span>
+                                <span class="coin-amount-list">2,180</span>
                             </div>
                         </div>
                     </div>
@@ -2557,72 +2737,265 @@
 
                 <!-- Community Tab Content -->
                 <div id="engageCommunity" class="engage-tab-content">
-                    <!-- Create Post Quick Button -->
-                    <div class="create-post-prompt" onclick="openCreatePostModal()">
-                        <div class="post-avatar">👤</div>
-                        <div class="post-input-placeholder">Share your Savoy experience...</div>
-                        <button class="btn-post-icon">📝</button>
+                    <!-- Community Stats Banner -->
+                    <div class="community-stats-banner">
+                        <div class="community-stat-item">
+                            <div class="stat-icon-community">👥</div>
+                            <div class="stat-number-community" id="community-members">2,847</div>
+                            <div class="stat-label-community">Members</div>
+                        </div>
+                        <div class="stat-divider-community"></div>
+                        <div class="community-stat-item">
+                            <div class="stat-icon-community">💬</div>
+                            <div class="stat-number-community" id="community-posts">156</div>
+                            <div class="stat-label-community">Posts Today</div>
+                        </div>
+                        <div class="stat-divider-community"></div>
+                        <div class="community-stat-item">
+                            <div class="stat-icon-community">🔥</div>
+                            <div class="stat-number-community" id="community-trending">24</div>
+                            <div class="stat-label-community">Trending</div>
+                        </div>
                     </div>
 
-                    <div class="posts-feed">
-                        <div class="post-card">
-                            <div class="post-header">
-                                <div class="post-user-info">
-                                    <div class="post-user-avatar">👩</div>
-                                    <div>
-                                        <div class="post-user-name">Emma Johnson</div>
-                                        <div class="post-timestamp">2 hours ago</div>
+                    <!-- Create Post Quick Button -->
+                    <div class="create-post-prompt-animated" onclick="openCreatePostModal()">
+                        <div class="create-post-glow"></div>
+                        <div class="post-avatar-animated">👤</div>
+                        <div class="post-input-placeholder-animated">
+                            <span>Share your Savoy experience...</span>
+                            <div class="input-shine"></div>
+                        </div>
+                        <button class="btn-post-icon-animated">
+                            <span class="post-icon">📝</span>
+                            <span class="post-text">Post</span>
+                        </button>
+                    </div>
+
+                    <!-- Trending Topics -->
+                    <div class="trending-topics-section">
+                        <h3 class="trending-title">🔥 Trending Now</h3>
+                        <div class="trending-tags">
+                            <button class="trending-tag">#ChocolateDelight</button>
+                            <button class="trending-tag">#MangoTango</button>
+                            <button class="trending-tag">#EcoWarrior</button>
+                            <button class="trending-tag">#FlavorExplorer</button>
+                            <button class="trending-tag">#WeekendVibes</button>
+                        </div>
+                    </div>
+
+                    <!-- Posts Feed -->
+                    <div class="posts-feed-animated">
+                        <!-- Post Card 1 - Flavor Review -->
+                        <div class="post-card-animated post-featured">
+                            <div class="post-featured-badge">⭐ Featured</div>
+                            <div class="post-header-animated">
+                                <div class="post-user-info-animated">
+                                    <div class="post-user-avatar-animated avatar-1">
+                                        <span class="avatar-emoji">👩</span>
+                                        <div class="avatar-ring"></div>
+                                    </div>
+                                    <div class="post-user-details">
+                                        <div class="post-user-name-animated">Emma Johnson</div>
+                                        <div class="post-timestamp-animated">
+                                            <span class="time-icon">🕐</span>
+                                            <span>2 hours ago</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <span class="post-category-badge">🍦 Flavor Review</span>
+                                <span class="post-category-badge-animated badge-flavor">🍦 Flavor Review</span>
                             </div>
-                            <div class="post-content">
-                                <div class="post-emoji">🍫</div>
-                                <p>Just tried the new Chocolate Delight and it's absolutely amazing! The rich cocoa flavor is perfectly balanced. Highly recommend! 🍫✨ #SavoyConnect #ChocolateLover</p>
+                            <div class="post-content-animated">
+                                <div class="post-emoji-large">🍫</div>
+                                <p class="post-text">Just tried the new <strong>Chocolate Delight</strong> and it's absolutely amazing! The rich cocoa flavor is perfectly balanced. Highly recommend! 🍫✨</p>
+                                <div class="post-tags">
+                                    <span class="post-hashtag">#SavoyConnect</span>
+                                    <span class="post-hashtag">#ChocolateLover</span>
+                                </div>
                             </div>
-                            <div class="post-actions">
-                                <button class="post-action-btn">
-                                    <span class="action-icon">❤️</span>
-                                    <span class="action-count">24</span>
+                            <div class="post-engagement-bar">
+                                <div class="engagement-preview">
+                                    <span class="reaction-preview">❤️😍👍</span>
+                                    <span class="engagement-text">24 reactions • 8 comments</span>
+                                </div>
+                            </div>
+                            <div class="post-actions-animated">
+                                <button class="post-action-btn-animated btn-like" onclick="likePost(this)">
+                                    <span class="action-icon-animated">❤️</span>
+                                    <span class="action-label">Like</span>
+                                    <span class="action-count-animated">24</span>
                                 </button>
-                                <button class="post-action-btn">
-                                    <span class="action-icon">💬</span>
-                                    <span class="action-count">8</span>
+                                <button class="post-action-btn-animated btn-comment">
+                                    <span class="action-icon-animated">💬</span>
+                                    <span class="action-label">Comment</span>
+                                    <span class="action-count-animated">8</span>
                                 </button>
-                                <button class="post-action-btn">
-                                    <span class="action-icon">🔗</span>
-                                    Share
+                                <button class="post-action-btn-animated btn-share">
+                                    <span class="action-icon-animated">🔗</span>
+                                    <span class="action-label">Share</span>
                                 </button>
                             </div>
                         </div>
 
-                        <div class="post-card">
-                            <div class="post-header">
-                                <div class="post-user-info">
-                                    <div class="post-user-avatar">👨</div>
-                                    <div>
-                                        <div class="post-user-name">Mike Chen</div>
-                                        <div class="post-timestamp">5 hours ago</div>
+                        <!-- Post Card 2 - Challenge Completed -->
+                        <div class="post-card-animated">
+                            <div class="post-header-animated">
+                                <div class="post-user-info-animated">
+                                    <div class="post-user-avatar-animated avatar-2">
+                                        <span class="avatar-emoji">👨</span>
+                                        <div class="avatar-ring"></div>
+                                    </div>
+                                    <div class="post-user-details">
+                                        <div class="post-user-name-animated">Mike Chen</div>
+                                        <div class="post-timestamp-animated">
+                                            <span class="time-icon">🕐</span>
+                                            <span>5 hours ago</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <span class="post-category-badge">🎯 Challenge Completed</span>
+                                <span class="post-category-badge-animated badge-challenge">🎯 Challenge</span>
                             </div>
-                            <div class="post-content">
-                                <div class="post-emoji">🎉</div>
-                                <p>Completed the Flavor Explorer challenge! Tried all 5 new flavors this week. My favorite was Mango Tango! 🥭 #SavoyChallenge</p>
+                            <div class="post-content-animated">
+                                <div class="post-emoji-large">🎉</div>
+                                <p class="post-text">Completed the <strong>Flavor Explorer</strong> challenge! Tried all 5 new flavors this week. My favorite was Mango Tango! 🥭</p>
+                                <div class="post-tags">
+                                    <span class="post-hashtag">#SavoyChallenge</span>
+                                    <span class="post-hashtag">#FlavorExplorer</span>
+                                </div>
                             </div>
-                            <div class="post-actions">
-                                <button class="post-action-btn">
-                                    <span class="action-icon">❤️</span>
-                                    <span class="action-count">42</span>
+                            <div class="post-engagement-bar">
+                                <div class="engagement-preview">
+                                    <span class="reaction-preview">🎉❤️👏</span>
+                                    <span class="engagement-text">42 reactions • 12 comments</span>
+                                </div>
+                            </div>
+                            <div class="post-actions-animated">
+                                <button class="post-action-btn-animated btn-like liked" onclick="likePost(this)">
+                                    <span class="action-icon-animated">❤️</span>
+                                    <span class="action-label">Like</span>
+                                    <span class="action-count-animated">42</span>
                                 </button>
-                                <button class="post-action-btn">
-                                    <span class="action-icon">💬</span>
-                                    <span class="action-count">12</span>
+                                <button class="post-action-btn-animated btn-comment">
+                                    <span class="action-icon-animated">💬</span>
+                                    <span class="action-label">Comment</span>
+                                    <span class="action-count-animated">12</span>
                                 </button>
-                                <button class="post-action-btn">
-                                    <span class="action-icon">🔗</span>
-                                    Share
+                                <button class="post-action-btn-animated btn-share">
+                                    <span class="action-icon-animated">🔗</span>
+                                    <span class="action-label">Share</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Post Card 3 - Photo Post -->
+                        <div class="post-card-animated">
+                            <div class="post-header-animated">
+                                <div class="post-user-info-animated">
+                                    <div class="post-user-avatar-animated avatar-3">
+                                        <span class="avatar-emoji">👧</span>
+                                        <div class="avatar-ring"></div>
+                                    </div>
+                                    <div class="post-user-details">
+                                        <div class="post-user-name-animated">Sarah Ali</div>
+                                        <div class="post-timestamp-animated">
+                                            <span class="time-icon">🕐</span>
+                                            <span>8 hours ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="post-category-badge-animated badge-photo">📸 Photo</span>
+                            </div>
+                            <div class="post-content-animated">
+                                <div class="post-emoji-large">🍦</div>
+                                <p class="post-text">Perfect Sunday vibes with my favorite Strawberry Swirl! Nothing beats a weekend treat 🍓💕</p>
+                                <div class="post-photo-grid">
+                                    <div class="post-photo">🍓🍦</div>
+                                </div>
+                                <div class="post-tags">
+                                    <span class="post-hashtag">#WeekendVibes</span>
+                                    <span class="post-hashtag">#StrawberryLove</span>
+                                </div>
+                            </div>
+                            <div class="post-engagement-bar">
+                                <div class="engagement-preview">
+                                    <span class="reaction-preview">😍❤️🍓</span>
+                                    <span class="engagement-text">67 reactions • 15 comments</span>
+                                </div>
+                            </div>
+                            <div class="post-actions-animated">
+                                <button class="post-action-btn-animated btn-like" onclick="likePost(this)">
+                                    <span class="action-icon-animated">❤️</span>
+                                    <span class="action-label">Like</span>
+                                    <span class="action-count-animated">67</span>
+                                </button>
+                                <button class="post-action-btn-animated btn-comment">
+                                    <span class="action-icon-animated">💬</span>
+                                    <span class="action-label">Comment</span>
+                                    <span class="action-count-animated">15</span>
+                                </button>
+                                <button class="post-action-btn-animated btn-share">
+                                    <span class="action-icon-animated">🔗</span>
+                                    <span class="action-label">Share</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Post Card 4 - Eco Achievement -->
+                        <div class="post-card-animated">
+                            <div class="post-header-animated">
+                                <div class="post-user-info-animated">
+                                    <div class="post-user-avatar-animated avatar-4">
+                                        <span class="avatar-emoji">🌱</span>
+                                        <div class="avatar-ring"></div>
+                                    </div>
+                                    <div class="post-user-details">
+                                        <div class="post-user-name-animated">Green Team</div>
+                                        <div class="post-timestamp-animated">
+                                            <span class="time-icon">🕐</span>
+                                            <span>1 day ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="post-category-badge-animated badge-eco">🌱 Eco Impact</span>
+                            </div>
+                            <div class="post-content-animated">
+                                <div class="post-emoji-large">♻️</div>
+                                <p class="post-text">Amazing milestone! Our community has saved <strong>10,000 plastic cups</strong> this month by using reusable containers! 🌍💚 Together we're making a difference!</p>
+                                <div class="post-stats-highlight">
+                                    <div class="stat-highlight-item">
+                                        <div class="stat-highlight-value">10K</div>
+                                        <div class="stat-highlight-label">Cups Saved</div>
+                                    </div>
+                                    <div class="stat-highlight-item">
+                                        <div class="stat-highlight-value">2.4T</div>
+                                        <div class="stat-highlight-label">CO₂ Reduced</div>
+                                    </div>
+                                </div>
+                                <div class="post-tags">
+                                    <span class="post-hashtag">#EcoWarrior</span>
+                                    <span class="post-hashtag">#SaveThePlanet</span>
+                                </div>
+                            </div>
+                            <div class="post-engagement-bar">
+                                <div class="engagement-preview">
+                                    <span class="reaction-preview">🌍💚👏</span>
+                                    <span class="engagement-text">234 reactions • 45 comments</span>
+                                </div>
+                            </div>
+                            <div class="post-actions-animated">
+                                <button class="post-action-btn-animated btn-like" onclick="likePost(this)">
+                                    <span class="action-icon-animated">❤️</span>
+                                    <span class="action-label">Like</span>
+                                    <span class="action-count-animated">234</span>
+                                </button>
+                                <button class="post-action-btn-animated btn-comment">
+                                    <span class="action-icon-animated">💬</span>
+                                    <span class="action-label">Comment</span>
+                                    <span class="action-count-animated">45</span>
+                                </button>
+                                <button class="post-action-btn-animated btn-share">
+                                    <span class="action-icon-animated">🔗</span>
+                                    <span class="action-label">Share</span>
                                 </button>
                             </div>
                         </div>
