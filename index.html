@@ -361,6 +361,18 @@
 
         <!-- Explore Flavors Screen -->
         <div id="explore" class="screen">
+            <!-- Animated Background -->
+            <div class="explore-animated-bg">
+                <div class="explore-bg-circle explore-bg-circle-1"></div>
+                <div class="explore-bg-circle explore-bg-circle-2"></div>
+                <div class="explore-bg-circle explore-bg-circle-3"></div>
+                <div class="explore-floating-icon" style="top: 10%; left: 15%; animation-delay: 0s;">🍦</div>
+                <div class="explore-floating-icon" style="top: 20%; right: 10%; animation-delay: 1s;">🍓</div>
+                <div class="explore-floating-icon" style="top: 40%; left: 8%; animation-delay: 2s;">🍫</div>
+                <div class="explore-floating-icon" style="bottom: 25%; right: 15%; animation-delay: 1.5s;">🥭</div>
+                <div class="explore-floating-icon" style="bottom: 15%; left: 20%; animation-delay: 0.5s;">🍪</div>
+                <div class="explore-floating-icon" style="top: 60%; right: 20%; animation-delay: 2.5s;">🌿</div>
+            </div>
             <div class="top-bar">
                 <button class="btn-back" onclick="navigateTo('home')">←</button>
                 <h2>Explore Flavors</h2>
@@ -601,6 +613,17 @@
 
         <!-- Flavor Detail Screen -->
         <div id="flavor-detail" class="screen">
+            <!-- Animated Background -->
+            <div class="flavor-detail-animated-bg">
+                <div class="flavor-detail-circle flavor-detail-circle-1"></div>
+                <div class="flavor-detail-circle flavor-detail-circle-2"></div>
+                <div class="flavor-detail-circle flavor-detail-circle-3"></div>
+                <div class="flavor-detail-floating-icon" style="top: 8%; left: 10%; animation-delay: 0s;">✨</div>
+                <div class="flavor-detail-floating-icon" style="top: 25%; right: 8%; animation-delay: 1.5s;">🌟</div>
+                <div class="flavor-detail-floating-icon" style="top: 50%; left: 5%; animation-delay: 2s;">💫</div>
+                <div class="flavor-detail-floating-icon" style="bottom: 30%; right: 12%; animation-delay: 1s;">⭐</div>
+                <div class="flavor-detail-floating-icon" style="bottom: 10%; left: 15%; animation-delay: 0.5s;">✨</div>
+            </div>
             <div class="top-bar">
                 <button class="btn-back" onclick="navigateTo('explore')">←</button>
                 <h2>Flavor Details</h2>
@@ -1306,6 +1329,16 @@
 
         <!-- Health & Nutrition Tracker Screen -->
         <div id="health-tracker" class="screen">
+            <div class="health-animated-bg">
+                <div class="health-circle health-circle-1"></div>
+                <div class="health-circle health-circle-2"></div>
+                <div class="health-circle health-circle-3"></div>
+                <span class="floating-health-icon" style="--delay: 0s; --x: 15%; --y: 20%;">💪</span>
+                <span class="floating-health-icon" style="--delay: 1s; --x: 80%; --y: 30%;">🥗</span>
+                <span class="floating-health-icon" style="--delay: 2s; --x: 25%; --y: 70%;">🏃</span>
+                <span class="floating-health-icon" style="--delay: 1.5s; --x: 70%; --y: 75%;">❤️</span>
+                <span class="floating-health-icon" style="--delay: 0.5s; --x: 50%; --y: 50%;">✨</span>
+            </div>
             <div class="top-bar">
                 <button class="btn-back" onclick="navigateTo('home')">←</button>
                 <h2>Health & Nutrition</h2>
@@ -1368,74 +1401,6 @@
                                 <div class="goal-progress-fill" id="calorieProgress" style="width: 0%;"></div>
                             </div>
                             <span class="goal-consumed" id="calorieConsumed">0 / 2000 kcal consumed</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- BMI Calculator Section -->
-                <div class="section">
-                    <h3 class="section-title">BMI Calculator</h3>
-                    <p class="section-subtitle">Calculate your Body Mass Index</p>
-                    
-                    <div class="bmi-calculator-card">
-                        <div class="bmi-input-section">
-                            <div class="bmi-input-group">
-                                <label for="bmiWeight">Weight (kg)</label>
-                                <input type="number" id="bmiWeight" placeholder="Enter weight" min="1" max="300" step="0.1">
-                            </div>
-                            
-                            <div class="bmi-input-group">
-                                <label for="bmiHeight">Height (cm)</label>
-                                <input type="number" id="bmiHeight" placeholder="Enter height" min="50" max="250" step="0.1">
-                            </div>
-                            
-                            <button class="btn-primary btn-full" onclick="calculateBMI()">
-                                Calculate BMI
-                            </button>
-                        </div>
-                        
-                        <div class="bmi-result-section" id="bmiResultSection" style="display: none;">
-                            <div class="bmi-result-display">
-                                <div class="bmi-score-circle">
-                                    <div class="bmi-score-number" id="bmiScore">0</div>
-                                    <div class="bmi-score-label">BMI</div>
-                                </div>
-                                <div class="bmi-category" id="bmiCategory">
-                                    <span class="category-badge" id="categoryBadge">Normal</span>
-                                    <p class="category-message" id="categoryMessage">You're in a healthy weight range</p>
-                                </div>
-                            </div>
-                            
-                            <div class="bmi-scale">
-                                <div class="bmi-scale-bar">
-                                    <div class="scale-section underweight">
-                                        <span>Underweight</span>
-                                        <span>&lt;18.5</span>
-                                    </div>
-                                    <div class="scale-section normal">
-                                        <span>Normal</span>
-                                        <span>18.5-24.9</span>
-                                    </div>
-                                    <div class="scale-section overweight">
-                                        <span>Overweight</span>
-                                        <span>25-29.9</span>
-                                    </div>
-                                    <div class="scale-section obese">
-                                        <span>Obese</span>
-                                        <span>≥30</span>
-                                    </div>
-                                </div>
-                                <div class="bmi-indicator" id="bmiIndicator"></div>
-                            </div>
-                            
-                            <div class="bmi-recommendations" id="bmiRecommendations">
-                                <h4>Recommendations:</h4>
-                                <ul id="bmiRecommendationList">
-                                    <li>Maintain a balanced diet with proper nutrition</li>
-                                    <li>Stay active with regular physical exercise</li>
-                                    <li>Enjoy ice cream in moderation as part of a healthy lifestyle</li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -3423,6 +3388,18 @@
 
         <!-- Profile Screen -->
         <div id="profile" class="screen">
+            <!-- Animated Background -->
+            <div class="profile-animated-bg">
+                <div class="profile-bg-circle profile-bg-circle-1"></div>
+                <div class="profile-bg-circle profile-bg-circle-2"></div>
+                <div class="profile-bg-circle profile-bg-circle-3"></div>
+                <div class="profile-floating-icon" style="top: 12%; left: 8%; animation-delay: 0s;">💎</div>
+                <div class="profile-floating-icon" style="top: 25%; right: 12%; animation-delay: 1s;">⚡</div>
+                <div class="profile-floating-icon" style="top: 45%; left: 10%; animation-delay: 2s;">🏆</div>
+                <div class="profile-floating-icon" style="bottom: 25%; right: 8%; animation-delay: 1.5s;">⭐</div>
+                <div class="profile-floating-icon" style="bottom: 15%; left: 15%; animation-delay: 0.5s;">💫</div>
+                <div class="profile-floating-icon" style="top: 60%; right: 15%; animation-delay: 2.5s;">🎯</div>
+            </div>
             <div class="top-bar">
                 <h2>Profile</h2>
                 <button class="icon-btn" onclick="navigateTo('settings')">⚙️</button>
@@ -3449,8 +3426,34 @@
                     </div>
                 </div>
 
-                <!-- Sustainability Impact Tracker -->
+                <!-- Sustainability Impact Tracker Large Tab -->
                 <div class="section">
+                    <div class="sustainability-large-tab" onclick="openSustainabilityTracker()">
+                        <!-- Animated Background -->
+                        <div class="sustainability-tab-bg">
+                            <div class="tab-bg-circle tab-bg-circle-1"></div>
+                            <div class="tab-bg-circle tab-bg-circle-2"></div>
+                        </div>
+                        <div class="sustainability-tab-content">
+                            <h3>Sustainability Impact Tracker</h3>
+                            <p>Track your environmental impact & achievements</p>
+                            <div class="sustainability-tab-stats">
+                                <div class="tab-stat">
+                                    <span class="stat-icon">☁️</span>
+                                    <span class="stat-text">2.4kg CO₂</span>
+                                </div>
+                                <div class="tab-stat">
+                                    <span class="stat-icon">♻️</span>
+                                    <span class="stat-text">28 cups</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sustainability-tab-arrow">→</div>
+                    </div>
+                </div>
+
+                <!-- Hidden Detailed Sustainability Section (shown in modal/separate view) -->
+                <div class="section" style="display: none;">
                     <div class="sustainability-header">
                         <h3 class="section-title">Sustainability Impact Tracker 🌱</h3>
                         <button class="eco-info-btn" onclick="openEcoImpactModal()">ℹ️</button>
@@ -3620,6 +3623,273 @@
                 <button class="nav-item" onclick="navigateTo('wallet')">
                     <span class="nav-icon">💳</span>
                     <span>Loyalty</span>
+                </button>
+                <button class="nav-item" onclick="navigateTo('challenges')">
+                    <span class="nav-icon">⚡</span>
+                    <span>Engage</span>
+                </button>
+                <button class="nav-item active" onclick="navigateTo('profile')">
+                    <span class="nav-icon">👤</span>
+                    <span>Profile</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Sustainability Impact Tracker Screen -->
+        <div id="sustainability-tracker" class="screen">
+            <!-- Animated Background -->
+            <div class="sustainability-animated-bg">
+                <div class="sustainability-bg-circle sustainability-bg-circle-1"></div>
+                <div class="sustainability-bg-circle sustainability-bg-circle-2"></div>
+                <div class="sustainability-bg-circle sustainability-bg-circle-3"></div>
+                <div class="sustainability-floating-icon" style="top: 10%; left: 10%; animation-delay: 0s;">🌱</div>
+                <div class="sustainability-floating-icon" style="top: 20%; right: 15%; animation-delay: 1s;">♻️</div>
+                <div class="sustainability-floating-icon" style="top: 45%; left: 8%; animation-delay: 2s;">🌍</div>
+                <div class="sustainability-floating-icon" style="bottom: 20%; right: 10%; animation-delay: 1.5s;">🌳</div>
+                <div class="sustainability-floating-icon" style="bottom: 35%; left: 12%; animation-delay: 0.5s;">💧</div>
+                <div class="sustainability-floating-icon" style="top: 60%; right: 18%; animation-delay: 2.5s;">☁️</div>
+            </div>
+
+            <div class="top-bar">
+                <button class="btn-back" onclick="navigateTo('profile')">←</button>
+                <h2>Sustainability Impact</h2>
+                <button class="btn-icon" onclick="shareEcoImpact()">📤</button>
+            </div>
+            
+            <div class="content">
+                <!-- Eco Level Badge -->
+                <div class="eco-level-card-detailed">
+                    <div class="eco-level-header">
+                        <div class="level-icon-large">🌿</div>
+                        <div class="level-info-large">
+                            <h2>Eco Warrior</h2>
+                            <p>You're making a real difference!</p>
+                        </div>
+                    </div>
+                    <div class="level-progress-detailed">
+                        <div class="level-stats-row">
+                            <span>Level 3 of 5</span>
+                            <span class="level-points">350/500 points</span>
+                        </div>
+                        <div class="level-progress-bar-large">
+                            <div class="level-progress-fill-animated" style="width: 70%"></div>
+                        </div>
+                        <p class="level-next">150 points to Eco Champion 🏆</p>
+                    </div>
+                </div>
+
+                <!-- Impact Metrics Grid -->
+                <div class="section">
+                    <h3 class="section-title">Your Environmental Impact</h3>
+                    <div class="impact-metrics-grid-detailed">
+                        <div class="impact-metric-card-large">
+                            <div class="metric-icon-large">☁️</div>
+                            <div class="metric-content">
+                                <h4>CO₂ Reduced</h4>
+                                <p class="metric-value-large">2.4 kg</p>
+                                <div class="metric-comparison-detailed">
+                                    <span class="comparison-arrow up">↑</span>
+                                    <span>12% this month</span>
+                                </div>
+                                <p class="metric-explanation">Equivalent to driving 9.6 km less</p>
+                            </div>
+                        </div>
+
+                        <div class="impact-metric-card-large">
+                            <div class="metric-icon-large">♻️</div>
+                            <div class="metric-content">
+                                <h4>Plastic Saved</h4>
+                                <p class="metric-value-large">28 cups</p>
+                                <div class="metric-comparison-detailed">
+                                    <span class="comparison-arrow up">↑</span>
+                                    <span>8% this month</span>
+                                </div>
+                                <p class="metric-explanation">That's 560g of plastic waste prevented</p>
+                            </div>
+                        </div>
+
+                        <div class="impact-metric-card-large">
+                            <div class="metric-icon-large">🌳</div>
+                            <div class="metric-content">
+                                <h4>Trees Planted</h4>
+                                <p class="metric-value-large">3 trees</p>
+                                <div class="metric-comparison-detailed">
+                                    <span class="comparison-arrow up">↑</span>
+                                    <span>+1 this month</span>
+                                </div>
+                                <p class="metric-explanation">Absorbs 60kg CO₂ annually</p>
+                            </div>
+                        </div>
+
+                        <div class="impact-metric-card-large">
+                            <div class="metric-icon-large">💧</div>
+                            <div class="metric-content">
+                                <h4>Water Saved</h4>
+                                <p class="metric-value-large">156 L</p>
+                                <div class="metric-comparison-detailed">
+                                    <span class="comparison-arrow up">↑</span>
+                                    <span>15% this month</span>
+                                </div>
+                                <p class="metric-explanation">Enough for 26 six-minute showers</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Impact Timeline -->
+                <div class="section">
+                    <h3 class="section-title">Monthly Progress</h3>
+                    <div class="impact-timeline-detailed">
+                        <div class="timeline-bar-item-large">
+                            <span class="bar-label-large">Week 1</span>
+                            <div class="timeline-bar-large">
+                                <div class="timeline-bar-fill-large" style="width: 45%"></div>
+                            </div>
+                            <span class="bar-value-large">45 pts</span>
+                        </div>
+                        <div class="timeline-bar-item-large">
+                            <span class="bar-label-large">Week 2</span>
+                            <div class="timeline-bar-large">
+                                <div class="timeline-bar-fill-large" style="width: 60%"></div>
+                            </div>
+                            <span class="bar-value-large">60 pts</span>
+                        </div>
+                        <div class="timeline-bar-item-large">
+                            <span class="bar-label-large">Week 3</span>
+                            <div class="timeline-bar-large">
+                                <div class="timeline-bar-fill-large" style="width: 80%"></div>
+                            </div>
+                            <span class="bar-value-large">80 pts</span>
+                        </div>
+                        <div class="timeline-bar-item-large">
+                            <span class="bar-label-large">Week 4</span>
+                            <div class="timeline-bar-large">
+                                <div class="timeline-bar-fill-large" style="width: 70%"></div>
+                            </div>
+                            <span class="bar-value-large">70 pts</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Eco Achievements -->
+                <div class="section">
+                    <h3 class="section-title">Eco Achievements</h3>
+                    <div class="eco-achievements-grid">
+                        <div class="achievement-card earned">
+                            <div class="achievement-icon">🥤</div>
+                            <h4>Cup Hero</h4>
+                            <p>Used reusable cup 10 times</p>
+                            <span class="achievement-date">Earned: Jan 15, 2025</span>
+                        </div>
+                        <div class="achievement-card earned">
+                            <div class="achievement-icon">🌍</div>
+                            <h4>Carbon Cutter</h4>
+                            <p>Saved 20kg CO₂</p>
+                            <span class="achievement-date">Earned: Jan 20, 2025</span>
+                        </div>
+                        <div class="achievement-card earned">
+                            <div class="achievement-icon">🌲</div>
+                            <h4>Tree Planter</h4>
+                            <p>Planted 3 trees</p>
+                            <span class="achievement-date">Earned: Jan 28, 2025</span>
+                        </div>
+                        <div class="achievement-card locked">
+                            <div class="achievement-icon">🔒</div>
+                            <h4>Eco Master</h4>
+                            <p>Save 50 cups to unlock</p>
+                            <span class="achievement-progress">28/50 cups saved</span>
+                        </div>
+                        <div class="achievement-card locked">
+                            <div class="achievement-icon">🔒</div>
+                            <h4>Green Guardian</h4>
+                            <p>Reach Level 5</p>
+                            <span class="achievement-progress">Level 3/5</span>
+                        </div>
+                        <div class="achievement-card locked">
+                            <div class="achievement-icon">🔒</div>
+                            <h4>Planet Hero</h4>
+                            <p>Plant 10 trees</p>
+                            <span class="achievement-progress">3/10 trees</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Eco Actions -->
+                <div class="section">
+                    <h3 class="section-title">Eco Actions You Can Take</h3>
+                    <div class="eco-actions-list">
+                        <div class="eco-action-card">
+                            <div class="action-icon">🥤</div>
+                            <div class="action-content">
+                                <h4>Bring Your Own Cup</h4>
+                                <p>Save 20g plastic per purchase</p>
+                            </div>
+                            <div class="action-reward">+5 pts</div>
+                        </div>
+                        <div class="eco-action-card">
+                            <div class="action-icon">🚶</div>
+                            <div class="action-content">
+                                <h4>Walk to Store</h4>
+                                <p>Reduce carbon footprint</p>
+                            </div>
+                            <div class="action-reward">+3 pts</div>
+                        </div>
+                        <div class="eco-action-card">
+                            <div class="action-icon">📦</div>
+                            <div class="action-content">
+                                <h4>Eco-Friendly Packaging</h4>
+                                <p>Choose sustainable packaging</p>
+                            </div>
+                            <div class="action-reward">+8 pts</div>
+                        </div>
+                        <div class="eco-action-card">
+                            <div class="action-icon">🌱</div>
+                            <div class="action-content">
+                                <h4>Plant a Tree</h4>
+                                <p>Offset your carbon emissions</p>
+                            </div>
+                            <div class="action-reward">+15 pts</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Community Impact -->
+                <div class="section">
+                    <h3 class="section-title">Community Impact</h3>
+                    <div class="community-impact-card">
+                        <div class="community-stat">
+                            <div class="community-icon">👥</div>
+                            <div class="community-info">
+                                <h4>15,234</h4>
+                                <p>Active eco-warriors</p>
+                            </div>
+                        </div>
+                        <div class="community-stat">
+                            <div class="community-icon">🌍</div>
+                            <div class="community-info">
+                                <h4>12,500 kg</h4>
+                                <p>Total CO₂ reduced</p>
+                            </div>
+                        </div>
+                        <div class="community-stat">
+                            <div class="community-icon">🌳</div>
+                            <div class="community-info">
+                                <h4>2,847</h4>
+                                <p>Trees planted together</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-nav">
+                <button class="nav-item" onclick="navigateTo('home')">
+                    <span class="nav-icon">🏠︎</span>
+                    <span>Home</span>
+                </button>
+                <button class="nav-item" onclick="navigateTo('wallet')">
+                    <span class="nav-icon">💎</span>
+                    <span>Wallet</span>
                 </button>
                 <button class="nav-item" onclick="navigateTo('challenges')">
                     <span class="nav-icon">⚡</span>
@@ -5220,6 +5490,17 @@
     <!-- Order Modal -->
     <div id="orderModal" class="modal">
         <div class="modal-content order-modal-content">
+            <!-- Animated Background for Order Modal -->
+            <div class="order-animated-bg">
+                <div class="order-circle order-circle-1"></div>
+                <div class="order-circle order-circle-2"></div>
+                <div class="order-circle order-circle-3"></div>
+                <div class="order-floating-icon" style="top: 10%; left: 8%; animation-delay: 0s;">🍦</div>
+                <div class="order-floating-icon" style="top: 25%; right: 12%; animation-delay: 1s;">📦</div>
+                <div class="order-floating-icon" style="bottom: 20%; left: 10%; animation-delay: 2s;">🍨</div>
+                <div class="order-floating-icon" style="bottom: 35%; right: 8%; animation-delay: 1.5s;">✨</div>
+                <div class="order-floating-icon" style="top: 45%; left: 15%; animation-delay: 0.8s;">🎉</div>
+            </div>
             <div class="modal-header">
                 <h2>📦 Order Ice Cream</h2>
                 <button class="modal-close" onclick="closeOrderModal()">✕</button>
@@ -6582,6 +6863,16 @@
     <!-- Custom Box Modal -->
     <div id="customBoxModal" class="modal">
         <div class="modal-content custom-box-modal-content">
+            <!-- Animated Background for Modal -->
+            <div class="custom-box-animated-bg">
+                <div class="custom-box-circle custom-box-circle-1"></div>
+                <div class="custom-box-circle custom-box-circle-2"></div>
+                <div class="custom-box-circle custom-box-circle-3"></div>
+                <div class="custom-box-floating-icon" style="top: 8%; left: 10%; animation-delay: 0s;">🍦</div>
+                <div class="custom-box-floating-icon" style="top: 20%; right: 8%; animation-delay: 1s;">🍨</div>
+                <div class="custom-box-floating-icon" style="bottom: 25%; left: 12%; animation-delay: 2s;">🎨</div>
+                <div class="custom-box-floating-icon" style="bottom: 15%; right: 10%; animation-delay: 1.5s;">✨</div>
+            </div>
             <div class="modal-header">
                 <h2>🎨 Make Your Own Box</h2>
                 <button class="modal-close" onclick="closeCustomBoxModal()">✕</button>
@@ -6743,64 +7034,67 @@
                     </div>
                 </div>
 
-                <!-- Store Selection -->
-                <div class="store-selection-section">
-                    <h3>Pick Up From</h3>
-                    <div class="store-list-compact">
-                        <div class="store-option active" data-store="depot-1" onclick="selectStore('depot-1')">
-                            <div class="store-radio">
-                                <span class="radio-dot"></span>
-                            </div>
-                            <div class="store-info">
-                                <h4>Savoy Main Depot</h4>
-                                <p>📍 0.5 km away • Ready in 2 hours</p>
-                            </div>
+                <!-- Delivery Information -->
+                <div class="delivery-info-section">
+                    <h3>🏍️ Delivery by Rider</h3>
+                    <div class="delivery-info-card">
+                        <div class="delivery-badge">
+                            <span class="badge-icon">📦</span>
+                            <span class="badge-text">Direct from Factory</span>
                         </div>
-                        
-                        <div class="store-option" data-store="store-1" onclick="selectStore('store-1')">
-                            <div class="store-radio">
-                                <span class="radio-dot"></span>
+                        <p class="delivery-description">
+                            Your custom box will be delivered directly from our factory to your doorstep by our trusted riders. 
+                            Fresh and personalized, just for you!
+                        </p>
+                        <div class="delivery-features">
+                            <div class="feature-item">
+                                <span class="feature-icon">✨</span>
+                                <span>Fresh from Factory</span>
                             </div>
-                            <div class="store-info">
-                                <h4>Sweet Corner Retailer</h4>
-                                <p>📍 1.2 km away • Ready in 3 hours</p>
+                            <div class="feature-item">
+                                <span class="feature-icon">🚚</span>
+                                <span>Fast Delivery</span>
                             </div>
-                        </div>
-                        
-                        <div class="store-option" data-store="store-2" onclick="selectStore('store-2')">
-                            <div class="store-radio">
-                                <span class="radio-dot"></span>
-                            </div>
-                            <div class="store-info">
-                                <h4>Ice Dream Parlor</h4>
-                                <p>📍 2.1 km away • Ready in 4 hours</p>
+                            <div class="feature-item">
+                                <span class="feature-icon">🎯</span>
+                                <span>Direct to Door</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Pickup Date & Time -->
-                <div class="pickup-section">
-                    <h3>Pickup Details</h3>
-                    <div class="pickup-form">
+                <!-- Delivery Details -->
+                <div class="delivery-details-section">
+                    <h3>Delivery Details</h3>
+                    <div class="delivery-form">
+                        <div class="form-group">
+                            <label for="customBoxAddress">Delivery Address *</label>
+                            <textarea id="customBoxAddress" rows="3" placeholder="Enter your complete delivery address..." required></textarea>
+                        </div>
+                        
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="pickupDate">Pickup Date</label>
-                                <input type="date" id="pickupDate" required>
+                                <label for="customBoxName">Contact Name *</label>
+                                <input type="text" id="customBoxName" placeholder="Your name" required>
                             </div>
                             <div class="form-group">
-                                <label for="pickupTime">Pickup Time</label>
-                                <select id="pickupTime">
-                                    <option value="">Select time</option>
-                                    <option value="10:00">10:00 AM</option>
-                                    <option value="11:00">11:00 AM</option>
-                                    <option value="12:00">12:00 PM</option>
-                                    <option value="13:00">1:00 PM</option>
-                                    <option value="14:00">2:00 PM</option>
-                                    <option value="15:00">3:00 PM</option>
-                                    <option value="16:00">4:00 PM</option>
-                                    <option value="17:00">5:00 PM</option>
-                                    <option value="18:00">6:00 PM</option>
+                                <label for="customBoxPhone">Phone Number *</label>
+                                <input type="tel" id="customBoxPhone" placeholder="+880 1XXX-XXXXXX" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customBoxDate">Preferred Delivery Date *</label>
+                                <input type="date" id="customBoxDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customBoxTime">Preferred Time Slot</label>
+                                <select id="customBoxTime">
+                                    <option value="">Select time slot</option>
+                                    <option value="morning">Morning (9 AM - 12 PM)</option>
+                                    <option value="afternoon">Afternoon (12 PM - 4 PM)</option>
+                                    <option value="evening">Evening (4 PM - 8 PM)</option>
                                 </select>
                             </div>
                         </div>
@@ -6840,6 +7134,20 @@
     <!-- Legacy Modal -->
     <div id="legacyModal" class="modal">
         <div class="modal-content legacy-modal-content">
+            <!-- Animated Background -->
+            <div class="legacy-animated-bg">
+                <div class="legacy-bg-circle legacy-bg-circle-1"></div>
+                <div class="legacy-bg-circle legacy-bg-circle-2"></div>
+                <div class="legacy-bg-circle legacy-bg-circle-3"></div>
+                <div class="floating-legacy-icon legacy-float-1">🍦</div>
+                <div class="floating-legacy-icon legacy-float-2">🍨</div>
+                <div class="floating-legacy-icon legacy-float-3">🎂</div>
+                <div class="floating-legacy-icon legacy-float-4">🧁</div>
+                <div class="floating-legacy-icon legacy-float-5">✨</div>
+                <div class="floating-legacy-icon legacy-float-6">⭐</div>
+                <div class="floating-legacy-icon legacy-float-7">💎</div>
+            </div>
+            
             <div class="modal-header">
                 <h2>🍦 Scoops of Legacy</h2>
                 <button class="modal-close" onclick="closeLegacyModal()">✕</button>

@@ -19,6 +19,13 @@ function navigateTo(screenId) {
             updateRecipeSuggestions();
         }
         
+        // Update health profile display when navigating to health tracker
+        if (screenId === 'health-tracker') {
+            if (typeof updateHealthProfileDisplay === 'function') {
+                updateHealthProfileDisplay();
+            }
+        }
+        
         // Scroll to top of content
         const content = targetScreen.querySelector('.content');
         if (content) {
@@ -2399,10 +2406,10 @@ function saveHealthProfile(event) {
     
     // Get form values
     healthProfile.name = document.getElementById('userName').value;
-    healthProfile.age = parseInt(document.getElementById('userAge').value);
+    healthProfile.age = parseInt(document.getElementById('userAge').value) || 0;
     healthProfile.gender = document.getElementById('userGender').value;
-    healthProfile.weight = parseFloat(document.getElementById('userWeight').value);
-    healthProfile.height = parseFloat(document.getElementById('userHeight').value);
+    healthProfile.weight = parseFloat(document.getElementById('userWeight').value) || 0;
+    healthProfile.height = parseFloat(document.getElementById('userHeight').value) || 0;
     healthProfile.activityLevel = document.getElementById('activityLevel').value;
     healthProfile.healthGoal = document.getElementById('healthGoal').value;
     
@@ -2416,8 +2423,15 @@ function saveHealthProfile(event) {
         document.querySelectorAll('input[name="allergies"]:checked')
     ).map(cb => cb.value);
     
-    // Calculate BMI and daily calories
-    healthProfile.bmi = calculateBMI(healthProfile.weight, healthProfile.height);
+    // Calculate BMI and daily calories (only if weight and height are valid)
+    if (healthProfile.weight > 0 && healthProfile.height > 0) {
+        healthProfile.bmi = calculateBMI(healthProfile.weight, healthProfile.height);
+        console.log('BMI Calculated:', healthProfile.bmi, 'Weight:', healthProfile.weight, 'Height:', healthProfile.height);
+    } else {
+        healthProfile.bmi = null;
+        console.log('BMI not calculated - Weight:', healthProfile.weight, 'Height:', healthProfile.height);
+    }
+    
     healthProfile.dailyCalories = calculateDailyCalories(
         healthProfile.weight,
         healthProfile.height,
@@ -2445,7 +2459,34 @@ function updateHealthProfileDisplay() {
     document.getElementById('profileAge').textContent = healthProfile.age ? `Age: ${healthProfile.age}` : 'Age: Not set';
     document.getElementById('profileWeight').textContent = healthProfile.weight ? `${healthProfile.weight} kg` : '-- kg';
     document.getElementById('profileHeight').textContent = healthProfile.height ? `${healthProfile.height} cm` : '-- cm';
-    document.getElementById('profileBMI').textContent = healthProfile.bmi || '--';
+    
+    // Update BMI with category
+    const bmiElement = document.getElementById('profileBMI');
+    if (healthProfile.bmi) {
+        const bmiValue = parseFloat(healthProfile.bmi);
+        let bmiCategory = '';
+        
+        // Determine BMI category
+        if (bmiValue < 18.5) {
+            bmiCategory = ' (Underweight)';
+            bmiElement.style.color = '#3b82f6';
+        } else if (bmiValue >= 18.5 && bmiValue < 25) {
+            bmiCategory = ' (Normal)';
+            bmiElement.style.color = '#10b981';
+        } else if (bmiValue >= 25 && bmiValue < 30) {
+            bmiCategory = ' (Overweight)';
+            bmiElement.style.color = '#f59e0b';
+        } else {
+            bmiCategory = ' (Obese)';
+            bmiElement.style.color = '#ef4444';
+        }
+        
+        bmiElement.textContent = healthProfile.bmi + bmiCategory;
+    } else {
+        bmiElement.textContent = '--';
+        bmiElement.style.color = '';
+    }
+    
     document.getElementById('calorieGoal').textContent = `${healthProfile.dailyCalories} kcal`;
     document.getElementById('calorieConsumed').textContent = `${healthProfile.consumedCalories} / ${healthProfile.dailyCalories} kcal consumed`;
     
@@ -4592,8 +4633,28 @@ function resetFeedbackForm() {
     document.getElementById('feedbackFollowUp').checked = true;
 }
 
+// Function to open Sustainability Tracker
+function openSustainabilityTracker() {
+    navigateTo('sustainability-tracker');
+}
+
+// Function to share eco impact
+function shareEcoImpact() {
+    if (navigator.share) {
+        navigator.share({
+            title: 'My Eco Impact',
+            text: 'I\'ve saved 2.4kg CO₂, 28 plastic cups, and planted 3 trees with Savoy! Join me in making a difference! 🌱',
+            url: window.location.href
+        }).catch((error) => console.log('Error sharing:', error));
+    } else {
+        showNotification('Link copied to clipboard!');
+    }
+}
+
 // Make functions globally accessible for inline onclick handlers
 window.navigateTo = navigateTo;
+window.openSustainabilityTracker = openSustainabilityTracker;
+window.shareEcoImpact = shareEcoImpact;
 window.updateBottomNav = updateBottomNav;
 window.redeemReward = redeemReward;
 window.showNotification = showNotification;
