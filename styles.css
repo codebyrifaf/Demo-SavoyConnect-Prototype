@@ -1219,14 +1219,22 @@ body {
 
 .progress-text {
     display: block;
-    font-size: 24px;
+    font-size: 40px;
     font-weight: var(--font-weight-bold);
+    background: linear-gradient(135deg, #ffffff 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 2px;
 }
 
 .progress-label {
     display: block;
-    font-size: 12px;
-    opacity: 0.8;
+    font-size: 11px;
+    color: #666;
+    font-weight: var(--font-weight-medium);
+    text-transform: lowercase;
+    letter-spacing: 0.3px;
 }
 
 /* Animated Action Buttons */
@@ -3797,6 +3805,12 @@ body {
     padding: var(--spacing-md);
     background: white;
     overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.store-filters::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
 }
 
 .filter-btn {
