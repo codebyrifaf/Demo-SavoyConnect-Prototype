@@ -1,0 +1,947 @@
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tikz}
+
+% Page geometry
+\geometry{
+    left=2cm,
+    right=2cm,
+    top=2.5cm,
+    bottom=2.5cm
+}
+
+% Color definitions
+\definecolor{primaryBlue}{RGB}{0, 102, 204}
+\definecolor{accentOrange}{RGB}{255, 127, 0}
+\definecolor{darkGray}{RGB}{51, 51, 51}
+\definecolor{lightGray}{RGB}{245, 245, 245}
+\definecolor{tableHeader}{RGB}{25, 118, 210}
+
+% Title formatting
+\titleformat{\section}
+  {\color{primaryBlue}\Large\bfseries}
+  {\thesection}{1em}{}[\titlerule]
+
+\titleformat{\subsection}
+  {\color{accentOrange}\large\bfseries}
+  {\thesubsection}{1em}{}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryBlue,
+    filecolor=accentOrange,
+    urlcolor=primaryBlue,
+    pdftitle={SavoyConnect Database Tables - Part 4},
+    pdfauthor={Rifaf Rahman}
+}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\color{primaryBlue}\textbf{SavoyConnect Database - Part 4}}
+\fancyhead[R]{\color{darkGray}\thepage}
+\fancyfoot[C]{\color{darkGray}\small Tables 31-40 | Prepared by Rifaf Rahman | November 2025}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+% Custom boxes
+\newtcolorbox{tablebox}[1]{
+  colback=lightGray,
+  colframe=primaryBlue,
+  fonttitle=\bfseries\large,
+  title=#1,
+  arc=2mm,
+  boxrule=1mm
+}
+
+\begin{document}
+
+% Title page
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture,overlay]
+        \fill[primaryBlue] (current page.north west) rectangle ([yshift=-8cm]current page.north east);
+    \end{tikzpicture}
+    
+    \vspace*{2cm}
+    
+    {\color{white}\Huge\bfseries SavoyConnect}\\[0.5cm]
+    {\color{white}\LARGE Database Schema - Part 4}\\[0.3cm]
+    {\color{white}\Large Detailed Table Properties}\\[2cm]
+    
+    \vspace{3cm}
+    
+    \begin{tcolorbox}[colback=white,colframe=accentOrange,width=0.8\textwidth,arc=3mm,boxrule=1mm]
+        \begin{tabular}{ll}
+            \textbf{\color{primaryBlue}Prepared by:} & Rifaf Rahman \\[0.3cm]
+            \textbf{\color{primaryBlue}Document:} & Part 4 of 8 \\[0.3cm]
+            \textbf{\color{primaryBlue}Tables:} & 31-40 (Phase 2 \& 3) \\[0.3cm]
+            \textbf{\color{primaryBlue}Date:} & November 9, 2025 \\
+        \end{tabular}
+    \end{tcolorbox}
+    
+    \vfill
+    
+    {\large\color{darkGray} Referrals, Promotions, Notifications, Recipes, Content}
+    
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Referral System}
+
+\subsection{Table 31: referrals}
+
+\begin{tablebox}{referrals - User Referral Tracking}
+\textbf{Purpose:} Tracks referral relationships and rewards between users.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} referrer\_id, referee\_id\\
+\textbf{Indexes:} referrer\_id, referee\_id, referral\_code (unique), status
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+referrer\_id & BIGINT & FOREIGN KEY, NOT NULL, References users(id) - User who sent referral \\
+\hline
+referee\_id & BIGINT & FOREIGN KEY, NULL, References users(id) - User who signed up \\
+\hline
+referral\_code & VARCHAR(50) & UNIQUE, NOT NULL, Unique referral code (e.g., "JOHN2025XYZ") \\
+\hline
+referee\_email & VARCHAR(255) & NULL, Email of invited person (before signup) \\
+\hline
+referee\_phone & VARCHAR(20) & NULL, Phone of invited person (before signup) \\
+\hline
+status & ENUM & NOT NULL, DEFAULT 'pending', Values: 'pending', 'signed\_up', 'qualified', 'rewarded', 'expired', 'invalid' \\
+\hline
+referrer\_reward\_type & VARCHAR(50) & NULL, Reward type: 'icecoins', 'discount', 'free\_delivery' \\
+\hline
+referrer\_reward\_value & INT & NULL, Reward amount for referrer \\
+\hline
+referrer\_reward\_claimed & BOOLEAN & NOT NULL, DEFAULT FALSE, Referrer reward claimed status \\
+\hline
+referrer\_rewarded\_at & TIMESTAMP & NULL, When referrer received reward \\
+\hline
+referee\_reward\_type & VARCHAR(50) & NULL, Reward type for new user \\
+\hline
+referee\_reward\_value & INT & NULL, Reward amount for referee \\
+\hline
+referee\_reward\_claimed & BOOLEAN & NOT NULL, DEFAULT FALSE, Referee reward claimed status \\
+\hline
+referee\_rewarded\_at & TIMESTAMP & NULL, When referee received reward \\
+\hline
+qualifying\_order\_id & BIGINT & NULL, First order ID that qualified the referral \\
+\hline
+qualifying\_criteria & JSON & NULL, Criteria met: \{"min\_order\_amount": 500, "order\_completed": true\} \\
+\hline
+utm\_source & VARCHAR(100) & NULL, Traffic source for analytics \\
+\hline
+utm\_medium & VARCHAR(100) & NULL, Marketing medium \\
+\hline
+utm\_campaign & VARCHAR(100) & NULL, Campaign name \\
+\hline
+device\_type & VARCHAR(50) & NULL, Device used for referral: 'mobile', 'tablet', 'desktop' \\
+\hline
+ip\_address & VARCHAR(45) & NULL, IP address of referee signup \\
+\hline
+signed\_up\_at & TIMESTAMP & NULL, Referee signup timestamp \\
+\hline
+qualified\_at & TIMESTAMP & NULL, When referral qualified for rewards \\
+\hline
+expires\_at & TIMESTAMP & NULL, Referral link expiration \\
+\hline
+notes & TEXT & NULL, Admin notes \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{referrals table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: users (referrer\_id, referee\_id)
+\end{itemize}
+
+\textbf{Referral Flow:}
+\begin{enumerate}
+    \item \textbf{pending:} Referral code generated, link shared
+    \item \textbf{signed\_up:} New user registered using referral code
+    \item \textbf{qualified:} New user completed qualifying action (first order > minimum amount)
+    \item \textbf{rewarded:} Both users received their rewards
+    \item \textbf{expired:} Referral expired before signup
+    \item \textbf{invalid:} Fraud detection or policy violation
+\end{enumerate}
+
+\textbf{Typical Rewards:}
+\begin{itemize}
+    \item \textbf{Referrer:} 200 IceCoins per successful referral
+    \item \textbf{Referee:} 100 IceCoins signup bonus + 10\% off first order
+    \item \textbf{Qualification:} First order must be ≥ 500 BDT
+\end{itemize}
+
+\newpage
+
+\section{Promotions \& Coupons}
+
+\subsection{Table 32: promotions}
+
+\begin{tablebox}{promotions - Marketing Promotions \& Campaigns}
+\textbf{Purpose:} Defines promotional campaigns with discounts and conditions.\\
+\textbf{Primary Key:} id\\
+\textbf{Indexes:} promo\_code (unique), promotion\_type, status, start\_date, end\_date
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+promo\_code & VARCHAR(50) & UNIQUE, NOT NULL, Promo code: "WELCOME10", "SUMMER2025" \\
+\hline
+title & VARCHAR(255) & NOT NULL, Promotion title for display \\
+\hline
+description & TEXT & NULL, Promotion description and terms \\
+\hline
+promotion\_type & ENUM & NOT NULL, Values: 'percentage\_discount', 'fixed\_discount', 'free\_delivery', 'buy\_x\_get\_y', 'cashback' \\
+\hline
+discount\_type & ENUM & NULL, Values: 'percentage', 'fixed\_amount', 'free\_shipping' \\
+\hline
+discount\_value & DECIMAL(10, 2) & NULL, Discount amount or percentage \\
+\hline
+max\_discount\_amount & DECIMAL(10, 2) & NULL, Maximum discount cap for percentage discounts \\
+\hline
+min\_order\_amount & DECIMAL(10, 2) & NULL, Minimum order value to apply \\
+\hline
+max\_order\_amount & DECIMAL(10, 2) & NULL, Maximum order value eligible \\
+\hline
+applicable\_to & ENUM & NOT NULL, DEFAULT 'all', Values: 'all', 'specific\_products', 'specific\_categories', 'first\_order\_only' \\
+\hline
+product\_ids & JSON & NULL, Array of eligible product IDs if specific\_products \\
+\hline
+category\_ids & JSON & NULL, Array of eligible category IDs if specific\_categories \\
+\hline
+excluded\_product\_ids & JSON & NULL, Array of excluded product IDs \\
+\hline
+user\_eligibility & ENUM & NOT NULL, DEFAULT 'all', Values: 'all', 'new\_users\_only', 'specific\_tier', 'specific\_users' \\
+\hline
+tier\_requirement & ENUM & NULL, Required loyalty tier: 'silver', 'gold', 'platinum', 'diamond' \\
+\hline
+eligible\_user\_ids & JSON & NULL, Array of specific user IDs if targeted \\
+\hline
+usage\_limit\_total & INT & NULL, Total usage limit across all users (NULL = unlimited) \\
+\hline
+usage\_limit\_per\_user & INT & NULL, Usage limit per user (NULL = unlimited) \\
+\hline
+usage\_count & INT & NOT NULL, DEFAULT 0, Current usage count \\
+\hline
+start\_date & TIMESTAMP & NOT NULL, Promotion start date/time \\
+\hline
+end\_date & TIMESTAMP & NULL, Promotion end date/time (NULL = no expiry) \\
+\hline
+is\_active & BOOLEAN & NOT NULL, DEFAULT TRUE, Active status \\
+\hline
+is\_featured & BOOLEAN & NOT NULL, DEFAULT FALSE, Featured on homepage \\
+\hline
+is\_stackable & BOOLEAN & NOT NULL, DEFAULT FALSE, Can be combined with other promos \\
+\hline
+priority & INT & NOT NULL, DEFAULT 0, Priority for auto-apply (higher = first) \\
+\hline
+banner\_image\_url & VARCHAR(500) & NULL, Promotional banner image \\
+\hline
+terms\_conditions & TEXT & NULL, Detailed terms and conditions \\
+\hline
+created\_by & BIGINT & NULL, Admin user ID who created promotion \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{promotions table structure}
+\end{longtable}
+
+\textbf{Promotion Examples:}
+\begin{itemize}
+    \item \textbf{WELCOME10:} 10\% off first order, new users only, min 300 BDT
+    \item \textbf{SUMMER2025:} 20\% off (max 200 BDT discount), all ice cream products
+    \item \textbf{FREEDEL:} Free delivery on orders above 500 BDT
+    \item \textbf{GOLD50:} 50 BDT fixed discount for Gold+ tier members
+    \item \textbf{BOGO:} Buy 2 get 1 free on selected products
+\end{itemize}
+
+\newpage
+
+\subsection{Table 33: promotion\_usage}
+
+\begin{tablebox}{promotion\_usage - Promotion Redemption History}
+\textbf{Purpose:} Tracks which users used which promotions on which orders.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} promotion\_id, user\_id, order\_id\\
+\textbf{Indexes:} promotion\_id, user\_id, order\_id, created\_at
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+promotion\_id & BIGINT & FOREIGN KEY, NOT NULL, References promotions(id) \\
+\hline
+user\_id & BIGINT & FOREIGN KEY, NOT NULL, References users(id) ON DELETE CASCADE \\
+\hline
+order\_id & BIGINT & FOREIGN KEY, NOT NULL, References orders(id) ON DELETE CASCADE \\
+\hline
+promo\_code\_used & VARCHAR(50) & NOT NULL, Snapshot of promo code \\
+\hline
+discount\_applied & DECIMAL(10, 2) & NOT NULL, Actual discount amount applied \\
+\hline
+order\_subtotal & DECIMAL(10, 2) & NOT NULL, Order subtotal before discount \\
+\hline
+order\_total & DECIMAL(10, 2) & NOT NULL, Order total after discount \\
+\hline
+conditions\_met & JSON & NULL, Conditions met at usage time \\
+\hline
+user\_tier\_at\_usage & VARCHAR(50) & NULL, User's loyalty tier when used \\
+\hline
+is\_auto\_applied & BOOLEAN & NOT NULL, DEFAULT FALSE, Auto-applied or manual entry \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+\caption{promotion\_usage table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: promotions (promotion\_id), users (user\_id), orders (order\_id)
+\end{itemize}
+
+\textbf{Analytics Use Cases:}
+\begin{itemize}
+    \item Track most popular promo codes
+    \item Calculate ROI per promotion campaign
+    \item Identify high-value customers using promos
+    \item Prevent abuse (check usage limits)
+    \item Generate promotional performance reports
+\end{itemize}
+
+\newpage
+
+\section{Notifications System}
+
+\subsection{Table 34: notifications}
+
+\begin{tablebox}{notifications - User Notifications}
+\textbf{Purpose:} Stores all notifications sent to users across channels.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} user\_id\\
+\textbf{Indexes:} user\_id, notification\_type, is\_read, created\_at
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+user\_id & BIGINT & FOREIGN KEY, NOT NULL, References users(id) ON DELETE CASCADE \\
+\hline
+notification\_type & ENUM & NOT NULL, Values: 'order\_update', 'delivery', 'promotion', 'challenge', 'review', 'icecoins', 'system', 'social' \\
+\hline
+title & VARCHAR(255) & NOT NULL, Notification title/headline \\
+\hline
+message & TEXT & NOT NULL, Notification message body \\
+\hline
+data & JSON & NULL, Additional structured data \\
+\hline
+action\_type & VARCHAR(100) & NULL, Deep link action: 'open\_order', 'view\_promotion', 'complete\_challenge' \\
+\hline
+action\_url & VARCHAR(500) & NULL, URL or deep link to navigate \\
+\hline
+related\_entity\_type & VARCHAR(50) & NULL, Related entity: 'order', 'promotion', 'challenge', 'product' \\
+\hline
+related\_entity\_id & BIGINT & NULL, ID of related entity \\
+\hline
+priority & ENUM & NOT NULL, DEFAULT 'normal', Values: 'low', 'normal', 'high', 'urgent' \\
+\hline
+channel & ENUM & NOT NULL, Values: 'in\_app', 'push', 'email', 'sms' \\
+\hline
+is\_read & BOOLEAN & NOT NULL, DEFAULT FALSE, Read status \\
+\hline
+read\_at & TIMESTAMP & NULL, When notification was read \\
+\hline
+is\_delivered & BOOLEAN & NOT NULL, DEFAULT FALSE, Delivery status \\
+\hline
+delivered\_at & TIMESTAMP & NULL, When notification was delivered \\
+\hline
+is\_clicked & BOOLEAN & NOT NULL, DEFAULT FALSE, Click/interaction status \\
+\hline
+clicked\_at & TIMESTAMP & NULL, When notification was clicked \\
+\hline
+expires\_at & TIMESTAMP & NULL, Notification expiration time \\
+\hline
+image\_url & VARCHAR(500) & NULL, Notification image/icon \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+\caption{notifications table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: users (user\_id)
+\end{itemize}
+
+\textbf{Notification Types:}
+\begin{itemize}
+    \item \textbf{order\_update:} "Your order \#123 is out for delivery"
+    \item \textbf{delivery:} "Your order has been delivered!"
+    \item \textbf{promotion:} "Flash Sale: 20\% off all ice cream!"
+    \item \textbf{challenge:} "You completed 'Week Warrior' challenge! +500 IceCoins"
+    \item \textbf{review:} "How was your order? Leave a review for 50 IceCoins"
+    \item \textbf{icecoins:} "You earned 100 IceCoins from your recent order"
+    \item \textbf{system:} "New features available! Check them out"
+    \item \textbf{social:} "@john liked your recipe"
+\end{itemize}
+
+\newpage
+
+\subsection{Table 35: notification\_templates}
+
+\begin{tablebox}{notification\_templates - Notification Templates}
+\textbf{Purpose:} Reusable notification templates with dynamic variables.\\
+\textbf{Primary Key:} id\\
+\textbf{Indexes:} template\_key (unique), notification\_type
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+template\_key & VARCHAR(100) & UNIQUE, NOT NULL, Unique template identifier: "order\_confirmed", "delivery\_started" \\
+\hline
+notification\_type & ENUM & NOT NULL, Type category \\
+\hline
+channel & ENUM & NOT NULL, Target channel: 'in\_app', 'push', 'email', 'sms' \\
+\hline
+title\_template & VARCHAR(255) & NULL, Title with variables: "Order \{\{order\_number\}\} Confirmed!" \\
+\hline
+message\_template & TEXT & NOT NULL, Message body with variables \\
+\hline
+email\_subject & VARCHAR(255) & NULL, Email subject line (for email channel) \\
+\hline
+email\_html\_template & TEXT & NULL, HTML email template \\
+\hline
+sms\_template & VARCHAR(500) & NULL, SMS message template (160 char limit) \\
+\hline
+variables & JSON & NULL, Available variables: ["order\_number", "user\_name", "delivery\_time"] \\
+\hline
+default\_action\_type & VARCHAR(100) & NULL, Default action when clicked \\
+\hline
+default\_action\_url & VARCHAR(500) & NULL, Default deep link URL \\
+\hline
+icon\_url & VARCHAR(500) & NULL, Default icon for this template \\
+\hline
+priority & ENUM & NOT NULL, DEFAULT 'normal', Default priority \\
+\hline
+is\_active & BOOLEAN & NOT NULL, DEFAULT TRUE, Template active status \\
+\hline
+language & VARCHAR(10) & NOT NULL, DEFAULT 'en', ISO 639-1 language code \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{notification\_templates table structure}
+\end{longtable}
+
+\textbf{Example Templates:}
+\begin{itemize}
+    \item \textbf{order\_confirmed:} "Hi \{\{user\_name\}\}, your order \{\{order\_number\}\} has been confirmed! Estimated delivery: \{\{delivery\_time\}\}"
+    \item \textbf{delivery\_started:} "Your order is on the way! Track driver: \{\{driver\_name\}\}"
+    \item \textbf{icecoins\_earned:} "Congrats! You earned \{\{icecoins\}\} IceCoins from order \{\{order\_number\}\}"
+    \item \textbf{challenge\_completed:} "Amazing! You completed '\{\{challenge\_name\}\}' and earned \{\{icecoins\}\} IceCoins!"
+\end{itemize}
+
+\newpage
+
+\section{Recipe System}
+
+\subsection{Table 36: recipes}
+
+\begin{tablebox}{recipes - Recipe Content \& Discovery}
+\textbf{Purpose:} User-generated and curated recipes using SavoyConnect products.\\
+\textbf{Primary Key:} id\\
+\textbf{Indexes:} author\_id, slug (unique), status, difficulty, is\_featured
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+author\_id & BIGINT & FOREIGN KEY, NOT NULL, References users(id) - Recipe creator \\
+\hline
+title & VARCHAR(255) & NOT NULL, Recipe name: "Chocolate Lava Cake", "Mango Smoothie Bowl" \\
+\hline
+slug & VARCHAR(255) & UNIQUE, NOT NULL, URL-friendly identifier \\
+\hline
+description & TEXT & NOT NULL, Short recipe description \\
+\hline
+story & TEXT & NULL, Personal story or context behind recipe \\
+\hline
+prep\_time\_minutes & INT & NOT NULL, Preparation time in minutes \\
+\hline
+cook\_time\_minutes & INT & NULL, Cooking/processing time \\
+\hline
+total\_time\_minutes & INT & NOT NULL, Total time (prep + cook) \\
+\hline
+servings & INT & NOT NULL, Number of servings \\
+\hline
+difficulty & ENUM & NOT NULL, Values: 'easy', 'medium', 'hard', 'expert' \\
+\hline
+cuisine\_type & VARCHAR(100) & NULL, Cuisine: 'bangladeshi', 'indian', 'italian', 'fusion' \\
+\hline
+meal\_type & ENUM & NULL, Values: 'breakfast', 'lunch', 'dinner', 'snack', 'dessert', 'beverage' \\
+\hline
+dietary\_tags & JSON & NULL, Array: ["vegetarian", "vegan", "gluten-free", "low-sugar"] \\
+\hline
+ingredients & JSON & NOT NULL, Array of ingredient objects with product links \\
+\hline
+instructions & JSON & NOT NULL, Array of step objects with descriptions and optional images \\
+\hline
+tips & TEXT & NULL, Chef tips and tricks \\
+\hline
+nutrition\_per\_serving & JSON & NULL, Nutritional information object \\
+\hline
+featured\_image\_url & VARCHAR(500) & NOT NULL, Main recipe image \\
+\hline
+gallery\_images & JSON & NULL, Array of additional image URLs \\
+\hline
+video\_url & VARCHAR(500) & NULL, Recipe video URL (YouTube, Vimeo) \\
+\hline
+average\_rating & DECIMAL(3, 2) & NOT NULL, DEFAULT 0.00, Average user rating (0-5) \\
+\hline
+rating\_count & INT & NOT NULL, DEFAULT 0, Number of ratings \\
+\hline
+view\_count & INT & NOT NULL, DEFAULT 0, Total views \\
+\hline
+try\_count & INT & NOT NULL, DEFAULT 0, Users who marked "I tried this" \\
+\hline
+save\_count & INT & NOT NULL, DEFAULT 0, Users who saved/bookmarked \\
+\hline
+share\_count & INT & NOT NULL, DEFAULT 0, Times shared \\
+\hline
+status & ENUM & NOT NULL, DEFAULT 'draft', Values: 'draft', 'pending\_review', 'published', 'rejected', 'archived' \\
+\hline
+is\_featured & BOOLEAN & NOT NULL, DEFAULT FALSE, Featured recipe flag \\
+\hline
+is\_verified & BOOLEAN & NOT NULL, DEFAULT FALSE, Verified by chef/admin \\
+\hline
+verified\_by & BIGINT & NULL, Admin/chef who verified \\
+\hline
+published\_at & TIMESTAMP & NULL, Publication timestamp \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+deleted\_at & TIMESTAMP & NULL, Soft delete timestamp \\
+\hline
+\caption{recipes table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: users (author\_id)
+    \item Many-to-Many: products (via recipe\_products)
+    \item One-to-Many: recipe\_reviews, recipe\_tries
+\end{itemize}
+
+\textbf{Ingredient JSON Structure:}
+\begin{verbatim}
+[
+  {
+    "product_id": 123,
+    "product_name": "Vanilla Ice Cream",
+    "quantity": 2,
+    "unit": "scoops",
+    "notes": "or any flavor"
+  },
+  {
+    "product_id": null,
+    "product_name": "Fresh Strawberries",
+    "quantity": 200,
+    "unit": "grams",
+    "notes": ""
+  }
+]
+\end{verbatim}
+
+\newpage
+
+\subsection{Table 37: recipe\_products}
+
+\begin{tablebox}{recipe\_products - Recipe-Product Relationships}
+\textbf{Purpose:} Links recipes to SavoyConnect products used as ingredients.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} recipe\_id, product\_id\\
+\textbf{Indexes:} recipe\_id, product\_id, UNIQUE(recipe\_id, product\_id)
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+recipe\_id & BIGINT & FOREIGN KEY, NOT NULL, References recipes(id) ON DELETE CASCADE \\
+\hline
+product\_id & BIGINT & FOREIGN KEY, NOT NULL, References products(id) ON DELETE CASCADE \\
+\hline
+quantity & DECIMAL(10, 2) & NULL, Quantity needed \\
+\hline
+unit & VARCHAR(50) & NULL, Unit of measurement: 'scoops', 'grams', 'ml', 'pieces' \\
+\hline
+is\_primary & BOOLEAN & NOT NULL, DEFAULT FALSE, Primary ingredient flag \\
+\hline
+is\_optional & BOOLEAN & NOT NULL, DEFAULT FALSE, Optional ingredient \\
+\hline
+notes & VARCHAR(255) & NULL, Ingredient notes or substitutions \\
+\hline
+sort\_order & INT & NOT NULL, DEFAULT 0, Display order in ingredient list \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+\caption{recipe\_products table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: recipes (recipe\_id), products (product\_id)
+\end{itemize}
+
+\textbf{Features:}
+\begin{itemize}
+    \item "Shop ingredients" feature - add all recipe products to cart
+    \item Show "Used in X recipes" on product pages
+    \item Product recommendations based on recipe views
+    \item Track which products are popular in recipes
+\end{itemize}
+
+\newpage
+
+\subsection{Table 38: recipe\_tries}
+
+\begin{tablebox}{recipe\_tries - User Recipe Attempts}
+\textbf{Purpose:} Tracks when users try recipes with photos and feedback.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} recipe\_id, user\_id\\
+\textbf{Indexes:} recipe\_id, user\_id, created\_at
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+recipe\_id & BIGINT & FOREIGN KEY, NOT NULL, References recipes(id) ON DELETE CASCADE \\
+\hline
+user\_id & BIGINT & FOREIGN KEY, NOT NULL, References users(id) ON DELETE CASCADE \\
+\hline
+rating & INT & NULL, User rating 1-5 stars \\
+\hline
+photo\_url & VARCHAR(500) & NULL, Photo of user's result \\
+\hline
+notes & TEXT & NULL, User's feedback or modifications \\
+\hline
+difficulty\_feedback & ENUM & NULL, Values: 'easier', 'as\_expected', 'harder' \\
+\hline
+would\_make\_again & BOOLEAN & NULL, Recommendation flag \\
+\hline
+modifications\_made & TEXT & NULL, What user changed in recipe \\
+\hline
+icecoins\_earned & INT & NOT NULL, DEFAULT 0, IceCoins for trying recipe \\
+\hline
+is\_featured & BOOLEAN & NOT NULL, DEFAULT FALSE, Featured by admin \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{recipe\_tries table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: recipes (recipe\_id), users (user\_id)
+\end{itemize}
+
+\textbf{Gamification:}
+\begin{itemize}
+    \item Award 20 IceCoins for first "I tried this" with photo
+    \item Challenge: "Try 5 recipes this month" → 200 IceCoins
+    \item Featured user creations on recipe pages
+    \item Social feed: "John tried Chocolate Lava Cake"
+\end{itemize}
+
+\newpage
+
+\subsection{Table 39: recipe\_saves}
+
+\begin{tablebox}{recipe\_saves - User Recipe Bookmarks}
+\textbf{Purpose:} Tracks user-saved/bookmarked recipes for later reference.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} recipe\_id, user\_id\\
+\textbf{Indexes:} recipe\_id, user\_id, UNIQUE(recipe\_id, user\_id)
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+recipe\_id & BIGINT & FOREIGN KEY, NOT NULL, References recipes(id) ON DELETE CASCADE \\
+\hline
+user\_id & BIGINT & FOREIGN KEY, NOT NULL, References users(id) ON DELETE CASCADE \\
+\hline
+collection\_name & VARCHAR(100) & NULL, User's collection: "Desserts", "Quick Recipes", "Party Ideas" \\
+\hline
+notes & TEXT & NULL, Personal notes about recipe \\
+\hline
+reminder\_date & DATE & NULL, Reminder to try this recipe \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+\caption{recipe\_saves table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: recipes (recipe\_id), users (user\_id)
+\end{itemize}
+
+\textbf{Features:}
+\begin{itemize}
+    \item "My Saved Recipes" collection in user profile
+    \item Organize saves into custom collections
+    \item Set reminders to try saved recipes
+    \item Personal notes on saved recipes
+    \item Email: "You have 5 saved recipes - try one today!"
+\end{itemize}
+
+\newpage
+
+\subsection{Table 40: recipe\_collections}
+
+\begin{tablebox}{recipe\_collections - Curated Recipe Collections}
+\textbf{Purpose:} Editorial or user-created collections of related recipes.\\
+\textbf{Primary Key:} id\\
+\textbf{Indexes:} creator\_id, slug (unique), collection\_type, is\_featured
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+creator\_id & BIGINT & FOREIGN KEY, NULL, References users(id) - Collection creator \\
+\hline
+collection\_type & ENUM & NOT NULL, Values: 'editorial', 'user', 'seasonal', 'trending' \\
+\hline
+title & VARCHAR(255) & NOT NULL, Collection name: "Summer Coolers", "Birthday Party Ideas" \\
+\hline
+slug & VARCHAR(255) & UNIQUE, NOT NULL, URL-friendly identifier \\
+\hline
+description & TEXT & NULL, Collection description \\
+\hline
+cover\_image\_url & VARCHAR(500) & NULL, Collection cover image \\
+\hline
+recipe\_count & INT & NOT NULL, DEFAULT 0, Number of recipes in collection \\
+\hline
+is\_featured & BOOLEAN & NOT NULL, DEFAULT FALSE, Featured on homepage \\
+\hline
+is\_public & BOOLEAN & NOT NULL, DEFAULT TRUE, Public visibility \\
+\hline
+view\_count & INT & NOT NULL, DEFAULT 0, Total views \\
+\hline
+save\_count & INT & NOT NULL, DEFAULT 0, Times saved by users \\
+\hline
+sort\_order & INT & NOT NULL, DEFAULT 0, Display order \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{recipe\_collections table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: users (creator\_id)
+    \item Many-to-Many: recipes (via recipe\_collection\_items)
+\end{itemize}
+
+\textbf{Collection Examples:}
+\begin{itemize}
+    \item \textbf{Editorial:} "Top 10 Summer Recipes by Chef Maria"
+    \item \textbf{Seasonal:} "Ramadan Special Desserts"
+    \item \textbf{User:} "My Favorite Quick Treats"
+    \item \textbf{Trending:} "Most Tried Recipes This Week"
+\end{itemize}
+
+\newpage
+
+\section{Summary}
+
+\begin{tcolorbox}[colback=primaryBlue!10,colframe=primaryBlue,arc=3mm,boxrule=1mm]
+\textbf{\large Part 4 Complete: Tables 31-40}
+
+\vspace{0.3cm}
+
+This document covers tables 31-40 of the SavoyConnect database schema:
+
+\begin{itemize}
+    \item \textbf{Referral System (1 table):} referrals
+    \item \textbf{Promotions (2 tables):} promotions, promotion\_usage
+    \item \textbf{Notifications (2 tables):} notifications, notification\_templates
+    \item \textbf{Recipe System (5 tables):} recipes, recipe\_products, recipe\_tries, recipe\_saves, recipe\_collections
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Key Features Implemented:}
+\begin{itemize}
+    \item Complete referral system with dual rewards (referrer + referee)
+    \item Flexible promotion engine with multiple discount types
+    \item Multi-channel notification system (in-app, push, email, SMS)
+    \item Template-based notifications with dynamic variables
+    \item User-generated recipe platform with ingredient linking
+    \item Recipe discovery with ratings, saves, and tries tracking
+    \item Curated recipe collections (editorial and user-created)
+    \item Social features: recipe sharing, user photos, community engagement
+    \item IceCoins integration for recipe interaction rewards
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Next Document:} Part 5 will cover tables 41-50 (Community, Social Features, Digital Passport, Custom Boxes, Stock Notifications)
+
+\end{tcolorbox}
+
+\end{document}

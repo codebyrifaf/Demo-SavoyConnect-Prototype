@@ -1,0 +1,924 @@
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tikz}
+
+% Page geometry
+\geometry{
+    left=2cm,
+    right=2cm,
+    top=2.5cm,
+    bottom=2.5cm
+}
+
+% Color definitions
+\definecolor{primaryBlue}{RGB}{0, 102, 204}
+\definecolor{accentOrange}{RGB}{255, 127, 0}
+\definecolor{darkGray}{RGB}{51, 51, 51}
+\definecolor{lightGray}{RGB}{245, 245, 245}
+\definecolor{tableHeader}{RGB}{25, 118, 210}
+
+% Title formatting
+\titleformat{\section}
+  {\color{primaryBlue}\Large\bfseries}
+  {\thesection}{1em}{}[\titlerule]
+
+\titleformat{\subsection}
+  {\color{accentOrange}\large\bfseries}
+  {\thesubsection}{1em}{}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryBlue,
+    filecolor=accentOrange,
+    urlcolor=primaryBlue,
+    pdftitle={SavoyConnect Database Tables - Part 5},
+    pdfauthor={Rifaf Rahman}
+}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\color{primaryBlue}\textbf{SavoyConnect Database - Part 5}}
+\fancyhead[R]{\color{darkGray}\thepage}
+\fancyfoot[C]{\color{darkGray}\small Tables 41-50 | Prepared by Rifaf Rahman | November 2025}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+% Custom boxes
+\newtcolorbox{tablebox}[1]{
+  colback=lightGray,
+  colframe=primaryBlue,
+  fonttitle=\bfseries\large,
+  title=#1,
+  arc=2mm,
+  boxrule=1mm
+}
+
+\begin{document}
+
+% Title page
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture,overlay]
+        \fill[primaryBlue] (current page.north west) rectangle ([yshift=-8cm]current page.north east);
+    \end{tikzpicture}
+    
+    \vspace*{2cm}
+    
+    {\color{white}\Huge\bfseries SavoyConnect}\\[0.5cm]
+    {\color{white}\LARGE Database Schema - Part 5}\\[0.3cm]
+    {\color{white}\Large Detailed Table Properties}\\[2cm]
+    
+    \vspace{3cm}
+    
+    \begin{tcolorbox}[colback=white,colframe=accentOrange,width=0.8\textwidth,arc=3mm,boxrule=1mm]
+        \begin{tabular}{ll}
+            \textbf{\color{primaryBlue}Prepared by:} & Rifaf Rahman \\[0.3cm]
+            \textbf{\color{primaryBlue}Document:} & Part 5 of 8 \\[0.3cm]
+            \textbf{\color{primaryBlue}Tables:} & 41-50 (Phase 3) \\[0.3cm]
+            \textbf{\color{primaryBlue}Date:} & November 9, 2025 \\
+        \end{tabular}
+    \end{tcolorbox}
+    
+    \vfill
+    
+    {\large\color{darkGray} Community, Social, Digital Passport, Custom Boxes, Stock Alerts}
+    
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Community \& Social Features}
+
+\subsection{Table 41: user\_follows}
+
+\begin{tablebox}{user\_follows - Social Following Relationships}
+\textbf{Purpose:} Tracks user-to-user following for social features and activity feeds.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} follower\_id, following\_id\\
+\textbf{Indexes:} follower\_id, following\_id, UNIQUE(follower\_id, following\_id)
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+follower\_id & BIGINT & FOREIGN KEY, NOT NULL, References users(id) ON DELETE CASCADE - User who follows \\
+\hline
+following\_id & BIGINT & FOREIGN KEY, NOT NULL, References users(id) ON DELETE CASCADE - User being followed \\
+\hline
+notification\_sent & BOOLEAN & NOT NULL, DEFAULT FALSE, Whether followed user was notified \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+\caption{user\_follows table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: users (follower\_id, following\_id)
+\end{itemize}
+
+\textbf{Social Features:}
+\begin{itemize}
+    \item User profile shows follower/following counts
+    \item Activity feed shows posts from followed users
+    \item "Suggested users to follow" based on recipe interactions
+    \item Notification: "@john started following you"
+    \item Follow trending recipe creators
+\end{itemize}
+
+\textbf{Constraints:}
+\begin{itemize}
+    \item Users cannot follow themselves (application logic)
+    \item Unique constraint prevents duplicate follows
+    \item Bidirectional following = mutual friendship
+\end{itemize}
+
+\newpage
+
+\subsection{Table 42: user\_posts}
+
+\begin{tablebox}{user\_posts - Social Feed Posts}
+\textbf{Purpose:} User-generated posts for community feed (photos, recipes, achievements).\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} user\_id, recipe\_id, product\_id\\
+\textbf{Indexes:} user\_id, post\_type, visibility, created\_at
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+user\_id & BIGINT & FOREIGN KEY, NOT NULL, References users(id) ON DELETE CASCADE \\
+\hline
+post\_type & ENUM & NOT NULL, Values: 'status', 'photo', 'recipe\_share', 'achievement', 'review\_share', 'product\_recommendation' \\
+\hline
+content & TEXT & NULL, Post text content \\
+\hline
+media\_urls & JSON & NULL, Array of image/video URLs \\
+\hline
+recipe\_id & BIGINT & FOREIGN KEY, NULL, References recipes(id) if sharing recipe \\
+\hline
+product\_id & BIGINT & FOREIGN KEY, NULL, References products(id) if recommending product \\
+\hline
+achievement\_type & VARCHAR(100) & NULL, Achievement badge type if achievement post \\
+\hline
+achievement\_data & JSON & NULL, Achievement details \\
+\hline
+visibility & ENUM & NOT NULL, DEFAULT 'public', Values: 'public', 'followers\_only', 'private' \\
+\hline
+like\_count & INT & NOT NULL, DEFAULT 0, Number of likes \\
+\hline
+comment\_count & INT & NOT NULL, DEFAULT 0, Number of comments \\
+\hline
+share\_count & INT & NOT NULL, DEFAULT 0, Times shared \\
+\hline
+view\_count & INT & NOT NULL, DEFAULT 0, Total views \\
+\hline
+is\_pinned & BOOLEAN & NOT NULL, DEFAULT FALSE, Pinned to user profile \\
+\hline
+is\_featured & BOOLEAN & NOT NULL, DEFAULT FALSE, Featured by admins \\
+\hline
+flagged\_count & INT & NOT NULL, DEFAULT 0, Times reported \\
+\hline
+status & ENUM & NOT NULL, DEFAULT 'published', Values: 'draft', 'published', 'hidden', 'removed' \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+deleted\_at & TIMESTAMP & NULL, Soft delete timestamp \\
+\hline
+\caption{user\_posts table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: users (user\_id), recipes (recipe\_id), products (product\_id)
+    \item One-to-Many: post\_likes, post\_comments
+\end{itemize}
+
+\textbf{Post Examples:}
+\begin{itemize}
+    \item \textbf{Status:} "Loving this new mango flavor! 🥭"
+    \item \textbf{Photo:} Photo of ice cream creation with caption
+    \item \textbf{Recipe Share:} "Just tried this amazing Chocolate Lava Cake recipe!"
+    \item \textbf{Achievement:} "I just earned the 'Chef Master' badge! 🏆"
+    \item \textbf{Product Recommendation:} "You have to try the new Pistachio flavor!"
+\end{itemize}
+
+\newpage
+
+\subsection{Table 43: post\_likes}
+
+\begin{tablebox}{post\_likes - Post Like/Reaction Tracking}
+\textbf{Purpose:} Tracks user likes/reactions on social posts.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} post\_id, user\_id\\
+\textbf{Indexes:} post\_id, user\_id, UNIQUE(post\_id, user\_id)
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+post\_id & BIGINT & FOREIGN KEY, NOT NULL, References user\_posts(id) ON DELETE CASCADE \\
+\hline
+user\_id & BIGINT & FOREIGN KEY, NOT NULL, References users(id) ON DELETE CASCADE \\
+\hline
+reaction\_type & ENUM & NOT NULL, DEFAULT 'like', Values: 'like', 'love', 'wow', 'yummy', 'celebrate' \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+\caption{post\_likes table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: user\_posts (post\_id), users (user\_id)
+\end{itemize}
+
+\textbf{Reaction Types:}
+\begin{itemize}
+    \item \textbf{like:} 👍 General like
+    \item \textbf{love:} ❤️ Love it
+    \item \textbf{wow:} 😮 Amazing
+    \item \textbf{yummy:} 😋 Looks delicious
+    \item \textbf{celebrate:} 🎉 Congratulations
+\end{itemize}
+
+\newpage
+
+\subsection{Table 44: post\_comments}
+
+\begin{tablebox}{post\_comments - Social Post Comments}
+\textbf{Purpose:} User comments on social posts with threading support.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} post\_id, user\_id, parent\_comment\_id\\
+\textbf{Indexes:} post\_id, user\_id, parent\_comment\_id, created\_at
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+post\_id & BIGINT & FOREIGN KEY, NOT NULL, References user\_posts(id) ON DELETE CASCADE \\
+\hline
+user\_id & BIGINT & FOREIGN KEY, NOT NULL, References users(id) ON DELETE CASCADE \\
+\hline
+parent\_comment\_id & BIGINT & FOREIGN KEY, NULL, References post\_comments(id) for threaded replies \\
+\hline
+comment\_text & TEXT & NOT NULL, Comment content \\
+\hline
+mentioned\_users & JSON & NULL, Array of @mentioned user IDs \\
+\hline
+like\_count & INT & NOT NULL, DEFAULT 0, Likes on this comment \\
+\hline
+reply\_count & INT & NOT NULL, DEFAULT 0, Number of replies \\
+\hline
+is\_edited & BOOLEAN & NOT NULL, DEFAULT FALSE, Edit status \\
+\hline
+edited\_at & TIMESTAMP & NULL, Last edit timestamp \\
+\hline
+flagged\_count & INT & NOT NULL, DEFAULT 0, Times reported \\
+\hline
+status & ENUM & NOT NULL, DEFAULT 'published', Values: 'published', 'hidden', 'removed' \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{post\_comments table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: user\_posts (post\_id), users (user\_id), post\_comments (parent\_comment\_id)
+    \item One-to-Many: comment\_likes (self-referencing for replies)
+\end{itemize}
+
+\textbf{Threading:}
+\begin{itemize}
+    \item parent\_comment\_id = NULL → Top-level comment
+    \item parent\_comment\_id = X → Reply to comment X
+    \item Support nested replies up to 2-3 levels
+    \item @mentions trigger notifications
+\end{itemize}
+
+\newpage
+
+\section{Digital Passport System}
+
+\subsection{Table 45: digital\_passports}
+
+\begin{tablebox}{digital\_passports - Product Digital Passports}
+\textbf{Purpose:} Blockchain-inspired traceability records for products.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} product\_id\\
+\textbf{Indexes:} product\_id, passport\_id (unique), qr\_code (unique)
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+product\_id & BIGINT & FOREIGN KEY, NOT NULL, References products(id) \\
+\hline
+passport\_id & VARCHAR(100) & UNIQUE, NOT NULL, Unique passport identifier (e.g., "DPP-2025-ICE-00001") \\
+\hline
+qr\_code & VARCHAR(255) & UNIQUE, NOT NULL, QR code data for scanning \\
+\hline
+qr\_image\_url & VARCHAR(500) & NULL, Generated QR code image URL \\
+\hline
+batch\_number & VARCHAR(100) & NOT NULL, Production batch number \\
+\hline
+production\_date & DATE & NOT NULL, Manufacturing date \\
+\hline
+expiry\_date & DATE & NOT NULL, Product expiration date \\
+\hline
+origin\_country & VARCHAR(100) & NOT NULL, Country of origin \\
+\hline
+origin\_location & VARCHAR(255) & NULL, Specific origin location/farm \\
+\hline
+manufacturer & VARCHAR(255) & NOT NULL, Manufacturer name \\
+\hline
+certifications & JSON & NULL, Array: ["Organic", "Halal", "Fair Trade", "ISO 22000"] \\
+\hline
+ingredients\_detail & JSON & NULL, Detailed ingredient sourcing info \\
+\hline
+supply\_chain\_events & JSON & NULL, Array of supply chain checkpoints \\
+\hline
+quality\_checks & JSON & NULL, Quality control test results \\
+\hline
+sustainability\_score & DECIMAL(3, 2) & NULL, Sustainability rating 0-10 \\
+\hline
+carbon\_footprint & DECIMAL(10, 2) & NULL, Carbon footprint in kg CO2 \\
+\hline
+water\_usage & DECIMAL(10, 2) & NULL, Water usage in liters \\
+\hline
+ethical\_sourcing & BOOLEAN & NOT NULL, DEFAULT FALSE, Ethical sourcing certified \\
+\hline
+fair\_trade\_certified & BOOLEAN & NOT NULL, DEFAULT FALSE, Fair trade status \\
+\hline
+documents\_urls & JSON & NULL, Links to certificates, test reports \\
+\hline
+scan\_count & INT & NOT NULL, DEFAULT 0, Times QR code scanned \\
+\hline
+last\_scanned\_at & TIMESTAMP & NULL, Last scan timestamp \\
+\hline
+is\_verified & BOOLEAN & NOT NULL, DEFAULT TRUE, Verification status \\
+\hline
+verified\_by & VARCHAR(255) & NULL, Verification authority \\
+\hline
+blockchain\_hash & VARCHAR(255) & NULL, Blockchain transaction hash if implemented \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{digital\_passports table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: products (product\_id)
+    \item One-to-Many: passport\_scans
+\end{itemize}
+
+\textbf{Supply Chain Events JSON Example:}
+\begin{verbatim}
+[
+  {
+    "event": "Harvested",
+    "date": "2025-10-01",
+    "location": "Rajshahi Mango Farm",
+    "verified": true
+  },
+  {
+    "event": "Processed",
+    "date": "2025-10-03",
+    "location": "Dhaka Processing Plant",
+    "verified": true
+  },
+  {
+    "event": "Quality Tested",
+    "date": "2025-10-04",
+    "result": "Pass",
+    "verified": true
+  }
+]
+\end{verbatim}
+
+\newpage
+
+\subsection{Table 46: passport\_scans}
+
+\begin{tablebox}{passport\_scans - Digital Passport Scan Tracking}
+\textbf{Purpose:} Tracks when and where users scan product digital passports.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} passport\_id, user\_id\\
+\textbf{Indexes:} passport\_id, user\_id, created\_at
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+passport\_id & BIGINT & FOREIGN KEY, NOT NULL, References digital\_passports(id) \\
+\hline
+user\_id & BIGINT & FOREIGN KEY, NULL, References users(id) - NULL if anonymous scan \\
+\hline
+scan\_location & VARCHAR(255) & NULL, GPS location of scan \\
+\hline
+latitude & DECIMAL(10, 8) & NULL, Scan GPS latitude \\
+\hline
+longitude & DECIMAL(11, 8) & NULL, Scan GPS longitude \\
+\hline
+device\_type & VARCHAR(50) & NULL, Device: 'mobile', 'tablet', 'desktop' \\
+\hline
+browser & VARCHAR(100) & NULL, Browser information \\
+\hline
+ip\_address & VARCHAR(45) & NULL, IP address of scanner \\
+\hline
+user\_agent & TEXT & NULL, User agent string \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+\caption{passport\_scans table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: digital\_passports (passport\_id), users (user\_id)
+\end{itemize}
+
+\textbf{Analytics Use Cases:}
+\begin{itemize}
+    \item Track product interest via scan frequency
+    \item Identify geographic distribution of products
+    \item Measure transparency feature engagement
+    \item Award IceCoins for first passport scan
+    \item Generate "Most scanned products" insights
+\end{itemize}
+
+\newpage
+
+\subsection{Table 47: sustainability\_reports}
+
+\begin{tablebox}{sustainability\_reports - Product Sustainability Metrics}
+\textbf{Purpose:} Detailed sustainability and environmental impact data per product.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} product\_id\\
+\textbf{Indexes:} product\_id, reporting\_period
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+product\_id & BIGINT & FOREIGN KEY, NOT NULL, References products(id) \\
+\hline
+reporting\_period & VARCHAR(50) & NOT NULL, Period: "Q1-2025", "2025-Annual" \\
+\hline
+carbon\_footprint\_kg & DECIMAL(10, 2) & NOT NULL, Total carbon emissions in kg CO2 \\
+\hline
+water\_usage\_liters & DECIMAL(10, 2) & NOT NULL, Water consumption in liters \\
+\hline
+energy\_usage\_kwh & DECIMAL(10, 2) & NULL, Energy usage in kilowatt-hours \\
+\hline
+renewable\_energy\_percentage & DECIMAL(5, 2) & NULL, \% energy from renewable sources \\
+\hline
+waste\_generated\_kg & DECIMAL(10, 2) & NULL, Waste generated in kg \\
+\hline
+waste\_recycled\_percentage & DECIMAL(5, 2) & NULL, \% waste recycled \\
+\hline
+packaging\_recyclable & BOOLEAN & NOT NULL, DEFAULT FALSE, Packaging recyclability \\
+\hline
+packaging\_material & VARCHAR(255) & NULL, Packaging material type \\
+\hline
+local\_sourcing\_percentage & DECIMAL(5, 2) & NULL, \% ingredients sourced locally \\
+\hline
+fair\_trade\_percentage & DECIMAL(5, 2) & NULL, \% fair trade ingredients \\
+\hline
+organic\_percentage & DECIMAL(5, 2) & NULL, \% organic ingredients \\
+\hline
+biodiversity\_impact & TEXT & NULL, Impact on biodiversity \\
+\hline
+social\_impact & TEXT & NULL, Social and community impact \\
+\hline
+supplier\_count & INT & NULL, Number of suppliers \\
+\hline
+certifications & JSON & NULL, Current certifications \\
+\hline
+improvement\_goals & JSON & NULL, Sustainability improvement targets \\
+\hline
+overall\_sustainability\_score & DECIMAL(3, 2) & NULL, Aggregate score 0-10 \\
+\hline
+report\_url & VARCHAR(500) & NULL, Full report document URL \\
+\hline
+verified\_by & VARCHAR(255) & NULL, Third-party verifier \\
+\hline
+verified\_at & TIMESTAMP & NULL, Verification timestamp \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{sustainability\_reports table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: products (product\_id)
+\end{itemize}
+
+\textbf{User Visibility:}
+\begin{itemize}
+    \item Display sustainability badges on product pages
+    \item "Eco-friendly choice" highlighting
+    \item Compare sustainability across products
+    \item Sustainability score in search filters
+    \item Reward IceCoins for purchasing sustainable products
+\end{itemize}
+
+\newpage
+
+\section{Custom Box System}
+
+\subsection{Table 48: custom\_boxes}
+
+\begin{tablebox}{custom\_boxes - User-Created Custom Product Boxes}
+\textbf{Purpose:} Tracks custom box configurations created by users for orders.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} user\_id, order\_id\\
+\textbf{Indexes:} user\_id, order\_id, status
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+user\_id & BIGINT & FOREIGN KEY, NOT NULL, References users(id) ON DELETE CASCADE \\
+\hline
+order\_id & BIGINT & FOREIGN KEY, NULL, References orders(id) if ordered \\
+\hline
+box\_name & VARCHAR(255) & NOT NULL, User-defined name: "Family Party Box", "Dessert Sampler" \\
+\hline
+box\_type & ENUM & NOT NULL, Values: 'small', 'medium', 'large', 'extra\_large' \\
+\hline
+box\_capacity & INT & NOT NULL, Maximum items allowed in box \\
+\hline
+current\_item\_count & INT & NOT NULL, DEFAULT 0, Current items in box \\
+\hline
+base\_price & DECIMAL(10, 2) & NOT NULL, Box base price \\
+\hline
+items\_price & DECIMAL(10, 2) & NOT NULL, DEFAULT 0.00, Total price of items \\
+\hline
+total\_price & DECIMAL(10, 2) & NOT NULL, Base + items price \\
+\hline
+discount\_applied & DECIMAL(10, 2) & NOT NULL, DEFAULT 0.00, Box discount amount \\
+\hline
+status & ENUM & NOT NULL, DEFAULT 'draft', Values: 'draft', 'saved', 'ordered', 'abandoned' \\
+\hline
+is\_template & BOOLEAN & NOT NULL, DEFAULT FALSE, Save as reusable template \\
+\hline
+is\_public & BOOLEAN & NOT NULL, DEFAULT FALSE, Share with community \\
+\hline
+is\_gift & BOOLEAN & NOT NULL, DEFAULT FALSE, Gift box flag \\
+\hline
+gift\_message & TEXT & NULL, Personalized gift message \\
+\hline
+gift\_wrapping & BOOLEAN & NOT NULL, DEFAULT FALSE, Gift wrap service \\
+\hline
+share\_count & INT & NOT NULL, DEFAULT 0, Times shared if public \\
+\hline
+copy\_count & INT & NOT NULL, DEFAULT 0, Times copied by others \\
+\hline
+notes & TEXT & NULL, User notes about box \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+ordered\_at & TIMESTAMP & NULL, When box was ordered \\
+\hline
+\caption{custom\_boxes table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: users (user\_id), orders (order\_id)
+    \item One-to-Many: custom\_box\_items
+\end{itemize}
+
+\textbf{Box Types:}
+\begin{itemize}
+    \item \textbf{Small:} 4 items, 299 BDT base price
+    \item \textbf{Medium:} 6 items, 399 BDT base price
+    \item \textbf{Large:} 8 items, 499 BDT base price
+    \item \textbf{Extra Large:} 12 items, 699 BDT base price
+\end{itemize}
+
+\textbf{Features:}
+\begin{itemize}
+    \item Mix and match any products
+    \item Save as template for repeat orders
+    \item Share box configurations with community
+    \item Gift customization with personal message
+    \item Volume discounts on boxes
+\end{itemize}
+
+\newpage
+
+\subsection{Table 49: custom\_box\_items}
+
+\begin{tablebox}{custom\_box\_items - Items in Custom Boxes}
+\textbf{Purpose:} Individual products added to custom boxes with quantities.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} custom\_box\_id, product\_id\\
+\textbf{Indexes:} custom\_box\_id, product\_id
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+custom\_box\_id & BIGINT & FOREIGN KEY, NOT NULL, References custom\_boxes(id) ON DELETE CASCADE \\
+\hline
+product\_id & BIGINT & FOREIGN KEY, NOT NULL, References products(id) \\
+\hline
+quantity & INT & NOT NULL, DEFAULT 1, Quantity of this product \\
+\hline
+unit\_price & DECIMAL(10, 2) & NOT NULL, Price per unit at time of adding \\
+\hline
+subtotal & DECIMAL(10, 2) & NOT NULL, Quantity × unit price \\
+\hline
+customization\_notes & TEXT & NULL, Special requests for this item \\
+\hline
+sort\_order & INT & NOT NULL, DEFAULT 0, Display order in box \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+\caption{custom\_box\_items table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: custom\_boxes (custom\_box\_id), products (product\_id)
+\end{itemize}
+
+\textbf{Validation Rules:}
+\begin{itemize}
+    \item Total items cannot exceed box capacity
+    \item Each item takes one slot regardless of quantity
+    \item Minimum 50\% capacity filled to order
+    \item Price snapshots prevent price changes after box saved
+\end{itemize}
+
+\newpage
+
+\section{Stock Notification System}
+
+\subsection{Table 50: stock\_notifications}
+
+\begin{tablebox}{stock\_notifications - Out-of-Stock Alert Subscriptions}
+\textbf{Purpose:} User subscriptions for product back-in-stock notifications.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} user\_id, product\_id, location\_id\\
+\textbf{Indexes:} user\_id, product\_id, location\_id, status, UNIQUE(user\_id, product\_id, location\_id)
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+user\_id & BIGINT & FOREIGN KEY, NOT NULL, References users(id) ON DELETE CASCADE \\
+\hline
+product\_id & BIGINT & FOREIGN KEY, NOT NULL, References products(id) ON DELETE CASCADE \\
+\hline
+location\_id & BIGINT & FOREIGN KEY, NULL, References locations(id) - Specific location or NULL for any \\
+\hline
+notification\_preference & ENUM & NOT NULL, DEFAULT 'both', Values: 'push', 'email', 'sms', 'both' \\
+\hline
+status & ENUM & NOT NULL, DEFAULT 'active', Values: 'active', 'notified', 'cancelled', 'expired' \\
+\hline
+priority & ENUM & NOT NULL, DEFAULT 'normal', Values: 'low', 'normal', 'high' - User preference \\
+\hline
+min\_quantity & INT & NOT NULL, DEFAULT 1, Minimum stock level to trigger notification \\
+\hline
+notified\_at & TIMESTAMP & NULL, When notification was sent \\
+\hline
+expires\_at & TIMESTAMP & NULL, Subscription expiration (auto-expire after 30 days) \\
+\hline
+notes & TEXT & NULL, User notes about why they want this \\
+\hline
+ip\_address & VARCHAR(45) & NULL, IP at subscription time \\
+\hline
+device\_type & VARCHAR(50) & NULL, Device used to subscribe \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{stock\_notifications table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: users (user\_id), products (product\_id), locations (location\_id)
+\end{itemize}
+
+\textbf{Notification Flow:}
+\begin{enumerate}
+    \item User subscribes when product is out of stock
+    \item Status: \textbf{active} → Waiting for restock
+    \item Inventory system detects stock > min\_quantity
+    \item Trigger notification to all active subscribers
+    \item Status: \textbf{notified} → Notification sent
+    \item Auto-expire after 30 days if product never restocked
+\end{enumerate}
+
+\textbf{Features:}
+\begin{itemize}
+    \item Location-specific alerts (notify only for nearby stores)
+    \item Multi-channel delivery (push + email + SMS)
+    \item Priority settings for urgent needs
+    \item Track demand for out-of-stock products
+    \item Analytics: Most requested products
+    \item Limited time window after notification (12-24 hours priority)
+\end{itemize}
+
+\textbf{Analytics Value:}
+\begin{itemize}
+    \item Measure unmet demand
+    \item Prioritize restocking based on subscriber count
+    \item Identify popular products with supply issues
+    \item Forecast demand for inventory planning
+\end{itemize}
+
+\newpage
+
+\section{Summary}
+
+\begin{tcolorbox}[colback=primaryBlue!10,colframe=primaryBlue,arc=3mm,boxrule=1mm]
+\textbf{\large Part 5 Complete: Tables 41-50}
+
+\vspace{0.3cm}
+
+This document covers tables 41-50 of the SavoyConnect database schema:
+
+\begin{itemize}
+    \item \textbf{Community \& Social (4 tables):} user\_follows, user\_posts, post\_likes, post\_comments
+    \item \textbf{Digital Passport (3 tables):} digital\_passports, passport\_scans, sustainability\_reports
+    \item \textbf{Custom Box System (2 tables):} custom\_boxes, custom\_box\_items
+    \item \textbf{Stock Notifications (1 table):} stock\_notifications
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Key Features Implemented:}
+\begin{itemize}
+    \item Complete social networking features (follow, post, like, comment, reactions)
+    \item Threaded comment system with @mentions support
+    \item Blockchain-inspired product traceability with QR codes
+    \item Supply chain transparency and sustainability metrics
+    \item Detailed environmental impact tracking (carbon footprint, water usage, waste)
+    \item Custom box builder with mix-and-match products
+    \item Gift box customization with personal messages
+    \item Reusable box templates and public sharing
+    \item Intelligent stock notification system with multi-channel alerts
+    \item Location-specific stock alerts for nearby availability
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Next Document:} Part 6 will cover tables 51-60 (Health Tracking, Gamification Badges, Leaderboards, Trust \& Verification, Feedback)
+
+\end{tcolorbox}
+
+\end{document}

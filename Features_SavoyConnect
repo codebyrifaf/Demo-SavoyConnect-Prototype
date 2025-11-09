@@ -1,0 +1,743 @@
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage{multicol}
+\usepackage{fontawesome5}
+\usepackage{tikz}
+
+% Page geometry
+\geometry{
+    left=2cm,
+    right=2cm,
+    top=2.5cm,
+    bottom=2.5cm
+}
+
+% Color definitions
+\definecolor{primaryBlue}{RGB}{0, 102, 204}
+\definecolor{accentOrange}{RGB}{255, 127, 0}
+\definecolor{darkGray}{RGB}{51, 51, 51}
+\definecolor{lightGray}{RGB}{245, 245, 245}
+\definecolor{sectionBlue}{RGB}{25, 118, 210}
+\definecolor{subsectionTeal}{RGB}{0, 150, 136}
+
+% Title formatting
+\titleformat{\section}
+  {\color{sectionBlue}\Large\bfseries}
+  {\thesection}{1em}{}[\titlerule]
+
+\titleformat{\subsection}
+  {\color{subsectionTeal}\large\bfseries}
+  {\thesubsection}{1em}{}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryBlue,
+    filecolor=accentOrange,
+    urlcolor=primaryBlue,
+    pdftitle={SavoyConnect Feature Brief},
+    pdfauthor={Rifaf Rahman}
+}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\color{primaryBlue}\textbf{SavoyConnect Features}}
+\fancyhead[R]{\color{darkGray}\thepage}
+\fancyfoot[C]{\color{darkGray}\small Prepared by Rifaf Rahman | October 2025}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+% Custom boxes
+\newtcolorbox{featurebox}[1]{
+  colback=lightGray,
+  colframe=primaryBlue,
+  fonttitle=\bfseries,
+  title=#1,
+  arc=2mm,
+  boxrule=0.5mm
+}
+
+\newtcolorbox{kpibox}{
+  colback=accentOrange!10,
+  colframe=accentOrange,
+  arc=2mm,
+  boxrule=0.5mm,
+  left=5pt,
+  right=5pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\begin{document}
+
+% Title page
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture,overlay]
+        \fill[primaryBlue] (current page.north west) rectangle ([yshift=-8cm]current page.north east);
+    \end{tikzpicture}
+    
+    \vspace*{2cm}
+    
+    {\color{white}\Huge\bfseries SavoyConnect}\\[0.5cm]
+    {\color{white}\LARGE Consumer-Centric Features}\\[2cm]
+    
+    \vspace{3cm}
+    
+    \begin{tcolorbox}[colback=white,colframe=accentOrange,width=0.8\textwidth,arc=3mm,boxrule=1mm]
+        \begin{tabular}{ll}
+            \textbf{\color{primaryBlue}Prepared by:} & Rifaf Rahman \\[0.3cm]
+            \textbf{\color{primaryBlue}Role:} & Intern \\[0.3cm]
+            \textbf{\color{primaryBlue}Company:} & Data Limited \\[0.3cm]
+            \textbf{\color{primaryBlue}Date:} & October 2025 \\
+        \end{tabular}
+    \end{tcolorbox}
+    
+    \vfill
+    
+    {\large\color{darkGray} Technical Feature Documentation}
+    
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% Main content
+\section{Core Commerce Features}
+
+\subsection{Ordering Flow (Pieces or Liters)}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Order by pieces (boxes) or liters with real-time totals, delivery fee threshold, validation, and a structured delivery form.
+
+\vspace{0.3cm}
+\textbf{Why:} Supports retail carton flows and bulk ordering.
+
+\vspace{0.3cm}
+\textbf{User Value:} Clear pricing/minimums; fast, trustworthy checkout.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Fewer manual corrections; higher conversion; controllable unit economics.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Checkout conversion, Average Order Value (AOV), repeat order rate, validation drop-offs.
+\end{kpibox}
+
+
+\subsection{Delivery Tracking}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Real-time order tracking with live status updates (Order Confirmed, Preparing, Out for Delivery, Delivered), delivery personnel details, estimated arrival time, and live map showing delivery location. Push notifications for each status change.
+
+\vspace{0.3cm}
+\textbf{Why:} Reduces delivery anxiety and support inquiries by providing transparency throughout the fulfillment process.
+
+\vspace{0.3cm}
+\textbf{User Value:} Peace of mind knowing exactly when their order will arrive; ability to plan accordingly.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Reduced "Where is my order?" support tickets; improved delivery success rates; higher customer satisfaction.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Tracking page views per order, delivery success rate, support ticket reduction, customer satisfaction score (CSAT) for delivery, on-time delivery rate.
+\end{kpibox}
+
+\subsection{Payment Methods \& Preferences}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Settings area for payment methods and user preferences .
+
+\vspace{0.3cm}
+\textbf{Why:} Faster repeat checkout; fewer payment failures.
+
+\vspace{0.3cm}
+\textbf{User Value:} Saved methods and consistent defaults.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Higher repeat rate; lower friction and support load.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Saved-method penetration, repeat checkout time, payment failure rate.
+\end{kpibox}
+
+\subsection{Customer Care, Help Center, About}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Customer Care modal, Help Center entry, and About modal within Settings.
+
+\vspace{0.3cm}
+\textbf{Why:} Industrial buyers expect clear support and self-service.
+
+\vspace{0.3cm}
+\textbf{User Value:} Faster answers and resolution.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Lower churn; deflection of simple tickets.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Customer Satisfaction Score (CSAT), First Response Time, Time to Resolution, deflection rate.
+\end{kpibox}
+
+\newpage
+\section{User Engagement \& Social Features}
+
+\subsection{Flavor Ratings \& Reviews}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Star ratings + text reviews per flavor, with character count and report action.
+
+\vspace{0.3cm}
+\textbf{Why:} Social proof improves conversion and guides product improvements.
+
+\vspace{0.3cm}
+\textbf{User Value:} Trust in flavor choices; voice in product quality.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Conversion lift; sentiment telemetry by SKU/region/batch.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Review coverage, average rating, sentiment trend, conversion lift on reviewed SKUs.
+\end{kpibox}
+
+\subsection{Store Reviews (Location-level)}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Reviews for store/outlet locations in addition to products.
+
+\vspace{0.3cm}
+\textbf{Why:} Surfaces service quality and operational issues by location.
+
+\vspace{0.3cm}
+\textbf{User Value:} Informed decisions about where to purchase.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Ops insights; targeted training and QA.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Store (Net Promoter Score) NPS, review velocity by region, correlation to sales/returns.
+\end{kpibox}
+
+\subsection{Community Feed}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} A brand-safe social feed with a composer, rich post cards, and interactions. Post types include Flavor Reviews, Challenge Completed badges, photo posts, and stories with hashtags. Users can like, comment, and share.
+
+\vspace{0.3cm}
+\textbf{Why:} Turns authentic user moments into ongoing social proof and distribution, amplifying core funnels.
+
+\vspace{0.3cm}
+\textbf{User Value:} Easy way to share experiences, celebrate challenge completions, discover trending flavors, and interact with the community.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Continuous UGC pipeline, increased reach via shares, and behavioral signals to inform merchandising and campaigns.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} DAU/WAU on feed, posts/day, engagement rate (likes+comments+shares), share-out rate, CTR from feed to flavor/review/challenge, moderation pass rate.
+\end{kpibox}
+
+\textbf{\color{subsectionTeal}Notes:} Brand-safe moderation and reporting/flagging, spam/abuse controls, optional tag filters, and privacy controls supported.
+
+\newpage
+\section{Content \& Discovery}
+
+\subsection{Recipe Discovery (Catalog + Filters + Details)}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} "All Recipes" screen with categories/filters, images, and a detailed view (ingredients, steps). Links to relevant flavors.
+
+\vspace{0.3cm}
+\textbf{Why:} Content marketing that converts interest into product demand.
+
+\vspace{0.3cm}
+\textbf{User Value:} Inspiration and step-by-step guidance.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Cross-sell; longer sessions; brand affinity.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Recipe views/session, filter usage, CTR to product/order, assisted conversions.
+\end{kpibox}
+
+\subsection{Search \& History (Recipes)}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Basic recipe search/history tracking.
+
+\vspace{0.3cm}
+\textbf{Why:} Return to recent items quickly; inform content strategy.
+
+\vspace{0.3cm}
+\textbf{User Value:} Convenience.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Insights into content demand.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Search frequency, top queries, revisit rate.
+\end{kpibox}
+
+\subsection{News \& Campaign Feed}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} In-app feed for flavor launches, CSR updates, seasonal offers.
+
+\vspace{0.3cm}
+\textbf{Why:} Always-on consumer communication channel.
+
+\vspace{0.3cm}
+\textbf{User Value:} Stay informed about what matters to them.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Increased campaign reach without paid media.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Feed views, post CTR, offer redemption.
+\end{kpibox}
+
+\newpage
+\section{Loyalty \& Rewards}
+
+\subsection{Wallet \& Loyalty (IceCoins UI)}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} A complete loyalty hub with:
+\begin{itemize}[leftmargin=*]
+    \item Wallet home card showing balance with "Earn More" and "Redeem" CTAs
+    \item Recent Activity ledger with positive/negative entries
+    \item Available Rewards gallery and Redeem Rewards list with tile cards
+   
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Why:} Makes loyalty tangible by showing value, history, and clear ways to redeem—driving retention and frequency.
+
+\vspace{0.3cm}
+\textbf{User Value:} Know exactly how many coins they have, where they came from, and what they can get—redeem in a tap.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Increases repeat rate and Average Revenue per Unit (ARPU); creates room for targeted promos and cross-feature ties.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Wallet adoption, redemption rate, time-to-first redemption, earn:burn ratio, outstanding liability, promo uplift, share of accrual from challenges.
+\end{kpibox}
+
+\textbf{\color{subsectionTeal}Notes:} In production, keep a server-side ledger, anti-abuse checks, expiration policy, and dispute workflow. Integrates with Promotions \& Ads Center for campaigns.
+
+\subsection{Challenges \& Missions (IceCoins)}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} A goal-based challenge system with progress tracking and IceCoins rewards. Examples:
+\begin{itemize}[leftmargin=*]
+    \item "Flavor Explorer — Try 5 new flavors this month"
+    \item "Social Star — Share 3 ice cream photos"
+    \item "Eco Warrior — Use your own cup 5 times"
+\end{itemize}
+Supports time-bounded windows (weekly/monthly), per-challenge progress bars, and instant reward issuance upon completion.
+
+\vspace{0.3cm}
+\textbf{Why:} Nudge high-value behaviors across trial, content creation, and sustainability.
+
+\vspace{0.3cm}
+\textbf{User Value:} Clear goals, visible progress, and meaningful rewards.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Increased (Stock Keeping Unit) SKU trial, steady UGC supply, and adoption of eco behaviors.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Challenge opt-in rate, completion rate, average IceCoins issued/user, lift to conversion post-completion, UGC submissions approved, eco action completions, abuse detection rate.
+\end{kpibox}
+
+\subsection{Referral / Pyramid Rewards}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Invite flow rewarding both referrer and referee; optional tiered bonuses.
+
+\vspace{0.3cm}
+\textbf{Why:} Harnesses word-of-mouth at scale.
+
+\vspace{0.3cm}
+\textbf{User Value:} Earn rewards by inviting friends.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Low-CAC acquisition channel.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Invites sent, acceptance rate, k-factor, cost per acquired user.
+\end{kpibox}
+
+\subsection{Promotions \& Ads Center}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Centralized, brand-safe promotional surfaces for campaigns such as "Double IceCoins Week." Supports hero banners, feed cards, and section headers with gradients/imagery. Campaigns can deep-link to wallet, offers, products, or challenges.
+
+\vspace{0.3cm}
+\textbf{Why:} A scalable way to broadcast offers and seasonal initiatives without app updates.
+
+\vspace{0.3cm}
+\textbf{User Value:} Clear visibility of active promotions and easy one-tap access.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Higher reach and measurable uplift for campaigns; flexible targeting and timing.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Banner viewable impressions, CTR, assist to conversion, incremental revenue vs. baseline, frequency cap hit rate, creative A/B test winner rate.
+\end{kpibox}
+
+\newpage
+\section{Location \& Inventory}
+
+\subsection{Nearby Availability Finder}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Search a flavor and see nearby retailers, Depo, Freezers with live/near-real-time availability; suggest similar substitutes when unavailable.
+
+\vspace{0.3cm}
+\textbf{Why:} Reduces lost sales due to stock-outs and increases user satisfaction.
+
+\vspace{0.3cm}
+\textbf{User Value:} Saves time finding desired products; smart substitutes.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Higher conversion; better inventory utilization.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Successful find rate, substitute acceptance rate, store visit CTR.
+\end{kpibox}
+
+\subsection{Map View + Directions}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Integrated map (Google Maps/Mapbox) of nearby Savoy retailers, Depo's and Freezers with filters (open now) and one-tap directions.
+
+\vspace{0.3cm}
+\textbf{Why:} Bridges discovery to physical purchase.
+
+\vspace{0.3cm}
+\textbf{User Value:} Visual proximity and fast navigation.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Drives footfall to retail partners; tracks campaign effectiveness by region.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Map opens, filter usage, directions taps.
+\end{kpibox}
+
+\subsection{Stock Notification System}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} "Notify me" when a flavor is back in stock nearby; alerts via in-app and/or push/email.
+
+\vspace{0.3cm}
+\textbf{Why:} Recovers demand that would otherwise churn.
+
+\vspace{0.3cm}
+\textbf{User Value:} Confidence they won't miss desired items.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Increased recapture rate; demand signaling for replenishment.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Notify opt-ins, alert open rate, post-alert conversion.
+\end{kpibox}
+
+\newpage
+\section{Personalization \& AI}
+
+\subsection{AI Flavor Recommendation Engine}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Personalized flavor suggestions using preferences, history, seasonality, and weather.
+
+\vspace{0.3cm}
+\textbf{Why:} Improves discovery and basket expansion.
+
+\vspace{0.3cm}
+\textbf{User Value:} Feels understood; less decision fatigue.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Higher (Average Order Value) AOV and conversion from recommendations.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Rec CTR, add-to-order from recs, lift vs. control.
+\end{kpibox}
+
+\subsection{Digital Ice Cream Passport}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Tracks flavors tried, awards badges ("Chocolate Lover", "Explorer"), and visualizes progress.
+
+\vspace{0.3cm}
+\textbf{Why:} Makes exploration rewarding.
+
+\vspace{0.3cm}
+\textbf{User Value:} Fun collection journey.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Increased SKU trial; insight into taste segments.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Badges earned, flavors tried per user, repeat rate.
+\end{kpibox}
+
+\subsection{Make-Your-Own-Box}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Build a personalized gift box by selecting individual scoops/flavors per slot (e.g., 4–6 scoops), choose packaging, add a gift message, recipient details, and schedule delivery or pickup. Also supports "for me" self-purchase.
+
+\vspace{0.3cm}
+\textbf{Why:} Personalization and gifting increase perceived value and drive premium orders.
+
+\vspace{0.3cm}
+\textbf{User Value:} Tailored selection with an easy end-to-end gifting flow.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Higher margins on curated bundles; rich preference data for merchandising and campaigns.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Gift box creations, completion rate, ARPB (average revenue per box), on-time delivery rate, gift redemption success.
+\end{kpibox}
+
+\subsection{Birthday Gift Feature}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Detects birthdays and issues a time-bound coupon or greeting.
+
+\vspace{0.3cm}
+\textbf{Why:} Human touch that drives a high-conversion moment.
+
+\vspace{0.3cm}
+\textbf{User Value:} Delight.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Strong, trackable re-engagement.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Coupon open/redeem rate, birthday cohort retention.
+\end{kpibox}
+
+\newpage
+\section{Health \& Sustainability}
+
+\subsection{Health \& Nutrition}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} A dedicated hub for health-conscious shopping including:
+\begin{itemize}[leftmargin=*]
+    \item Health Profile (weight, height, auto-calculated BMI)
+    \item Dietary preferences and allergies
+    \item Daily calorie goal with progress tracking
+    \item BMI Calculator
+    \item Personalized Recommendations with "Perfect Match" badge
+    \item Side-by-side Nutrition Compare for two flavors
+    \item Clear Allergen Information badges per flavor
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Why:} Helps users quickly identify products that fit their goals and restrictions while building trust.
+
+\vspace{0.3cm}
+\textbf{User Value:} Safer choices for allergens/diets, awareness of calories and BMI, confidence via "Perfect Match."
+
+\vspace{0.3cm}
+\textbf{Company Value:} Expands addressable audience, improves recommendation relevance, reduces post-purchase dissatisfaction.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Health profile completion rate, BMI calculator usage, users with a set calorie goal, CTR on "Recommended for you," conversion lift for "Perfect Match" items, allergen filter usage, nutrition-compare usage.
+\end{kpibox}
+
+\textbf{\color{subsectionTeal}Notes:} Not medical advice; provide plain-language disclaimer. Respect privacy by storing only what's necessary. Integrates with Recommendations, Search/Filters, and product detail pages.
+\newpage
+\subsection{Eco Meter \& Sustainability Impact Tracker}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Shows per-purchase sustainability contributions (e.g., plastic saved, trees planted) with badges, plus longitudinal tracking of personal eco impact with levels (Eco Beginner → Eco Hero).
+
+\vspace{0.3cm}
+\textbf{Why:} Aligns with values-driven purchasing and sustains engagement over time.
+
+\vspace{0.3cm}
+\textbf{User Value:} Recognition for positive impact, motivation through progress and levels.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Differentiation and CSR storytelling; ongoing re-engagement and brand affinity.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Badge unlock rate, eco views/session, return visits to tracker, level progression, correlation to retention, cohort retention.
+\end{kpibox}
+
+\newpage
+\section{Gamification \& Engagement}
+
+\subsection{Games Hub (Online, Offline, AR)}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} A centralized hub for Online and Offline games (e.g., Scratch, Memory, Puzzle), location-aware AR games, and city-wise competitions. Includes a catalog of popular game subscriptions purchasable with IceCoins, plus event-based mini-games.
+
+\vspace{0.3cm}
+\textbf{Why:} Scalable engagement engine that deepens brand connection, supports local activations, and ties play directly to loyalty.
+
+\vspace{0.3cm}
+\textbf{User Value:} Fun experiences (online/offline/AR), local challenges, and the ability to unlock or subscribe to games using IceCoins.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Higher time-on-app, loyalty adoption (IceCoins burn), regional community engagement, partnership revenue via subscriptions.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Games DAU/WAU/MAU, sessions per user, average session length, IceCoins redemption/burn in games, subscription conversion rate, AR participation rate, city event participation, retention lift vs. non-gamers, post-game order conversion.
+\end{kpibox}
+
+\subsection{Leaderboards (Engagement)}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Leaderboard UI with period toggles (weekly/monthly/all-time) for the most wallet point gainer.
+
+\vspace{0.3cm}
+\textbf{Why:} Optional engagement mechanic for community and contests.
+
+\vspace{0.3cm}
+\textbf{User Value:} Recognition and competition.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Retention through light gamification.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Views, period toggle usage, retention lift among participants.
+\end{kpibox}
+
+\newpage
+\section{Trust \& Transparency}
+
+\subsection{Barcode/QR Scan}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Scan package QR/barcode to show authenticity, ingredient/allergen info, active promos and increase wallet points.
+
+\vspace{0.3cm}
+\textbf{Why:} Builds trust and drives promotional engagement at point-of-use.
+
+\vspace{0.3cm}
+\textbf{User Value:} Safety and savings.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Anti-counterfeit telemetry; promo attribution.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Scans per 1,000 packs, promo redemption rate, authenticity checks, earn points.
+\end{kpibox}
+
+\subsection{In-App Feedback \& CSAT}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} A "Share Your Feedback" CTA card that opens a lightweight feedback modal. Users can select a category (Bug, Suggestion, Compliment, Other), rate satisfaction , add free-text comments, and optionally attach a screenshot.
+
+\vspace{0.3cm}
+\textbf{Why:} Captures the voice of the customer within context, closing the loop faster.
+
+\vspace{0.3cm}
+\textbf{User Value:} Smooth way to be heard and help improve the experience.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Continuous Quality of Experience (QoE) signal, prioritized backlog via categorization, early detection of issues.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Feedback submission rate (per 1,000 sessions), completion rate, time to first response, \% categorized, top themes, fix time for bug-classified items.
+\end{kpibox}
+
+\textbf{\color{subsectionTeal}Notes:} Respect privacy and consent. Basic rate limiting and spam checks. Optional screenshot capture stub in prototype.
+
+\newpage
+\section{Infrastructure \& Platform}
+
+\subsection{Accounts \& Authentication}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Email/password Login and Sign Up screens. Sign Up collects full name, email, phone, date of birth, gender, address, city; password with minimum length and confirmation; mandatory checkbox to accept Terms \& Conditions and Privacy Policy.
+
+\vspace{0.3cm}
+\textbf{Why:} Enables personalization, saved preferences, loyalty, and order history while ensuring compliance and consent capture.
+
+\vspace{0.3cm}
+\textbf{User Value:} Secure access, faster repeat actions with saved profile info, and control over their data.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Identified users for targeted experiences and offers, improved fraud prevention, and compliant data collection.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Sign-up completion rate, login success rate, error rate by field, drop-off step analytics, verified email/phone rate, password reset success, returning user share.
+\end{kpibox}
+
+\textbf{\color{subsectionTeal}Notes:} Production hardening includes secure password hashing, rate limiting, bot protection, email/OTP verification, and social login options. Regional compliance for consent and data retention required.
+
+\subsection{Notifications \& Toasts}
+\begin{featurebox}{Feature Overview}
+\textbf{What:} Non-blocking notifications for key actions (e.g., ordering, games placeholders).
+
+\vspace{0.3cm}
+\textbf{Why:} Inform users without breaking flow.
+
+\vspace{0.3cm}
+\textbf{User Value:} Clear feedback.
+
+\vspace{0.3cm}
+\textbf{Company Value:} Better UX and reduced support confusion.
+\end{featurebox}
+
+\begin{kpibox}
+\textbf{KPIs:} Error vs. success rate, frequency of repeat attempts.
+\end{kpibox}
+
+% \newpage
+% \section*{Summary}
+% \addcontentsline{toc}{section}{Summary}
+
+% This document outlines \textbf{29 comprehensive features} for the SavoyConnect platform, organized into the following categories:
+
+% \begin{multicols}{2}
+% \begin{itemize}[leftmargin=*]
+%     \item \textbf{\color{sectionBlue}Core Commerce} (4 features)
+%     \item \textbf{\color{sectionBlue}User Engagement \& Social} (3 features)
+%     \item \textbf{\color{sectionBlue}Content \& Discovery} (3 features)
+%     \item \textbf{\color{sectionBlue}Loyalty \& Rewards} (4 features)
+%     \item \textbf{\color{sectionBlue}Location \& Inventory} (3 features)
+%     \item \textbf{\color{sectionBlue}Personalization \& AI} (4 features)
+%     \item \textbf{\color{sectionBlue}Health \& Sustainability} (2 features)
+%     \item \textbf{\color{sectionBlue}Gamification \& Engagement} (2 features)
+%     \item \textbf{\color{sectionBlue}Trust \& Transparency} (2 features)
+%     \item \textbf{\color{sectionBlue}Infrastructure \& Platform} (2 features)
+% \end{itemize}
+% \end{multicols}
+
+% \vspace{0.5cm}
+
+% Each feature has been designed with:
+% \begin{itemize}
+%     \item Clear \textbf{user value propositions}
+%     \item Measurable \textbf{company benefits}
+%     \item Specific \textbf{KPIs for tracking success}
+%     \item Technical and operational \textbf{implementation notes}
+% \end{itemize}
+
+% \vspace{0.5cm}
+
+% \begin{tcolorbox}[colback=primaryBlue!10,colframe=primaryBlue,arc=3mm,boxrule=1mm]
+% \textbf{\large\color{primaryBlue}Key Highlights:}
+% \begin{itemize}
+%     \item \textbf{Consumer-First Design:} Every feature prioritizes user experience and value
+%     \item \textbf{Data-Driven:} Comprehensive KPI framework for measurement and optimization
+%     \item \textbf{Scalable Architecture:} Built for growth with modular, interconnected features
+%     \item \textbf{Business Impact:} Clear ROI through conversion, retention, and engagement metrics
+% \end{itemize}
+% \end{tcolorbox}
+
+\end{document}

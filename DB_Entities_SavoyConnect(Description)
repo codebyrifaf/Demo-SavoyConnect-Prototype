@@ -1,0 +1,918 @@
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\usepackage{multicol}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tikz}
+
+% Page geometry
+\geometry{
+    left=2cm,
+    right=2cm,
+    top=2.5cm,
+    bottom=2.5cm
+}
+
+% Color definitions
+\definecolor{primaryBlue}{RGB}{0, 102, 204}
+\definecolor{accentOrange}{RGB}{255, 127, 0}
+\definecolor{darkGray}{RGB}{51, 51, 51}
+\definecolor{lightGray}{RGB}{245, 245, 245}
+\definecolor{mvpRed}{RGB}{220, 53, 69}
+\definecolor{phase2Orange}{RGB}{255, 127, 0}
+\definecolor{phase3Blue}{RGB}{0, 123, 255}
+\definecolor{supportGreen}{RGB}{40, 167, 69}
+
+% Title formatting
+\titleformat{\section}
+  {\color{primaryBlue}\Large\bfseries}
+  {\thesection}{1em}{}[\titlerule]
+
+\titleformat{\subsection}
+  {\color{accentOrange}\large\bfseries}
+  {\thesubsection}{1em}{}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryBlue,
+    filecolor=accentOrange,
+    urlcolor=primaryBlue,
+    pdftitle={SavoyConnect Database Schema},
+    pdfauthor={Rifaf Rahman}
+}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\color{primaryBlue}\textbf{SavoyConnect Database}}
+\fancyhead[R]{\color{darkGray}\thepage}
+\fancyfoot[C]{\color{darkGray}\small Database Schema Design | Prepared by Rifaf Rahman | November 2025}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+% Custom boxes
+\newtcolorbox{phasebox}[2]{
+  colback=#1!10,
+  colframe=#1,
+  fonttitle=\bfseries\large,
+  title=#2,
+  arc=2mm,
+  boxrule=1mm
+}
+
+\newtcolorbox{summarybox}{
+  colback=primaryBlue!10,
+  colframe=primaryBlue,
+  arc=2mm,
+  boxrule=1mm,
+  left=5pt,
+  right=5pt,
+  top=5pt,
+  bottom=5pt
+}
+
+\begin{document}
+
+% Title page
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture,overlay]
+        \fill[primaryBlue] (current page.north west) rectangle ([yshift=-8cm]current page.north east);
+    \end{tikzpicture}
+    
+    \vspace*{2cm}
+    
+    {\color{white}\Huge\bfseries SavoyConnect}\\[0.5cm]
+    {\color{white}\LARGE Database Schema Design}\\[2cm]
+    
+    \vspace{3cm}
+    
+    \begin{tcolorbox}[colback=white,colframe=accentOrange,width=0.8\textwidth,arc=3mm,boxrule=1mm]
+        \begin{tabular}{ll}
+            \textbf{\color{primaryBlue}Prepared by:} & Rifaf Rahman \\[0.3cm]
+            \textbf{\color{primaryBlue}Role:} & Intern \\[0.3cm]
+            \textbf{\color{primaryBlue}Company:} & Data Limited \\[0.3cm]
+            \textbf{\color{primaryBlue}Date:} & November 2025 \\[0.3cm]
+            \textbf{\color{primaryBlue}Total Tables:} & 98 \\[0.3cm]
+            \textbf{\color{primaryBlue}Timeline:} & 6 Months to Production \\
+        \end{tabular}
+    \end{tcolorbox}
+    
+    \vfill
+    
+    {\large\color{darkGray} Production-Ready Industrial Database Design}
+    
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Executive Summary}
+
+\begin{summarybox}
+The SavoyConnect database schema comprises \textbf{98 tables} organized into four phased implementation stages over a 6-month production timeline. This design supports a comprehensive consumer-centric platform with core commerce, loyalty, social engagement, personalization, and analytics capabilities.
+\end{summarybox}
+
+\subsection{Phase Distribution}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|p{6cm}|}
+\hline
+
+\textbf{Phase} & \textbf{Tables} & \textbf{Timeline} & \textbf{Focus Area} \\
+\hline
+MVP & 21 & Months 1-3 & Core commerce, authentication, ordering, delivery \\
+\hline
+Phase 2 & 16 & Months 3-4 & Loyalty, engagement, reviews, promotions \\
+\hline
+Phase 3 & 18 & Months 4-5 & Social features, recipes, custom boxes \\
+\hline
+Supporting & 25 & Months 5-6 & Analytics, gamification, health, admin \\
+\hline
+
+\textbf{Total} & \textbf{80} & \textbf{6 Months} & \textbf{Complete Platform} \\
+\hline
+\end{tabular}
+\caption{Database Implementation Phases}
+\end{table}
+
+\newpage
+
+\section{MVP Tables (Months 1-3)}
+
+\begin{phasebox}{mvpRed}{MVP Phase: Core Commerce \& Authentication (21 Tables)}
+\textbf{Priority:} Critical foundation for platform launch
+\end{phasebox}
+
+\subsection{User Management \& Authentication (6 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\endfirsthead
+
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\endhead
+
+\texttt{users} & Core user accounts with authentication credentials (email, password hash, phone, status) \\
+\hline
+\texttt{user\_profiles} & Extended user information including full name, date of birth, gender, city, profile picture \\
+\hline
+\texttt{user\_preferences} & Dietary preferences, allergen restrictions, notification settings, language preferences \\
+\hline
+\texttt{user\_addresses} & Multiple delivery addresses per user with default flag, geocoding coordinates \\
+\hline
+\texttt{sessions} & Active user sessions with tokens, device info, expiration tracking \\
+\hline
+\texttt{password\_resets} & Password reset tokens with expiration and usage tracking \\
+\hline
+\caption{User Management Tables}
+\end{longtable}
+
+\subsection{Product Catalog (5 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{products} & Ice cream flavors and SKUs with name, description, price, unit type (pieces/liters), active status \\
+\hline
+\texttt{product\_categories} & Product categorization (e.g., Premium, Classic, Seasonal) with hierarchy support \\
+\hline
+\texttt{product\_nutrition} & Nutritional information per product: calories, protein, carbs, fats, sugar, serving size \\
+\hline
+\texttt{product\_allergens} & Allergen information (dairy, nuts, gluten, etc.) with severity levels \\
+\hline
+\texttt{product\_images} & Product image URLs with type (primary, gallery), sort order, alt text \\
+\hline
+\caption{Product Catalog Tables}
+\end{longtable}
+
+\subsection{Order Management (5 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{orders} & Customer orders with total amount, delivery fee, status, timestamps, delivery address \\
+\hline
+\texttt{order\_items} & Line items within orders: product, quantity, unit price, subtotal, unit type \\
+\hline
+\texttt{order\_status\_history} & Audit trail of order status transitions with timestamps and actor info \\
+\hline
+\texttt{payments} & Payment transactions with method, amount, status, gateway response, timestamps \\
+\hline
+\texttt{payment\_methods} & Saved payment methods (cards, mobile wallets) with tokenization, default flag \\
+\hline
+\caption{Order Management Tables}
+\end{longtable}
+
+\subsection{Location \& Inventory (3 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{locations} & Stores, depots, and freezers with address, geocoordinates, type, operating hours, contact info \\
+\hline
+\texttt{location\_inventory} & Real-time stock levels by location and product with last updated timestamp \\
+\hline
+\caption{Location \& Inventory Tables}
+\end{longtable}
+
+\subsection{Delivery Tracking (2 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{delivery\_personnel} & Delivery driver information: name, phone, vehicle details, current location, status \\
+\hline
+\texttt{deliveries} & Delivery assignments linking orders to personnel with estimated/actual times \\
+\hline
+\texttt{delivery\_tracking\_events} & Granular delivery status updates with GPS coordinates, timestamps, status types \\
+\hline
+\caption{Delivery Tracking Tables}
+\end{longtable}
+
+\newpage
+
+\section{Phase 2 Tables (Months 3-4)}
+
+\begin{phasebox}{phase2Orange}{Phase 2: Engagement \& Loyalty (16 Tables)}
+\textbf{Priority:} Retention and repeat purchase drivers
+\end{phasebox}
+
+\subsection{Loyalty \& Wallet System (4 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{wallet\_accounts} & IceCoins wallet balances per user with current balance, lifetime earned, lifetime spent \\
+\hline
+\texttt{wallet\_transactions} & Complete ledger of wallet activity: earn/burn events, amounts, sources, timestamps \\
+\hline
+\texttt{loyalty\_rewards} & Available rewards catalog with IceCoin cost, reward type, expiration, availability \\
+\hline
+\texttt{reward\_redemptions} & Redemption history linking users, rewards, costs, and redemption timestamps \\
+\hline
+\caption{Loyalty \& Wallet Tables}
+\end{longtable}
+
+\subsection{Challenges \& Missions (3 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{challenges} & Challenge definitions with title, description, reward amount, duration, completion criteria \\
+\hline
+\texttt{user\_challenges} & User enrollment and progress tracking per challenge with status, progress percentage \\
+\hline
+\texttt{challenge\_completions} & Completed challenge records with completion time, rewards issued, validation status \\
+\hline
+\caption{Challenges \& Missions Tables}
+\end{longtable}
+
+\subsection{Reviews \& Ratings (3 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{product\_reviews} & Flavor ratings (1-5 stars) and text reviews with character limits, verification status \\
+\hline
+\texttt{location\_reviews} & Store/outlet reviews with ratings, service quality feedback, timestamps \\
+\hline
+\texttt{review\_reports} & Flagged/reported reviews with report reason, status, moderator notes \\
+\hline
+\caption{Reviews \& Ratings Tables}
+\end{longtable}
+\newpage
+\subsection{Referrals \& Promotions (4 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{referrals} & Referral tracking with referrer, referee, status, rewards for both parties \\
+\hline
+\texttt{promotions} & Campaign and promotion definitions with code, discount type, validity dates, conditions \\
+\hline
+\texttt{promotion\_redemptions} & Promotion usage tracking with order association, discount applied, timestamps \\
+\hline
+\texttt{user\_promotions} & Personalized promotion assignments with targeting criteria, usage limits \\
+\hline
+\caption{Referrals \& Promotions Tables}
+\end{longtable}
+
+\subsection{Notifications (2 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{notifications} & Push/email notification queue with message content, delivery status, read status \\
+\hline
+\texttt{notification\_preferences} & User notification channel preferences (push, email, SMS) by notification type \\
+\hline
+\caption{Notification Tables}
+\end{longtable}
+
+\newpage
+
+\section{Phase 3 Tables (Months 4-5)}
+
+\begin{phasebox}{phase3Blue}{Phase 3: Advanced Features \& Social (18 Tables)}
+\textbf{Priority:} Differentiation and community building
+\end{phasebox}
+
+\subsection{Recipe Discovery (5 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{recipes} & Recipe catalog with title, description, prep time, difficulty, servings, category \\
+\hline
+\texttt{recipe\_ingredients} & Ingredients per recipe with quantity, unit, optional flag, product links \\
+\hline
+\texttt{recipe\_steps} & Step-by-step instructions with order, description, optional images \\
+\hline
+\texttt{recipe\_images} & Recipe images (hero, step photos) with URLs, types, sort order \\
+\hline
+\texttt{user\_recipe\_history} & User recipe views, favorites, completed flag, last viewed timestamp \\
+\hline
+\caption{Recipe Discovery Tables}
+\end{longtable}
+
+\subsection{Community \& Social Feed (6 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{news\_posts} & News and campaign feed posts with title, content, images, publication dates \\
+\hline
+\texttt{community\_posts} & User-generated social feed posts with text, images, hashtags, post type \\
+\hline
+\texttt{post\_likes} & Post like tracking with user, post, and timestamp \\
+\hline
+\texttt{post\_comments} & Comments on posts with text, user, parent comment (threading), timestamps \\
+\hline
+\texttt{post\_shares} & Share tracking with share destination, count, timestamps \\
+\hline
+\texttt{post\_reports} & Flagged posts with report reason, reporter, moderation status, moderator action \\
+\hline
+\caption{Community \& Social Tables}
+\end{longtable}
+
+\subsection{Digital Passport \& Badges (3 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{user\_badges} & Earned badges per user with badge type, earn date, visibility settings \\
+\hline
+\texttt{badge\_definitions} & Badge catalog defining badge types, criteria, icons, rarity levels \\
+\hline
+\texttt{flavor\_tries} & Tracking of flavors tried by users with first try date, try count \\
+\hline
+\caption{Digital Passport Tables}
+\end{longtable}
+
+\subsection{Custom Boxes \& Gifts (3 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{custom\_boxes} & Make-your-own-box orders with box size, packaging type, total price, delivery info \\
+\hline
+\texttt{custom\_box\_items} & Individual scoops/flavors in custom boxes with slot position, flavor, size \\
+\hline
+\texttt{gift\_messages} & Gift box messages with recipient name, message text, sender info \\
+\hline
+\caption{Custom Boxes Tables}
+\end{longtable}
+
+\subsection{Stock Notifications (2 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{stock\_notifications} & Back-in-stock alert subscriptions with user, product, location, notification preferences \\
+\hline
+\texttt{stock\_notification\_sends} & Notification delivery log tracking when alerts were sent and opened \\
+\hline
+\caption{Stock Notification Tables}
+\end{longtable}
+
+\newpage
+
+\section{Supporting Tables (Months 5-6)}
+
+\begin{phasebox}{supportGreen}{Supporting Features: Analytics \& Optimization (25 Tables)}
+\textbf{Priority:} Long-term engagement and operational excellence
+\end{phasebox}
+
+\subsection{Health \& Nutrition (2 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{health\_profiles} & User health data including weight, height, BMI, dietary goals, restrictions \\
+\hline
+\texttt{calorie\_tracking} & Daily calorie consumption tracking with date, total calories, goal progress \\
+\hline
+\caption{Health \& Nutrition Tables}
+\end{longtable}
+
+\subsection{Sustainability (2 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{eco\_impact} & User sustainability impact tracking: plastic saved, trees planted, carbon offset \\
+\hline
+\texttt{eco\_badges} & Eco achievement badges with levels (Beginner → Hero), criteria, icons \\
+\hline
+\caption{Sustainability Tables}
+\end{longtable}
+
+\subsection{Gamification (5 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{games} & Game catalog (online, offline, AR) with title, type, description, IceCoin cost \\
+\hline
+\texttt{game\_sessions} & Game play sessions with start/end times, score, completion status \\
+\hline
+\texttt{game\_subscriptions} & IceCoins-based game subscriptions with user, game, expiration, auto-renew \\
+\hline
+\texttt{game\_scores} & Game leaderboard scores with user, game, score, rank, timestamp \\
+\hline
+\texttt{ar\_game\_events} & Location-based AR game data with GPS coordinates, event type, participants \\
+\hline
+\caption{Gamification Tables}
+\end{longtable}
+
+\subsection{Leaderboards (2 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{leaderboards} & Leaderboard definitions with type, period (weekly/monthly), metric tracked \\
+\hline
+\texttt{leaderboard\_entries} & User positions on leaderboards with rank, score, last updated timestamp \\
+\hline
+\caption{Leaderboard Tables}
+\end{longtable}
+
+\subsection{Trust \& Verification (2 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{barcode\_scans} & QR/barcode scan history with product, user, scan time, location, promotion applied \\
+\hline
+\texttt{product\_authenticity} & Authenticity verification records linking serial numbers to products, batch info \\
+\hline
+\caption{Trust \& Verification Tables}
+\end{longtable}
+
+\subsection{Feedback \& Support (4 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{feedback\_submissions} & User feedback and CSAT with category, rating, text, optional screenshot \\
+\hline
+\texttt{feedback\_categories} & Feedback categorization (Bug, Suggestion, Compliment, Other) with routing rules \\
+\hline
+\texttt{support\_tickets} & Customer support requests with subject, priority, status, assigned agent \\
+\hline
+\texttt{ticket\_messages} & Support conversation threads with sender, message, attachments, timestamps \\
+\hline
+\caption{Feedback \& Support Tables}
+\end{longtable}
+
+\subsection{Analytics \& Tracking (5 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{search\_history} & Search queries, results returned, CTR, filters applied, timestamps \\
+\hline
+\texttt{recommendation\_logs} & AI recommendation tracking with algorithm version, items shown, user action \\
+\hline
+\texttt{user\_analytics\_events} & Behavioral event tracking (page views, clicks, scrolls) with properties, session ID \\
+\hline
+\texttt{ab\_tests} & A/B test configurations with variant definitions, targeting, success metrics \\
+\hline
+\texttt{ab\_test\_assignments} & User test group assignments with variant, enrollment date, conversion tracking \\
+\hline
+\caption{Analytics \& Tracking Tables}
+\end{longtable}
+\newpage
+\subsection{Administration (3 tables)}
+
+\begin{longtable}{|p{4cm}|p{9cm}|}
+\hline
+
+\textbf{Table Name} & \textbf{Description} \\
+\hline
+\texttt{admin\_users} & Admin/staff accounts with roles, permissions, last login, status \\
+\hline
+\texttt{admin\_roles} & Role-based access control definitions with permission sets \\
+\hline
+\texttt{audit\_logs} & Complete system audit trail with actor, action, entity, old/new values, timestamps \\
+\hline
+\caption{Administration Tables}
+\end{longtable}
+
+\newpage
+
+\section{Implementation Considerations}
+
+\subsection{Database Design Principles}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Normalization:} We should follow 3NF (Third Normal Form) for data integrity while allowing strategic denormalization for performance
+    \item \textbf{Indexing Strategy:} 
+    \begin{itemize}
+        \item Primary keys on all tables (auto-incrementing IDs)
+        \item Foreign key indexes for all relationships
+        \item Composite indexes on frequently queried column combinations
+        \item Full-text indexes for search fields (product names, descriptions, reviews)
+    \end{itemize}
+    \item \textbf{Data Types:} 
+    \begin{itemize}
+        \item UUIDs for public-facing identifiers (order numbers, referral codes)
+        \item DECIMAL for monetary values (avoid floating-point precision issues)
+        \item TIMESTAMP with timezone for all date/time fields
+        \item JSON/JSONB for flexible metadata and preferences
+    \end{itemize}
+    \item \textbf{Soft Deletes:} Implement \texttt{deleted\_at} timestamps instead of hard deletes for audit trails
+    \item \textbf{Optimistic Locking:} Use version numbers or timestamps for concurrent update handling
+\end{itemize}
+
+\subsection{Performance Optimization}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Partitioning:}
+    \begin{itemize}
+        \item \texttt{orders}: Partition by order date (monthly or quarterly)
+        \item \texttt{wallet\_transactions}: Partition by transaction date
+        \item \texttt{user\_analytics\_events}: Partition by event date
+        \item \texttt{delivery\_tracking\_events}: Partition by timestamp
+    \end{itemize}
+    \item \textbf{Read Replicas:} Deploy read replicas for:
+    \begin{itemize}
+        \item Analytics queries
+        \item Report generation
+        \item Product catalog searches
+        \item Leaderboard calculations
+    \end{itemize}
+    \item \textbf{Caching Strategy:}
+    \begin{itemize}
+        \item Redis for session management
+        \item Product catalog and inventory (with TTL)
+        \item User preferences and profiles
+        \item Leaderboard rankings
+        \item Frequently accessed rewards catalog
+    \end{itemize}
+    \item \textbf{Connection Pooling:} Implement robust connection pooling (e.g., PgBouncer for PostgreSQL)
+\end{itemize}
+
+\subsection{Security \& Compliance}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Data Encryption:}
+    \begin{itemize}
+        \item Encryption at rest for sensitive tables (users, payments, health\_profiles)
+        \item TLS for all database connections
+        \item Field-level encryption for PII (Personally Identifiable Information)
+    \end{itemize}
+    \item \textbf{Access Control:}
+    \begin{itemize}
+        \item Role-based access control (RBAC) at database level
+        \item Separate credentials for read-only, read-write, and admin operations
+        \item IP whitelisting for production database access
+    \end{itemize}
+    \item \textbf{GDPR Compliance:}
+    \begin{itemize}
+        \item Data retention policies with automated purging
+        \item User data export functionality
+        \item Right to be forgotten (cascade deletes with anonymization)
+        \item Consent tracking in \texttt{user\_preferences}
+    \end{itemize}
+    \item \textbf{PCI-DSS:}
+    \begin{itemize}
+        \item No storage of full credit card numbers (use tokenization)
+        \item Separate secure vault for payment tokens
+        \item Quarterly security audits
+    \end{itemize}
+\end{itemize}
+
+\subsection{Backup \& Disaster Recovery}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Backup Strategy:}
+    \begin{itemize}
+        \item Continuous replication to standby instances
+        \item Automated daily full backups
+        \item Point-in-time recovery capability (retain 30 days)
+        \item Hourly incremental backups for critical tables
+    \end{itemize}
+    \item \textbf{Geographic Redundancy:}
+    \begin{itemize}
+        \item Multi-region deployment for high availability
+        \item Cross-region backup replication
+        \item Failover procedures with RTO < 1 hour, RPO < 15 minutes
+    \end{itemize}
+    \item \textbf{Testing:}
+    \begin{itemize}
+        \item Monthly backup restoration tests
+        \item Quarterly disaster recovery drills
+        \item Documented runbooks for all recovery scenarios
+    \end{itemize}
+\end{itemize}
+
+\subsection{Migration Strategy}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Schema Versioning:} Use migration tools (Flyway, Liquibase, Alembic) for version-controlled schema changes
+    \item \textbf{Zero-Downtime Deployments:}
+    \begin{itemize}
+        \item Backward-compatible migrations
+        \item Blue-green deployment for schema changes
+        \item Feature flags for gradual rollouts
+    \end{itemize}
+    \item \textbf{Data Migration:} Plan for initial data imports with validation, reconciliation, and rollback procedures
+\end{itemize}
+
+\newpage
+
+\section{Phased Rollout Timeline}
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|p{7.5cm}|}
+\hline
+
+\textbf{Phase} & \textbf{Duration} & \textbf{Key Deliverables} \\
+\hline
+\textbf{MVP} & Months 1-3 & 
+\begin{itemize}[leftmargin=*, nosep, topsep=2pt, partopsep=0pt]
+\item User authentication \& profiles
+\item Product catalog with nutrition
+\item Order processing \& payments
+\item Delivery tracking system
+\item Basic inventory management
+\end{itemize} \\
+\hline
+\textbf{Phase 2} & Months 3-4 & 
+\begin{itemize}[leftmargin=*, nosep, topsep=2pt, partopsep=0pt]
+\item IceCoins wallet \& loyalty
+\item Challenges \& missions
+\item Product \& location reviews
+\item Referral program
+\item Promotions engine
+\end{itemize} \\
+\hline
+\textbf{Phase 3} & Months 4-5 & 
+\begin{itemize}[leftmargin=*, nosep, topsep=2pt, partopsep=0pt]
+\item Recipe discovery system
+\item Community social feed
+\item Digital passport \& badges
+\item Custom gift boxes
+\item Stock notifications
+\end{itemize} \\
+\hline
+\textbf{Supporting} & Months 5-6 & 
+\begin{itemize}[leftmargin=*, nosep, topsep=2pt, partopsep=0pt]
+\item Health \& nutrition tracking
+\item Gamification hub
+\item Analytics \& A/B testing
+\item Admin tools \& audit logs
+\item Sustainability tracking
+\end{itemize} \\
+\hline
+\end{tabular}
+\caption{Phased Implementation Timeline}
+\end{table}
+\subsection{Critical Path Dependencies}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Foundation First:} MVP tables must be completed before any subsequent phases
+    \item \textbf{Wallet Before Challenges:} \texttt{wallet\_accounts} and \texttt{wallet\_transactions} required before implementing challenges
+    \item \textbf{Products Before Reviews:} Complete product catalog before enabling reviews
+    \item \textbf{Orders Before Analytics:} Order system must be operational for meaningful analytics
+    \item \textbf{Users Before Social:} Full user system required for community features
+\end{enumerate}
+
+\newpage
+
+\section{Database Technology Recommendations}
+
+\subsection{Primary Database: MySQL 8.0+}
+
+\textbf{Rationale:}
+\begin{itemize}[leftmargin=*]
+    \item Mature ACID compliance for transactional integrity with InnoDB engine
+    \item Excellent JSON support for flexible schemas
+    \item Full-text search capabilities with InnoDB and MyISAM engines
+    \item Geospatial support with spatial data types and functions
+    \item Advanced indexing options (B-tree, Full-text, Spatial, Hash)
+    \item Proven scalability for enterprise workloads
+    \item Wide industry adoption and extensive community support
+    \item High performance for read-heavy workloads
+\end{itemize}
+
+\subsection{Complementary Technologies}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Redis:} Session management, caching, real-time leaderboards
+    \item \textbf{Elasticsearch:} Advanced product search, recipe discovery, full-text search
+    \item \textbf{Amazon S3 / Cloud Storage:} Product images, user uploads, recipe photos
+    \item \textbf{ProxySQL:} Connection pooling, query routing, and load balancing
+    \item \textbf{MySQL Spatial Extensions:} Geospatial queries for nearby locations, delivery routing
+\end{itemize}
+
+\newpage
+
+\section{Table Relationship Overview}
+
+\subsection{Core Entity Relationships}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Users $\rightarrow$ Orders:} One-to-many (user places multiple orders)
+    \item \textbf{Orders $\rightarrow$ Order Items:} One-to-many (order contains multiple products)
+    \item \textbf{Products $\rightarrow$ Order Items:} One-to-many (product in multiple orders)
+    \item \textbf{Users $\rightarrow$ Wallet Accounts:} One-to-one (single wallet per user)
+    \item \textbf{Wallet Accounts $\rightarrow$ Transactions:} One-to-many (multiple transactions)
+    \item \textbf{Orders $\rightarrow$ Payments:} One-to-many (support split payments)
+    \item \textbf{Orders $\rightarrow$ Deliveries:} One-to-one (single delivery per order)
+    \item \textbf{Locations $\rightarrow$ Inventory:} One-to-many (location has many products)
+    \item \textbf{Products $\rightarrow$ Reviews:} One-to-many (product has multiple reviews)
+    \item \textbf{Users $\rightarrow$ Reviews:} One-to-many (user writes multiple reviews)
+    \item \textbf{Challenges $\rightarrow$ User Challenges:} One-to-many (many users per challenge)
+    \item \textbf{Users $\rightarrow$ Community Posts:} One-to-many (user creates multiple posts)
+    \item \textbf{Posts $\rightarrow$ Comments:} One-to-many (post has multiple comments)
+    \item \textbf{Recipes $\rightarrow$ Ingredients:} One-to-many (recipe has multiple ingredients)
+    \item \textbf{Users $\rightarrow$ Game Sessions:} One-to-many (user plays multiple sessions)
+\end{itemize}
+
+\subsection{Many-to-Many Relationships (Junction Tables)}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Products $\leftrightarrow$ Categories:} Via product-category junction
+    \item \textbf{Users $\leftrightarrow$ Badges:} Via \texttt{user\_badges}
+    \item \textbf{Products $\leftrightarrow$ Allergens:} Via \texttt{product\_allergens}
+    \item \textbf{Posts $\leftrightarrow$ Hashtags:} Via post-hashtag junction (if implemented)
+    \item \textbf{Users $\leftrightarrow$ Products (Favorites):} Via user-favorites junction
+\end{itemize}
+
+\newpage
+
+
+\section{Appendix: Quick Reference}
+
+\subsection{Table Count Summary}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+
+\textbf{Category} & \textbf{Table Count} \\
+\hline
+User Management & 6 \\
+\hline
+Product Catalog & 5 \\
+\hline
+Order Management & 5 \\
+\hline
+Location \& Inventory & 2 \\
+\hline
+Delivery Tracking & 3 \\
+\hline
+Loyalty \& Wallet & 4 \\
+\hline
+Challenges & 3 \\
+\hline
+Reviews & 3 \\
+\hline
+Referrals \& Promotions & 4 \\
+\hline
+Notifications & 2 \\
+\hline
+Recipes & 5 \\
+\hline
+Community \& Social & 6 \\
+\hline
+Digital Passport & 3 \\
+\hline
+Custom Boxes & 3 \\
+\hline
+Stock Notifications & 2 \\
+\hline
+Health \& Nutrition & 2 \\
+\hline
+Sustainability & 2 \\
+\hline
+Gamification & 5 \\
+\hline
+Leaderboards & 2 \\
+\hline
+Trust \& Verification & 2 \\
+\hline
+Feedback \& Support & 4 \\
+\hline
+Analytics & 5 \\
+\hline
+Administration & 3 \\
+\hline
+
+\textbf{TOTAL} & \textbf{80} \\
+\hline
+\end{tabular}
+\caption{Complete Table Inventory}
+\end{table}
+
+\subsection{Critical Tables Requiring High Performance}
+
+\begin{enumerate}[leftmargin=*]
+    \item \texttt{products} - High read volume, frequent searches
+    \item \texttt{location\_inventory} - Real-time updates, frequent queries
+    \item \texttt{orders} - High write volume, complex queries
+    \item \texttt{wallet\_transactions} - High write volume, strict consistency
+    \item \texttt{user\_analytics\_events} - Extremely high write volume
+    \item \texttt{deliveries} - Real-time updates, location tracking
+    \item \texttt{community\_posts} - High read/write, complex filtering
+    \item \texttt{game\_scores} - High read volume for leaderboards
+\end{enumerate}
+
+\subsection{Tables Requiring Special Security}
+
+\begin{enumerate}[leftmargin=*]
+    \item \texttt{users} - Password hashes, PII
+    \item \texttt{payment\_methods} - Tokenized payment data
+    \item \texttt{payments} - Transaction details
+    \item \texttt{user\_addresses} - Physical addresses
+    \item \texttt{health\_profiles} - Sensitive health information
+    \item \texttt{admin\_users} - Elevated privileges
+    \item \texttt{audit\_logs} - Compliance and forensics
+\end{enumerate}
+
+
+\end{document}

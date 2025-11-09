@@ -1,0 +1,996 @@
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tikz}
+
+% Page geometry
+\geometry{
+    left=2cm,
+    right=2cm,
+    top=2.5cm,
+    bottom=2.5cm
+}
+
+% Color definitions
+\definecolor{primaryBlue}{RGB}{0, 102, 204}
+\definecolor{accentOrange}{RGB}{255, 127, 0}
+\definecolor{darkGray}{RGB}{51, 51, 51}
+\definecolor{lightGray}{RGB}{245, 245, 245}
+\definecolor{tableHeader}{RGB}{25, 118, 210}
+
+% Title formatting
+\titleformat{\section}
+  {\color{primaryBlue}\Large\bfseries}
+  {\thesection}{1em}{}[\titlerule]
+
+\titleformat{\subsection}
+  {\color{accentOrange}\large\bfseries}
+  {\thesubsection}{1em}{}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryBlue,
+    filecolor=accentOrange,
+    urlcolor=primaryBlue,
+    pdftitle={SavoyConnect Database Tables - Part 6},
+    pdfauthor={Rifaf Rahman}
+}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\color{primaryBlue}\textbf{SavoyConnect Database - Part 6}}
+\fancyhead[R]{\color{darkGray}\thepage}
+\fancyfoot[C]{\color{darkGray}\small Tables 51-60 | Prepared by Rifaf Rahman | November 2025}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+% Custom boxes
+\newtcolorbox{tablebox}[1]{
+  colback=lightGray,
+  colframe=primaryBlue,
+  fonttitle=\bfseries\large,
+  title=#1,
+  arc=2mm,
+  boxrule=1mm
+}
+
+\begin{document}
+
+% Title page
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture,overlay]
+        \fill[primaryBlue] (current page.north west) rectangle ([yshift=-8cm]current page.north east);
+    \end{tikzpicture}
+    
+    \vspace*{2cm}
+    
+    {\color{white}\Huge\bfseries SavoyConnect}\\[0.5cm]
+    {\color{white}\LARGE Database Schema - Part 6}\\[0.3cm]
+    {\color{white}\Large Detailed Table Properties}\\[2cm]
+    
+    \vspace{3cm}
+    
+    \begin{tcolorbox}[colback=white,colframe=accentOrange,width=0.8\textwidth,arc=3mm,boxrule=1mm]
+        \begin{tabular}{ll}
+            \textbf{\color{primaryBlue}Prepared by:} & Rifaf Rahman \\[0.3cm]
+            \textbf{\color{primaryBlue}Document:} & Part 6 of 8 \\[0.3cm]
+            \textbf{\color{primaryBlue}Tables:} & 51-60 (Phase 3) \\[0.3cm]
+            \textbf{\color{primaryBlue}Date:} & November 9, 2025 \\
+        \end{tabular}
+    \end{tcolorbox}
+    
+    \vfill
+    
+    {\large\color{darkGray} Health, Gamification, Leaderboards, Trust, Feedback}
+    
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Health Tracking System}
+
+\subsection{Table 51: health\_goals}
+
+\begin{tablebox}{health\_goals - User Health \& Wellness Goals}
+\textbf{Purpose:} User-defined health goals with nutrition tracking integration.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} user\_id\\
+\textbf{Indexes:} user\_id, goal\_type, status
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+user\_id & BIGINT & FOREIGN KEY, NOT NULL, References users(id) ON DELETE CASCADE \\
+\hline
+goal\_type & ENUM & NOT NULL, Values: 'calorie\_limit', 'sugar\_reduction', 'protein\_intake', 'low\_carb', 'weight\_management', 'fitness' \\
+\hline
+goal\_name & VARCHAR(255) & NOT NULL, User-friendly name: "Reduce Daily Sugar", "Stay Under 2000 Cal" \\
+\hline
+target\_value & DECIMAL(10, 2) & NOT NULL, Target numeric value \\
+\hline
+target\_unit & VARCHAR(50) & NOT NULL, Unit: 'calories', 'grams', 'kg', 'days' \\
+\hline
+current\_value & DECIMAL(10, 2) & NOT NULL, DEFAULT 0.00, Current progress \\
+\hline
+timeframe & ENUM & NOT NULL, Values: 'daily', 'weekly', 'monthly', 'custom' \\
+\hline
+start\_date & DATE & NOT NULL, Goal start date \\
+\hline
+end\_date & DATE & NULL, Goal end date (NULL for ongoing) \\
+\hline
+status & ENUM & NOT NULL, DEFAULT 'active', Values: 'active', 'completed', 'paused', 'abandoned' \\
+\hline
+reminder\_enabled & BOOLEAN & NOT NULL, DEFAULT TRUE, Daily reminder flag \\
+\hline
+reminder\_time & TIME & NULL, Daily reminder time \\
+\hline
+progress\_percentage & DECIMAL(5, 2) & NOT NULL, DEFAULT 0.00, Calculated progress 0-100 \\
+\hline
+streak\_days & INT & NOT NULL, DEFAULT 0, Consecutive days meeting goal \\
+\hline
+best\_streak & INT & NOT NULL, DEFAULT 0, Longest streak achieved \\
+\hline
+days\_successful & INT & NOT NULL, DEFAULT 0, Total days goal met \\
+\hline
+days\_failed & INT & NOT NULL, DEFAULT 0, Total days goal missed \\
+\hline
+icecoins\_earned & INT & NOT NULL, DEFAULT 0, Total IceCoins from this goal \\
+\hline
+notes & TEXT & NULL, User notes and motivation \\
+\hline
+completed\_at & TIMESTAMP & NULL, Goal completion timestamp \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{health\_goals table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: users (user\_id)
+    \item One-to-Many: health\_goal\_logs
+\end{itemize}
+
+\textbf{Goal Examples:}
+\begin{itemize}
+    \item \textbf{Calorie Limit:} Stay under 2,000 calories/day for 30 days
+    \item \textbf{Sugar Reduction:} Max 30g sugar per day
+    \item \textbf{Protein Intake:} Reach 80g protein daily
+    \item \textbf{Low Carb:} Keep carbs under 100g/day
+    \item \textbf{Weight Management:} Lose 5kg in 3 months
+\end{itemize}
+
+\textbf{Gamification:}
+\begin{itemize}
+    \item Award 10 IceCoins per day goal met
+    \item Bonus 100 IceCoins for 7-day streak
+    \item Bonus 500 IceCoins for completing 30-day goal
+    \item Share achievements on social feed
+\end{itemize}
+
+\newpage
+
+\subsection{Table 52: health\_goal\_logs}
+
+\begin{tablebox}{health\_goal\_logs - Daily Health Goal Tracking}
+\textbf{Purpose:} Daily log entries for health goal progress tracking.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} health\_goal\_id, user\_id\\
+\textbf{Indexes:} health\_goal\_id, user\_id, log\_date, UNIQUE(health\_goal\_id, log\_date)
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+health\_goal\_id & BIGINT & FOREIGN KEY, NOT NULL, References health\_goals(id) ON DELETE CASCADE \\
+\hline
+user\_id & BIGINT & FOREIGN KEY, NOT NULL, References users(id) ON DELETE CASCADE \\
+\hline
+log\_date & DATE & NOT NULL, Date of this log entry \\
+\hline
+recorded\_value & DECIMAL(10, 2) & NOT NULL, Actual value for the day \\
+\hline
+target\_value & DECIMAL(10, 2) & NOT NULL, Target value (snapshot) \\
+\hline
+goal\_met & BOOLEAN & NOT NULL, Whether goal was achieved \\
+\hline
+variance & DECIMAL(10, 2) & NOT NULL, Difference from target (recorded - target) \\
+\hline
+source & ENUM & NOT NULL, DEFAULT 'manual', Values: 'manual', 'order\_tracking', 'app\_integration', 'system' \\
+\hline
+orders\_counted & JSON & NULL, Array of order IDs that contributed to this day \\
+\hline
+products\_consumed & JSON & NULL, Products and quantities consumed \\
+\hline
+nutrition\_breakdown & JSON & NULL, Detailed nutritional breakdown \\
+\hline
+notes & TEXT & NULL, User notes for the day \\
+\hline
+mood & ENUM & NULL, Values: 'great', 'good', 'okay', 'struggling', 'bad' \\
+\hline
+energy\_level & INT & NULL, Energy level 1-5 \\
+\hline
+icecoins\_earned & INT & NOT NULL, DEFAULT 0, IceCoins earned this day \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{health\_goal\_logs table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: health\_goals (health\_goal\_id), users (user\_id)
+\end{itemize}
+
+\textbf{Auto-Tracking:}
+\begin{itemize}
+    \item Automatically calculate nutrition from orders
+    \item Sum calories/macros from all products ordered
+    \item Update goal progress in real-time
+    \item Notify user if approaching daily limit
+    \item Suggest low-calorie alternatives
+\end{itemize}
+
+\newpage
+
+\section{Gamification Badges}
+
+\subsection{Table 53: badges}
+
+\begin{tablebox}{badges - Achievement Badge Definitions}
+\textbf{Purpose:} Defines all available achievement badges users can earn.\\
+\textbf{Primary Key:} id\\
+\textbf{Indexes:} badge\_key (unique), badge\_category, rarity
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+badge\_key & VARCHAR(100) & UNIQUE, NOT NULL, Unique identifier: "first\_order", "recipe\_master", "eco\_warrior" \\
+\hline
+badge\_name & VARCHAR(255) & NOT NULL, Display name: "First Order", "Recipe Master", "Eco Warrior" \\
+\hline
+description & TEXT & NOT NULL, What the badge represents \\
+\hline
+badge\_category & ENUM & NOT NULL, Values: 'ordering', 'social', 'recipes', 'reviews', 'sustainability', 'loyalty', 'challenges', 'special' \\
+\hline
+rarity & ENUM & NOT NULL, DEFAULT 'common', Values: 'common', 'uncommon', 'rare', 'epic', 'legendary' \\
+\hline
+icon\_url & VARCHAR(500) & NOT NULL, Badge icon image \\
+\hline
+icon\_locked\_url & VARCHAR(500) & NULL, Locked/grayed out version \\
+\hline
+color\_hex & VARCHAR(7) & NOT NULL, Badge primary color \\
+\hline
+unlock\_criteria & JSON & NOT NULL, Criteria object: \{"orders\_count": 1, "total\_spent": 0\} \\
+\hline
+unlock\_message & VARCHAR(500) & NULL, Message shown when earned \\
+\hline
+reward\_icecoins & INT & NOT NULL, DEFAULT 0, IceCoins awarded \\
+\hline
+is\_secret & BOOLEAN & NOT NULL, DEFAULT FALSE, Hidden until unlocked \\
+\hline
+is\_limited\_edition & BOOLEAN & NOT NULL, DEFAULT FALSE, Limited time availability \\
+\hline
+available\_from & TIMESTAMP & NULL, Availability start time \\
+\hline
+available\_until & TIMESTAMP & NULL, Availability end time \\
+\hline
+max\_awards & INT & NULL, Max users who can earn (NULL = unlimited) \\
+\hline
+current\_awards & INT & NOT NULL, DEFAULT 0, Users who have earned \\
+\hline
+display\_priority & INT & NOT NULL, DEFAULT 0, Display order in badge list \\
+\hline
+is\_active & BOOLEAN & NOT NULL, DEFAULT TRUE, Badge active status \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{badges table structure}
+\end{longtable}
+
+\textbf{Badge Examples:}
+\begin{itemize}
+    \item \textbf{First Order (Common):} Place your first order → 50 IceCoins
+    \item \textbf{Chef Apprentice (Uncommon):} Try 10 recipes → 100 IceCoins
+    \item \textbf{Review Guru (Rare):} Write 50 reviews → 300 IceCoins
+    \item \textbf{Eco Warrior (Epic):} Order 100 sustainable products → 500 IceCoins
+    \item \textbf{Legend (Legendary):} Reach Diamond tier → 1,000 IceCoins
+\end{itemize}
+
+\textbf{Unlock Criteria JSON Examples:}
+\begin{verbatim}
+{
+  "orders_count": 10,
+  "recipes_tried": 5,
+  "total_spent": 10000,
+  "reviews_count": 20,
+  "streak_days": 30,
+  "tier": "gold"
+}
+\end{verbatim}
+
+\newpage
+
+\subsection{Table 54: user\_badges}
+
+\begin{tablebox}{user\_badges - User Badge Achievements}
+\textbf{Purpose:} Tracks which badges each user has earned.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} user\_id, badge\_id\\
+\textbf{Indexes:} user\_id, badge\_id, UNIQUE(user\_id, badge\_id), earned\_at
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+user\_id & BIGINT & FOREIGN KEY, NOT NULL, References users(id) ON DELETE CASCADE \\
+\hline
+badge\_id & BIGINT & FOREIGN KEY, NOT NULL, References badges(id) \\
+\hline
+earned\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP, When badge was earned \\
+\hline
+progress\_data & JSON & NULL, Progress snapshot when earned \\
+\hline
+icecoins\_awarded & INT & NOT NULL, DEFAULT 0, IceCoins received \\
+\hline
+notification\_sent & BOOLEAN & NOT NULL, DEFAULT FALSE, Notification status \\
+\hline
+is\_pinned & BOOLEAN & NOT NULL, DEFAULT FALSE, Pinned to profile \\
+\hline
+is\_public & BOOLEAN & NOT NULL, DEFAULT TRUE, Visible on public profile \\
+\hline
+shared\_on\_feed & BOOLEAN & NOT NULL, DEFAULT FALSE, Shared to social feed \\
+\hline
+\caption{user\_badges table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: users (user\_id), badges (badge\_id)
+\end{itemize}
+
+\textbf{Features:}
+\begin{itemize}
+    \item Display earned badges on user profile
+    \item Pin favorite badges to profile header
+    \item Share badge achievements on social feed
+    \item "Badge Showcase" - select 3-5 badges to display
+    \item Progress tracking: "50\% toward Recipe Master badge"
+\end{itemize}
+
+\newpage
+
+\section{Leaderboards}
+
+\subsection{Table 55: leaderboards}
+
+\begin{tablebox}{leaderboards - Leaderboard Definitions}
+\textbf{Purpose:} Defines various competitive leaderboards across categories.\\
+\textbf{Primary Key:} id\\
+\textbf{Indexes:} leaderboard\_key (unique), category, status
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+leaderboard\_key & VARCHAR(100) & UNIQUE, NOT NULL, Identifier: "top\_spenders", "recipe\_creators", "review\_masters" \\
+\hline
+title & VARCHAR(255) & NOT NULL, Display title: "Top Spenders", "Recipe Creators", "Review Masters" \\
+\hline
+description & TEXT & NULL, Leaderboard description \\
+\hline
+category & ENUM & NOT NULL, Values: 'spending', 'orders', 'recipes', 'reviews', 'social', 'sustainability', 'challenges' \\
+\hline
+metric\_type & VARCHAR(100) & NOT NULL, Metric to rank: 'total\_spent', 'order\_count', 'recipe\_count', 'review\_count' \\
+\hline
+ranking\_period & ENUM & NOT NULL, Values: 'all\_time', 'monthly', 'weekly', 'daily', 'custom' \\
+\hline
+start\_date & TIMESTAMP & NULL, Period start (for custom/limited periods) \\
+\hline
+end\_date & TIMESTAMP & NULL, Period end \\
+\hline
+min\_entries & INT & NOT NULL, DEFAULT 1, Minimum entries to appear on board \\
+\hline
+max\_rank\_display & INT & NOT NULL, DEFAULT 100, Show top X users \\
+\hline
+reward\_structure & JSON & NULL, Prizes for top ranks: \{"1": \{"icecoins": 1000\}, "2": \{"icecoins": 500\}\} \\
+\hline
+icon\_url & VARCHAR(500) & NULL, Leaderboard icon \\
+\hline
+banner\_url & VARCHAR(500) & NULL, Banner image \\
+\hline
+is\_active & BOOLEAN & NOT NULL, DEFAULT TRUE, Active status \\
+\hline
+is\_featured & BOOLEAN & NOT NULL, DEFAULT FALSE, Featured on homepage \\
+\hline
+visibility & ENUM & NOT NULL, DEFAULT 'public', Values: 'public', 'tier\_restricted', 'private' \\
+\hline
+tier\_requirement & ENUM & NULL, Minimum tier: 'silver', 'gold', 'platinum', 'diamond' \\
+\hline
+last\_updated\_at & TIMESTAMP & NULL, Last leaderboard recalculation \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{leaderboards table structure}
+\end{longtable}
+
+\textbf{Leaderboard Types:}
+\begin{itemize}
+    \item \textbf{Top Spenders:} Users by total spending (all-time or monthly)
+    \item \textbf{Recipe Creators:} Most published recipes
+    \item \textbf{Review Masters:} Most helpful reviews
+    \item \textbf{Challenge Champions:} Most challenges completed
+    \item \textbf{Eco Leaders:} Most sustainable product purchases
+    \item \textbf{Social Stars:} Most followers/engagement
+    \item \textbf{Streak Kings:} Longest order streaks
+\end{itemize}
+
+\newpage
+
+\subsection{Table 56: leaderboard\_entries}
+
+\begin{tablebox}{leaderboard\_entries - Leaderboard Rankings}
+\textbf{Purpose:} Current standings and historical rankings for each leaderboard.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} leaderboard\_id, user\_id\\
+\textbf{Indexes:} leaderboard\_id, user\_id, rank, UNIQUE(leaderboard\_id, user\_id, period\_start)
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+leaderboard\_id & BIGINT & FOREIGN KEY, NOT NULL, References leaderboards(id) \\
+\hline
+user\_id & BIGINT & FOREIGN KEY, NOT NULL, References users(id) ON DELETE CASCADE \\
+\hline
+rank & INT & NOT NULL, Current rank position \\
+\hline
+previous\_rank & INT & NULL, Rank in previous period \\
+\hline
+rank\_change & INT & NULL, Change in rank (positive = up, negative = down) \\
+\hline
+score & DECIMAL(15, 2) & NOT NULL, Metric value (spending, count, etc.) \\
+\hline
+entries\_count & INT & NOT NULL, DEFAULT 0, Number of qualifying entries \\
+\hline
+period\_start & DATE & NOT NULL, Ranking period start \\
+\hline
+period\_end & DATE & NULL, Ranking period end \\
+\hline
+reward\_eligible & BOOLEAN & NOT NULL, DEFAULT FALSE, Eligible for rewards \\
+\hline
+reward\_claimed & BOOLEAN & NOT NULL, DEFAULT FALSE, Reward claimed status \\
+\hline
+reward\_data & JSON & NULL, Reward details if eligible \\
+\hline
+is\_current & BOOLEAN & NOT NULL, DEFAULT TRUE, Current active ranking \\
+\hline
+calculated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP, When rank was calculated \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{leaderboard\_entries table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: leaderboards (leaderboard\_id), users (user\_id)
+\end{itemize}
+
+\textbf{Ranking Updates:}
+\begin{itemize}
+    \item Daily: Recalculate all daily leaderboards at midnight
+    \item Weekly: Update every Monday at 00:00
+    \item Monthly: Update on 1st of each month
+    \item Real-time: All-time leaderboards update after qualifying actions
+    \item Archive: Keep historical rankings (is\_current = false)
+\end{itemize}
+
+\newpage
+
+\section{Trust \& Verification}
+
+\subsection{Table 57: user\_verifications}
+
+\begin{tablebox}{user\_verifications - User Identity Verification}
+\textbf{Purpose:} KYC and identity verification records for trusted user status.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} user\_id\\
+\textbf{Indexes:} user\_id, verification\_type, status
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+user\_id & BIGINT & FOREIGN KEY, NOT NULL, References users(id) ON DELETE CASCADE \\
+\hline
+verification\_type & ENUM & NOT NULL, Values: 'email', 'phone', 'id\_document', 'address', 'payment\_method', 'business' \\
+\hline
+status & ENUM & NOT NULL, DEFAULT 'pending', Values: 'pending', 'in\_review', 'verified', 'rejected', 'expired' \\
+\hline
+verification\_method & VARCHAR(100) & NULL, Method used: 'otp', 'document\_upload', 'third\_party\_api' \\
+\hline
+document\_type & VARCHAR(100) & NULL, Document type: 'nid', 'passport', 'driving\_license', 'utility\_bill' \\
+\hline
+document\_number & VARCHAR(255) & NULL, ENCRYPTED, Document ID number \\
+\hline
+document\_front\_url & VARCHAR(500) & NULL, ENCRYPTED, Front image URL \\
+\hline
+document\_back\_url & VARCHAR(500) & NULL, ENCRYPTED, Back image URL \\
+\hline
+selfie\_url & VARCHAR(500) & NULL, ENCRYPTED, Selfie for face match \\
+\hline
+submitted\_data & JSON & NULL, ENCRYPTED, Submitted verification data \\
+\hline
+verification\_code & VARCHAR(100) & NULL, OTP or verification code (hashed) \\
+\hline
+code\_expires\_at & TIMESTAMP & NULL, Code expiration time \\
+\hline
+verified\_by & BIGINT & NULL, Admin who verified \\
+\hline
+verification\_notes & TEXT & NULL, Admin notes \\
+\hline
+rejection\_reason & TEXT & NULL, Reason for rejection \\
+\hline
+third\_party\_provider & VARCHAR(100) & NULL, KYC provider: 'jumio', 'onfido', 'trulioo' \\
+\hline
+third\_party\_reference & VARCHAR(255) & NULL, Provider's transaction ID \\
+\hline
+expires\_at & TIMESTAMP & NULL, Verification expiration (for documents) \\
+\hline
+verified\_at & TIMESTAMP & NULL, Verification completion timestamp \\
+\hline
+rejected\_at & TIMESTAMP & NULL, Rejection timestamp \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{user\_verifications table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: users (user\_id)
+\end{itemize}
+
+\textbf{Verification Levels:}
+\begin{itemize}
+    \item \textbf{Level 1 (Basic):} Email + Phone verified → Access to basic features
+    \item \textbf{Level 2 (Standard):} + ID Document → Higher order limits, payment methods
+    \item \textbf{Level 3 (Premium):} + Address verification → All features, corporate accounts
+\end{itemize}
+
+\textbf{Security:}
+\begin{itemize}
+    \item Encrypt all document images and personal data
+    \item Auto-delete documents after 90 days of verification
+    \item Store only verification status after confirmed
+    \item GDPR compliance for data retention
+    \item Audit log all access to verification data
+\end{itemize}
+
+\newpage
+
+\subsection{Table 58: trust\_scores}
+
+\begin{tablebox}{trust\_scores - User Trustworthiness Scores}
+\textbf{Purpose:} Calculated trust scores based on behavior, reviews, and activity.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} user\_id\\
+\textbf{Indexes:} user\_id (unique), overall\_score
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+user\_id & BIGINT & FOREIGN KEY, UNIQUE, NOT NULL, References users(id) ON DELETE CASCADE \\
+\hline
+overall\_score & DECIMAL(5, 2) & NOT NULL, DEFAULT 0.00, Overall trust score 0-100 \\
+\hline
+account\_age\_score & DECIMAL(5, 2) & NOT NULL, DEFAULT 0.00, Score based on account age \\
+\hline
+verification\_score & DECIMAL(5, 2) & NOT NULL, DEFAULT 0.00, Verification completion score \\
+\hline
+activity\_score & DECIMAL(5, 2) & NOT NULL, DEFAULT 0.00, Regular activity score \\
+\hline
+order\_history\_score & DECIMAL(5, 2) & NOT NULL, DEFAULT 0.00, Order completion rate \\
+\hline
+review\_quality\_score & DECIMAL(5, 2) & NOT NULL, DEFAULT 0.00, Review helpfulness score \\
+\hline
+social\_score & DECIMAL(5, 2) & NOT NULL, DEFAULT 0.00, Community engagement score \\
+\hline
+payment\_score & DECIMAL(5, 2) & NOT NULL, DEFAULT 0.00, Payment reliability score \\
+\hline
+negative\_flags\_count & INT & NOT NULL, DEFAULT 0, Warnings or violations \\
+\hline
+positive\_reviews\_received & INT & NOT NULL, DEFAULT 0, As recipe/content creator \\
+\hline
+negative\_reviews\_received & INT & NOT NULL, DEFAULT 0, Reports or complaints \\
+\hline
+successful\_orders & INT & NOT NULL, DEFAULT 0, Completed orders \\
+\hline
+cancelled\_orders & INT & NOT NULL, DEFAULT 0, User-cancelled orders \\
+\hline
+refund\_requests & INT & NOT NULL, DEFAULT 0, Total refund requests \\
+\hline
+trust\_level & ENUM & NOT NULL, DEFAULT 'new', Values: 'new', 'basic', 'trusted', 'verified', 'premium', 'flagged' \\
+\hline
+trust\_badge & VARCHAR(100) & NULL, Badge displayed: 'Verified Buyer', 'Trusted Member', 'Top Contributor' \\
+\hline
+last\_calculated\_at & TIMESTAMP & NULL, Last score recalculation \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{trust\_scores table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item One-to-One: users (user\_id)
+\end{itemize}
+
+\textbf{Score Calculation:}
+\begin{itemize}
+    \item \textbf{Account Age:} 0-15 points (1 point per month, max 15)
+    \item \textbf{Verification:} 0-20 points (email: 5, phone: 5, ID: 10)
+    \item \textbf{Activity:} 0-15 points (regular orders, logins)
+    \item \textbf{Order History:} 0-20 points (completion rate, no cancellations)
+    \item \textbf{Review Quality:} 0-15 points (helpful reviews written)
+    \item \textbf{Social:} 0-10 points (posts, engagement, followers)
+    \item \textbf{Payment:} 0-5 points (no failed payments)
+    \item \textbf{Total:} 0-100 points
+\end{itemize}
+
+\textbf{Trust Levels:}
+\begin{itemize}
+    \item \textbf{New:} 0-20 score → Basic access
+    \item \textbf{Basic:} 21-40 score → Standard features
+    \item \textbf{Trusted:} 41-60 score → "Verified Buyer" badge
+    \item \textbf{Verified:} 61-80 score → "Trusted Member" badge
+    \item \textbf{Premium:} 81-100 score → "Top Contributor" badge, priority support
+    \item \textbf{Flagged:} Negative behavior → Restricted access
+\end{itemize}
+
+\newpage
+
+\section{Feedback System}
+
+\subsection{Table 59: feedback}
+
+\begin{tablebox}{feedback - User Feedback \& Suggestions}
+\textbf{Purpose:} Collects user feedback, bug reports, and feature suggestions.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} user\_id\\
+\textbf{Indexes:} user\_id, feedback\_type, status, category
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+user\_id & BIGINT & FOREIGN KEY, NULL, References users(id) - NULL for anonymous feedback \\
+\hline
+feedback\_type & ENUM & NOT NULL, Values: 'bug\_report', 'feature\_request', 'complaint', 'suggestion', 'compliment', 'general' \\
+\hline
+category & ENUM & NOT NULL, Values: 'app', 'website', 'product', 'delivery', 'customer\_service', 'payment', 'other' \\
+\hline
+title & VARCHAR(255) & NOT NULL, Feedback title/summary \\
+\hline
+description & TEXT & NOT NULL, Detailed feedback \\
+\hline
+priority & ENUM & NOT NULL, DEFAULT 'medium', Values: 'low', 'medium', 'high', 'critical' \\
+\hline
+severity & ENUM & NULL, Values: 'minor', 'moderate', 'major', 'blocker' - For bugs \\
+\hline
+screenshots & JSON & NULL, Array of screenshot URLs \\
+\hline
+device\_info & JSON & NULL, Device and browser info \\
+\hline
+app\_version & VARCHAR(50) & NULL, App version when submitted \\
+\hline
+page\_url & VARCHAR(500) & NULL, Page where feedback originated \\
+\hline
+contact\_email & VARCHAR(255) & NULL, Contact email if anonymous \\
+\hline
+contact\_phone & VARCHAR(20) & NULL, Contact phone \\
+\hline
+status & ENUM & NOT NULL, DEFAULT 'new', Values: 'new', 'in\_review', 'in\_progress', 'resolved', 'closed', 'wont\_fix' \\
+\hline
+assigned\_to & BIGINT & NULL, Admin/developer assigned \\
+\hline
+admin\_notes & TEXT & NULL, Internal notes \\
+\hline
+resolution\_notes & TEXT & NULL, Resolution details for user \\
+\hline
+upvotes & INT & NOT NULL, DEFAULT 0, Community upvotes \\
+\hline
+is\_public & BOOLEAN & NOT NULL, DEFAULT FALSE, Visible to community \\
+\hline
+is\_featured & BOOLEAN & NOT NULL, DEFAULT FALSE, Featured feedback \\
+\hline
+response\_sent & BOOLEAN & NOT NULL, DEFAULT FALSE, Response sent to user \\
+\hline
+response\_at & TIMESTAMP & NULL, When response was sent \\
+\hline
+resolved\_at & TIMESTAMP & NULL, Resolution timestamp \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{feedback table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: users (user\_id)
+    \item One-to-Many: feedback\_responses
+\end{itemize}
+
+\textbf{Feedback Workflow:}
+\begin{enumerate}
+    \item User submits feedback → Status: \textbf{new}
+    \item Auto-categorize and assign priority
+    \item Admin reviews → Status: \textbf{in\_review}
+    \item Assign to team member → Status: \textbf{in\_progress}
+    \item Fix/implement → Status: \textbf{resolved}
+    \item Notify user of resolution → Status: \textbf{closed}
+\end{enumerate}
+
+\textbf{Incentives:}
+\begin{itemize}
+    \item Award 25 IceCoins for first feedback submission
+    \item Award 100 IceCoins for critical bug reports
+    \item Award 50 IceCoins for implemented feature suggestions
+    \item Monthly "Top Contributor" rewards
+\end{itemize}
+
+\newpage
+
+\subsection{Table 60: feedback\_responses}
+
+\begin{tablebox}{feedback\_responses - Admin Responses to Feedback}
+\textbf{Purpose:} Admin/developer responses to user feedback and status updates.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} feedback\_id, responder\_id\\
+\textbf{Indexes:} feedback\_id, responder\_id, created\_at
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+feedback\_id & BIGINT & FOREIGN KEY, NOT NULL, References feedback(id) ON DELETE CASCADE \\
+\hline
+responder\_id & BIGINT & FOREIGN KEY, NOT NULL, Admin/developer user ID \\
+\hline
+responder\_name & VARCHAR(255) & NOT NULL, Name displayed to user \\
+\hline
+responder\_role & VARCHAR(100) & NULL, Role/title: "Support Manager", "Lead Developer" \\
+\hline
+response\_type & ENUM & NOT NULL, Values: 'acknowledgment', 'update', 'resolution', 'question', 'closure' \\
+\hline
+message & TEXT & NOT NULL, Response message \\
+\hline
+status\_changed\_to & VARCHAR(50) & NULL, New status after this response \\
+\hline
+attachments & JSON & NULL, Response attachment URLs \\
+\hline
+is\_public & BOOLEAN & NOT NULL, DEFAULT TRUE, Visible to user \\
+\hline
+is\_internal & BOOLEAN & NOT NULL, DEFAULT FALSE, Internal note only \\
+\hline
+notification\_sent & BOOLEAN & NOT NULL, DEFAULT FALSE, User notification status \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+\caption{feedback\_responses table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: feedback (feedback\_id)
+\end{itemize}
+
+\textbf{Response Types:}
+\begin{itemize}
+    \item \textbf{Acknowledgment:} "Thanks for reporting! We're looking into it."
+    \item \textbf{Update:} "We've started working on your suggestion."
+    \item \textbf{Question:} "Can you provide more details about..."
+    \item \textbf{Resolution:} "This has been fixed in version 2.5.0!"
+    \item \textbf{Closure:} "Issue resolved. Thanks for your patience!"
+\end{itemize}
+
+\newpage
+
+\section{Summary}
+
+\begin{tcolorbox}[colback=primaryBlue!10,colframe=primaryBlue,arc=3mm,boxrule=1mm]
+\textbf{\large Part 6 Complete: Tables 51-60}
+
+\vspace{0.3cm}
+
+This document covers tables 51-60 of the SavoyConnect database schema:
+
+\begin{itemize}
+    \item \textbf{Health Tracking (2 tables):} health\_goals, health\_goal\_logs
+    \item \textbf{Gamification Badges (2 tables):} badges, user\_badges
+    \item \textbf{Leaderboards (2 tables):} leaderboards, leaderboard\_entries
+    \item \textbf{Trust \& Verification (2 tables):} user\_verifications, trust\_scores
+    \item \textbf{Feedback System (2 tables):} feedback, feedback\_responses
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Key Features Implemented:}
+\begin{itemize}
+    \item Comprehensive health goal tracking with nutrition integration
+    \item Daily goal logging with mood, energy, and IceCoins rewards
+    \item Achievement badge system with rarity tiers (common to legendary)
+    \item Secret and limited-edition badges for exclusivity
+    \item Multi-category competitive leaderboards with period rankings
+    \item Leaderboard rewards and historical tracking
+    \item Multi-level user verification system (email, phone, ID, address)
+    \item Encrypted document storage with KYC integration
+    \item Dynamic trust scoring based on behavior and activity
+    \item Trust badges for verified and premium users
+    \item Comprehensive feedback system with bug reports and feature requests
+    \item Public feedback voting and community-driven prioritization
+    \item Admin response tracking with status updates
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Next Document:} Part 7 will cover tables 61-70 (Analytics, User Activity Logs, Search Tracking, System Administration)
+
+\end{tcolorbox}
+
+\end{document}

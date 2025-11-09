@@ -1,0 +1,1305 @@
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{tcolorbox}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{hyperref}
+
+% Color definitions
+\definecolor{primaryBlue}{RGB}{0,102,204}
+\definecolor{accentOrange}{RGB}{255,127,0}
+\definecolor{tableHeader}{RGB}{25,118,210}
+\definecolor{darkGray}{RGB}{51,51,51}
+\definecolor{lightGray}{RGB}{245,245,245}
+
+% Section formatting
+\titleformat{\section}{\Large\bfseries\color{primaryBlue}}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries\color{darkGray}}{\thesubsection}{1em}{}
+
+% Custom box environment
+\newtcolorbox{tablebox}[1]{
+    colback=lightGray,
+    colframe=primaryBlue,
+    arc=3mm,
+    boxrule=1mm,
+    title={#1},
+    fonttitle=\bfseries,
+    coltitle=white,
+    colbacktitle=primaryBlue
+}
+
+% Hyperlink setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryBlue,
+    urlcolor=primaryBlue,
+    citecolor=primaryBlue
+}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+    \begin{center}
+        \vspace*{2cm}
+        
+        \begin{tikzpicture}
+            \fill[primaryBlue] (0,0) rectangle (15,0.3);
+            \fill[accentOrange] (0,-0.5) rectangle (15,-0.8);
+        \end{tikzpicture}
+        
+        \vspace{1cm}
+        
+        {\Huge\bfseries\color{primaryBlue} SavoyConnect Database Schema}
+        
+        \vspace{0.5cm}
+        
+        {\LARGE\bfseries Part 8: Tables 71-80 (FINAL)}
+        
+        \vspace{0.5cm}
+        
+        {\Large System Configuration, API, Templates \& Supporting Tables}
+        
+        \vspace{2cm}
+        
+        \begin{tcolorbox}[colback=primaryBlue!10,colframe=primaryBlue,arc=3mm,boxrule=1mm,width=0.8\textwidth]
+            \centering
+            \textbf{\large Document Information}
+            
+            \vspace{0.3cm}
+            
+            \begin{tabular}{ll}
+                \textbf{Project:} & SavoyConnect E-Commerce Platform \\
+                \textbf{Database:} & MySQL 8.0+ \\
+                \textbf{Total Tables:} & 80 tables \\
+                \textbf{This Document:} & Tables 71-80 (Final 10 tables) \\
+                \textbf{Version:} & 1.0 \\
+                \textbf{Date:} & November 9, 2025 \\
+                \textbf{Status:} & \textcolor{accentOrange}{\textbf{COMPLETE}} \\
+            \end{tabular}
+        \end{tcolorbox}
+        
+        \vfill
+        
+        {\large Prepared for: Development Team \\
+        SavoyConnect Platform}
+        
+    \end{center}
+\end{titlepage}
+
+% Table of Contents
+\tableofcontents
+\newpage
+
+\section{System Configuration}
+
+\subsection{Table 71: system\_settings}
+
+\begin{tablebox}{system\_settings - Application Configuration}
+\textbf{Purpose:} Stores system-wide configuration settings and feature flags.\\
+\textbf{Primary Key:} id\\
+\textbf{Indexes:} setting\_key (unique), category
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+setting\_key & VARCHAR(255) & UNIQUE, NOT NULL, Setting identifier: "maintenance\_mode", "max\_order\_value" \\
+\hline
+setting\_value & TEXT & NOT NULL, Setting value (string, number, JSON) \\
+\hline
+value\_type & ENUM & NOT NULL, DEFAULT 'string', Values: 'string', 'number', 'boolean', 'json', 'date', 'time' \\
+\hline
+category & VARCHAR(100) & NOT NULL, Category: 'general', 'payment', 'delivery', 'loyalty', 'features' \\
+\hline
+display\_name & VARCHAR(255) & NOT NULL, Human-readable name \\
+\hline
+description & TEXT & NULL, Setting description \\
+\hline
+default\_value & TEXT & NULL, Default value \\
+\hline
+validation\_rules & JSON & NULL, Validation: \{"min": 0, "max": 100000, "regex": "pattern"\} \\
+\hline
+is\_public & BOOLEAN & NOT NULL, DEFAULT FALSE, Accessible via public API \\
+\hline
+is\_editable & BOOLEAN & NOT NULL, DEFAULT TRUE, Can be modified via admin panel \\
+\hline
+requires\_restart & BOOLEAN & NOT NULL, DEFAULT FALSE, Requires app restart \\
+\hline
+environment & ENUM & NOT NULL, DEFAULT 'all', Values: 'all', 'production', 'staging', 'development' \\
+\hline
+updated\_by & BIGINT & NULL, Admin who last updated \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+\caption{system\_settings table structure}
+\end{longtable}
+
+\textbf{Common Settings:}
+\begin{itemize}
+    \item \textbf{General:} maintenance\_mode (boolean), app\_version (string), support\_email (string)
+    \item \textbf{Orders:} min\_order\_value (number), max\_order\_value (number), order\_timeout\_minutes (number)
+    \item \textbf{Delivery:} free\_delivery\_threshold (number), delivery\_radius\_km (number), delivery\_fee (number)
+    \item \textbf{Loyalty:} icecoins\_per\_taka (number), referral\_bonus (number), signup\_bonus (number)
+    \item \textbf{Features:} enable\_recipes (boolean), enable\_challenges (boolean), enable\_social\_feed (boolean)
+    \item \textbf{Payment:} enable\_card\_payment (boolean), enable\_mobile\_banking (boolean), max\_wallet\_balance (number)
+\end{itemize}
+
+\newpage
+
+\subsection{Table 72: api\_keys}
+
+\begin{tablebox}{api\_keys - API Access Keys}
+\textbf{Purpose:} Manages API keys for third-party integrations and external access.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} created\_by\\
+\textbf{Indexes:} api\_key (unique), status
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+api\_key & VARCHAR(255) & UNIQUE, NOT NULL, Hashed API key \\
+\hline
+api\_key\_prefix & VARCHAR(20) & NOT NULL, Visible prefix: "sk\_live\_", "sk\_test\_" \\
+\hline
+api\_secret & VARCHAR(255) & NULL, ENCRYPTED, API secret for HMAC signing \\
+\hline
+key\_name & VARCHAR(255) & NOT NULL, Descriptive name: "Mobile App", "POS System" \\
+\hline
+key\_type & ENUM & NOT NULL, Values: 'public', 'private', 'admin', 'webhook' \\
+\hline
+environment & ENUM & NOT NULL, DEFAULT 'production', Values: 'production', 'sandbox', 'development' \\
+\hline
+permissions & JSON & NOT NULL, Permission array: ["orders.read", "products.read", "users.write"] \\
+\hline
+rate\_limit & INT & NOT NULL, DEFAULT 1000, Requests per hour \\
+\hline
+allowed\_ips & JSON & NULL, IP whitelist array \\
+\hline
+allowed\_origins & JSON & NULL, CORS origin whitelist \\
+\hline
+webhook\_url & VARCHAR(1000) & NULL, Callback URL for webhooks \\
+\hline
+webhook\_secret & VARCHAR(255) & NULL, ENCRYPTED, Webhook signature secret \\
+\hline
+status & ENUM & NOT NULL, DEFAULT 'active', Values: 'active', 'inactive', 'revoked', 'expired' \\
+\hline
+last\_used\_at & TIMESTAMP & NULL, Last successful API call \\
+\hline
+last\_used\_ip & VARCHAR(45) & NULL, Last request IP \\
+\hline
+usage\_count & BIGINT & NOT NULL, DEFAULT 0, Total API calls made \\
+\hline
+expires\_at & TIMESTAMP & NULL, Key expiration date \\
+\hline
+created\_by & BIGINT & FOREIGN KEY, NOT NULL, Admin who created key \\
+\hline
+revoked\_by & BIGINT & NULL, Admin who revoked key \\
+\hline
+revoked\_at & TIMESTAMP & NULL, Revocation timestamp \\
+\hline
+revocation\_reason & TEXT & NULL, Why key was revoked \\
+\hline
+notes & TEXT & NULL, Internal notes \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{api\_keys table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: admin\_users (created\_by, revoked\_by)
+    \item One-to-Many: api\_logs
+\end{itemize}
+
+\textbf{Key Types:}
+\begin{itemize}
+    \item \textbf{Public:} Client-side access (read-only, limited scope)
+    \item \textbf{Private:} Server-side access (full CRUD operations)
+    \item \textbf{Admin:} Administrative operations (user management, system config)
+    \item \textbf{Webhook:} Outbound webhook calls to external services
+\end{itemize}
+
+\textbf{Security:}
+\begin{itemize}
+    \item API keys are hashed using bcrypt
+    \item Secrets encrypted with AES-256
+    \item Rate limiting per key (default 1000/hour)
+    \item IP whitelisting for sensitive operations
+    \item Automatic revocation on suspicious activity
+    \item HMAC-SHA256 signature verification
+\end{itemize}
+
+\newpage
+
+\subsection{Table 73: api\_logs}
+
+\begin{tablebox}{api\_logs - API Request/Response Logging}
+\textbf{Purpose:} Logs all API requests and responses for debugging and monitoring.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} api\_key\_id\\
+\textbf{Indexes:} api\_key\_id, endpoint, status\_code, created\_at
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+api\_key\_id & BIGINT & FOREIGN KEY, NULL, References api\_keys(id) - NULL for public endpoints \\
+\hline
+request\_id & VARCHAR(100) & UNIQUE, NOT NULL, Unique request identifier (UUID) \\
+\hline
+method & VARCHAR(10) & NOT NULL, HTTP method: 'GET', 'POST', 'PUT', 'DELETE', 'PATCH' \\
+\hline
+endpoint & VARCHAR(500) & NOT NULL, API endpoint: "/api/v1/products" \\
+\hline
+full\_url & VARCHAR(2000) & NULL, Complete URL with query params \\
+\hline
+request\_headers & JSON & NULL, HTTP headers \\
+\hline
+request\_body & JSON & NULL, Request payload (truncated if large) \\
+\hline
+query\_params & JSON & NULL, URL query parameters \\
+\hline
+response\_status & INT & NOT NULL, HTTP status code: 200, 400, 500 \\
+\hline
+response\_body & JSON & NULL, Response payload (truncated if large) \\
+\hline
+response\_headers & JSON & NULL, Response headers \\
+\hline
+response\_time\_ms & INT & NOT NULL, Response time in milliseconds \\
+\hline
+ip\_address & VARCHAR(45) & NOT NULL, Client IP address \\
+\hline
+user\_agent & TEXT & NULL, Client user agent \\
+\hline
+user\_id & BIGINT & NULL, Authenticated user ID \\
+\hline
+error\_message & TEXT & NULL, Error details if failed \\
+\hline
+error\_stack & TEXT & NULL, Stack trace for debugging \\
+\hline
+database\_queries & INT & NOT NULL, DEFAULT 0, Number of DB queries executed \\
+\hline
+database\_time\_ms & INT & NULL, Total DB query time \\
+\hline
+cache\_hit & BOOLEAN & NOT NULL, DEFAULT FALSE, Response served from cache \\
+\hline
+rate\_limit\_remaining & INT & NULL, Remaining requests in rate limit window \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+\caption{api\_logs table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: api\_keys (api\_key\_id)
+\end{itemize}
+
+\textbf{Monitoring \& Analytics:}
+\begin{itemize}
+    \item API performance metrics (response times, error rates)
+    \item Endpoint usage statistics
+    \item Rate limit violation tracking
+    \item Error pattern detection
+    \item Client behavior analysis
+    \item Database query optimization
+    \item Cache effectiveness monitoring
+\end{itemize}
+
+\textbf{Data Retention:}
+\begin{itemize}
+    \item Keep last 30 days in hot storage
+    \item Archive 31-90 days to cold storage
+    \item Purge after 90 days (compliance)
+    \item Exception: Keep error logs for 180 days
+\end{itemize}
+
+\newpage
+
+\section{Communication Templates}
+
+\subsection{Table 74: email\_templates}
+
+\begin{tablebox}{email\_templates - Email Template Management}
+\textbf{Purpose:} Stores email templates for automated notifications and campaigns.\\
+\textbf{Primary Key:} id\\
+\textbf{Indexes:} template\_key (unique), category
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+template\_key & VARCHAR(100) & UNIQUE, NOT NULL, Template identifier: "order\_confirmation", "password\_reset" \\
+\hline
+template\_name & VARCHAR(255) & NOT NULL, Display name \\
+\hline
+category & ENUM & NOT NULL, Values: 'transactional', 'marketing', 'notification', 'system' \\
+\hline
+subject & VARCHAR(500) & NOT NULL, Email subject line (supports variables) \\
+\hline
+subject\_preview & VARCHAR(100) & NULL, Subject line preview text \\
+\hline
+html\_body & TEXT & NOT NULL, HTML email body \\
+\hline
+text\_body & TEXT & NULL, Plain text fallback \\
+\hline
+variables & JSON & NOT NULL, Available variables: ["\{\{user\_name\}\}", "\{\{order\_id\}\}"] \\
+\hline
+default\_sender\_name & VARCHAR(255) & NOT NULL, DEFAULT 'SavoyConnect', From name \\
+\hline
+default\_sender\_email & VARCHAR(255) & NOT NULL, From email address \\
+\hline
+reply\_to\_email & VARCHAR(255) & NULL, Reply-to address \\
+\hline
+cc\_emails & JSON & NULL, CC recipients array \\
+\hline
+bcc\_emails & JSON & NULL, BCC recipients array \\
+\hline
+attachments & JSON & NULL, Default attachments \\
+\hline
+design\_json & JSON & NULL, MJML or email builder JSON \\
+\hline
+language & VARCHAR(10) & NOT NULL, DEFAULT 'en', Language code: 'en', 'bn' \\
+\hline
+is\_active & BOOLEAN & NOT NULL, DEFAULT TRUE, Template active status \\
+\hline
+send\_count & BIGINT & NOT NULL, DEFAULT 0, Total emails sent \\
+\hline
+last\_sent\_at & TIMESTAMP & NULL, Last email sent timestamp \\
+\hline
+version & INT & NOT NULL, DEFAULT 1, Template version number \\
+\hline
+notes & TEXT & NULL, Internal notes \\
+\hline
+created\_by & BIGINT & NULL, Admin who created \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{email\_templates table structure}
+\end{longtable}
+
+\textbf{Template Examples:}
+\begin{itemize}
+    \item \textbf{Transactional:} Order confirmation, delivery updates, payment receipts, password reset
+    \item \textbf{Marketing:} Promotional campaigns, new product announcements, seasonal offers
+    \item \textbf{Notification:} Review requests, stock alerts, wishlist price drops, abandoned cart
+    \item \textbf{System:} Welcome email, account verification, privacy policy updates
+\end{itemize}
+
+\textbf{Variable Substitution:}
+\begin{verbatim}
+Subject: Order #{{order_id}} Confirmed - {{user_name}}
+Body:
+  Hi {{user_name}},
+  Your order #{{order_id}} has been confirmed!
+  Total: {{order_total}} BDT
+  Expected delivery: {{delivery_date}}
+\end{verbatim}
+
+\newpage
+
+\subsection{Table 75: sms\_templates}
+
+\begin{tablebox}{sms\_templates - SMS Template Management}
+\textbf{Purpose:} Stores SMS templates for automated text notifications.\\
+\textbf{Primary Key:} id\\
+\textbf{Indexes:} template\_key (unique), category
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+template\_key & VARCHAR(100) & UNIQUE, NOT NULL, Template identifier: "otp\_verification", "delivery\_update" \\
+\hline
+template\_name & VARCHAR(255) & NOT NULL, Display name \\
+\hline
+category & ENUM & NOT NULL, Values: 'otp', 'notification', 'marketing', 'alert' \\
+\hline
+message\_body & VARCHAR(500) & NOT NULL, SMS message (160 chars recommended) \\
+\hline
+message\_length & INT & NOT NULL, Character count \\
+\hline
+sms\_count & INT & NOT NULL, DEFAULT 1, Number of SMS segments \\
+\hline
+variables & JSON & NOT NULL, Available variables \\
+\hline
+language & VARCHAR(10) & NOT NULL, DEFAULT 'en', Language code \\
+\hline
+sender\_id & VARCHAR(20) & NOT NULL, Sender ID/name: "SAVOY", "SavoyConnect" \\
+\hline
+priority & ENUM & NOT NULL, DEFAULT 'normal', Values: 'low', 'normal', 'high', 'urgent' \\
+\hline
+is\_active & BOOLEAN & NOT NULL, DEFAULT TRUE, Template active status \\
+\hline
+requires\_consent & BOOLEAN & NOT NULL, DEFAULT TRUE, User opt-in required \\
+\hline
+send\_count & BIGINT & NOT NULL, DEFAULT 0, Total SMS sent \\
+\hline
+last\_sent\_at & TIMESTAMP & NULL, Last SMS sent timestamp \\
+\hline
+delivery\_rate & DECIMAL(5, 2) & NULL, Successful delivery percentage \\
+\hline
+average\_cost & DECIMAL(10, 4) & NULL, Average cost per SMS \\
+\hline
+notes & TEXT & NULL, Internal notes \\
+\hline
+created\_by & BIGINT & NULL, Admin who created \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{sms\_templates table structure}
+\end{longtable}
+
+\textbf{SMS Examples:}
+\begin{itemize}
+    \item \textbf{OTP:} "Your SavoyConnect verification code is \{\{otp\_code\}\}. Valid for 5 minutes."
+    \item \textbf{Order:} "Order \#\{\{order\_id\}\} confirmed! Estimated delivery: \{\{delivery\_time\}\}. Track: \{\{tracking\_url\}\}"
+    \item \textbf{Delivery:} "Your order is out for delivery! Delivery person: \{\{driver\_name\}\}, Contact: \{\{driver\_phone\}\}"
+    \item \textbf{Promotion:} "Flash Sale! Get \{\{discount\_percent\}\}\% off on all dairy products. Valid till \{\{expiry\_time\}\}."
+\end{itemize}
+
+\textbf{Character Limits:}
+\begin{itemize}
+    \item \textbf{Single SMS:} 160 characters (GSM-7) or 70 characters (Unicode)
+    \item \textbf{Concatenated:} 153 chars per segment (GSM-7), 67 chars (Unicode)
+    \item Keep OTP messages under 160 characters
+    \item Include brand name and action in first 70 characters
+\end{itemize}
+
+\newpage
+
+\section{File Management}
+
+\subsection{Table 76: file\_uploads}
+
+\begin{tablebox}{file\_uploads - File Upload Tracking}
+\textbf{Purpose:} Tracks all uploaded files with metadata and storage information.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} uploaded\_by\\
+\textbf{Indexes:} uploaded\_by, file\_hash, entity\_type, created\_at
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+file\_name & VARCHAR(500) & NOT NULL, Original filename \\
+\hline
+file\_path & VARCHAR(1000) & NOT NULL, Storage path/key \\
+\hline
+file\_url & VARCHAR(1000) & NOT NULL, Public access URL \\
+\hline
+file\_size & BIGINT & NOT NULL, File size in bytes \\
+\hline
+file\_type & VARCHAR(100) & NOT NULL, MIME type: 'image/jpeg', 'application/pdf' \\
+\hline
+file\_extension & VARCHAR(20) & NOT NULL, File extension: 'jpg', 'pdf', 'mp4' \\
+\hline
+file\_hash & VARCHAR(255) & NOT NULL, SHA-256 hash for deduplication \\
+\hline
+storage\_provider & ENUM & NOT NULL, DEFAULT 's3', Values: 's3', 'cloudinary', 'local', 'azure', 'gcs' \\
+\hline
+storage\_bucket & VARCHAR(255) & NULL, S3 bucket or container name \\
+\hline
+storage\_region & VARCHAR(100) & NULL, Storage region: 'ap-south-1' \\
+\hline
+entity\_type & VARCHAR(100) & NULL, Related entity: 'product', 'recipe', 'user', 'review' \\
+\hline
+entity\_id & BIGINT & NULL, Related entity ID \\
+\hline
+uploaded\_by & BIGINT & FOREIGN KEY, NULL, References users(id) or admin\_users(id) \\
+\hline
+uploader\_type & ENUM & NOT NULL, Values: 'user', 'admin', 'system' \\
+\hline
+is\_public & BOOLEAN & NOT NULL, DEFAULT TRUE, Public access flag \\
+\hline
+is\_temporary & BOOLEAN & NOT NULL, DEFAULT FALSE, Auto-delete if unused \\
+\hline
+expires\_at & TIMESTAMP & NULL, Expiration date for temp files \\
+\hline
+cdn\_url & VARCHAR(1000) & NULL, CDN-accelerated URL \\
+\hline
+thumbnail\_url & VARCHAR(1000) & NULL, Thumbnail URL (for images/videos) \\
+\hline
+image\_width & INT & NULL, Original width (pixels) \\
+\hline
+image\_height & INT & NULL, Original height (pixels) \\
+\hline
+duration\_seconds & INT & NULL, Duration for audio/video \\
+\hline
+metadata & JSON & NULL, Additional metadata (EXIF, tags, etc.) \\
+\hline
+access\_count & BIGINT & NOT NULL, DEFAULT 0, Download/view count \\
+\hline
+last\_accessed\_at & TIMESTAMP & NULL, Last access timestamp \\
+\hline
+deleted\_at & TIMESTAMP & NULL, Soft delete timestamp \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{file\_uploads table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: users (uploaded\_by)
+\end{itemize}
+
+\textbf{File Categories:}
+\begin{itemize}
+    \item \textbf{Product Images:} Product photos, 360° views, lifestyle images
+    \item \textbf{Recipe Media:} Recipe photos, cooking videos, step images
+    \item \textbf{User Content:} Profile pictures, review photos, post images
+    \item \textbf{Documents:} Invoices, receipts, verification documents, reports
+    \item \textbf{System:} Badges, icons, banners, email templates
+\end{itemize}
+
+\textbf{Storage Strategy:}
+\begin{itemize}
+    \item Images optimized and compressed on upload
+    \item Multiple sizes generated: thumbnail, small, medium, large, original
+    \item CDN distribution for global performance
+    \item Hash-based deduplication (save storage costs)
+    \item Temporary files auto-deleted after 24 hours if unused
+    \item Orphaned files cleaned up weekly
+\end{itemize}
+
+\newpage
+
+\subsection{Table 77: scheduled\_jobs}
+
+\begin{tablebox}{scheduled\_jobs - Cron Job Management}
+\textbf{Purpose:} Manages scheduled background jobs and cron tasks.\\
+\textbf{Primary Key:} id\\
+\textbf{Indexes:} job\_key (unique), status, next\_run\_at
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+job\_key & VARCHAR(100) & UNIQUE, NOT NULL, Job identifier: "cleanup\_temp\_files", "send\_daily\_digest" \\
+\hline
+job\_name & VARCHAR(255) & NOT NULL, Display name \\
+\hline
+job\_type & ENUM & NOT NULL, Values: 'scheduled', 'recurring', 'one\_time', 'triggered' \\
+\hline
+description & TEXT & NULL, Job description \\
+\hline
+handler & VARCHAR(255) & NOT NULL, Function/class to execute \\
+\hline
+parameters & JSON & NULL, Job parameters \\
+\hline
+schedule\_type & ENUM & NOT NULL, Values: 'cron', 'interval', 'daily', 'weekly', 'monthly' \\
+\hline
+cron\_expression & VARCHAR(100) & NULL, Cron schedule: "0 0 * * *" (daily at midnight) \\
+\hline
+interval\_minutes & INT & NULL, Interval in minutes \\
+\hline
+schedule\_time & TIME & NULL, Specific time for daily jobs \\
+\hline
+timezone & VARCHAR(100) & NOT NULL, DEFAULT 'Asia/Dhaka', Timezone for scheduling \\
+\hline
+priority & ENUM & NOT NULL, DEFAULT 'normal', Values: 'low', 'normal', 'high', 'critical' \\
+\hline
+max\_retries & INT & NOT NULL, DEFAULT 3, Max retry attempts \\
+\hline
+retry\_delay\_minutes & INT & NOT NULL, DEFAULT 5, Delay between retries \\
+\hline
+timeout\_seconds & INT & NOT NULL, DEFAULT 300, Job timeout \\
+\hline
+status & ENUM & NOT NULL, DEFAULT 'active', Values: 'active', 'paused', 'disabled', 'failed' \\
+\hline
+last\_run\_at & TIMESTAMP & NULL, Last execution timestamp \\
+\hline
+last\_run\_status & ENUM & NULL, Values: 'success', 'failed', 'timeout', 'skipped' \\
+\hline
+last\_run\_duration & INT & NULL, Last execution duration (seconds) \\
+\hline
+last\_run\_output & TEXT & NULL, Last execution output/logs \\
+\hline
+last\_error\_message & TEXT & NULL, Last error message \\
+\hline
+next\_run\_at & TIMESTAMP & NULL, Next scheduled execution \\
+\hline
+run\_count & BIGINT & NOT NULL, DEFAULT 0, Total executions \\
+\hline
+success\_count & BIGINT & NOT NULL, DEFAULT 0, Successful executions \\
+\hline
+failure\_count & BIGINT & NOT NULL, DEFAULT 0, Failed executions \\
+\hline
+average\_duration & INT & NULL, Average execution duration (seconds) \\
+\hline
+is\_running & BOOLEAN & NOT NULL, DEFAULT FALSE, Currently executing flag \\
+\hline
+locked\_at & TIMESTAMP & NULL, Lock timestamp (prevent concurrent runs) \\
+\hline
+locked\_by & VARCHAR(255) & NULL, Worker/server that locked job \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{scheduled\_jobs table structure}
+\end{longtable}
+
+\textbf{Common Scheduled Jobs:}
+\begin{itemize}
+    \item \textbf{Daily (Midnight):}
+    \begin{itemize}
+        \item Calculate leaderboard rankings
+        \item Update trust scores
+        \item Send daily digest emails
+        \item Archive old logs
+        \item Generate daily reports
+    \end{itemize}
+    \item \textbf{Hourly:}
+    \begin{itemize}
+        \item Check inventory levels
+        \item Process pending orders
+        \item Send abandoned cart reminders
+        \item Update product recommendations
+    \end{itemize}
+    \item \textbf{Every 15 Minutes:}
+    \begin{itemize}
+        \item Check order status updates
+        \item Process notification queue
+        \item Update cache
+    \end{itemize}
+    \item \textbf{Weekly:}
+    \begin{itemize}
+        \item Cleanup orphaned files
+        \item Generate weekly analytics
+        \item Send weekly newsletter
+        \item Database optimization
+    \end{itemize}
+\end{itemize}
+
+\newpage
+
+\section{Error Handling \& Monitoring}
+
+\subsection{Table 78: error\_logs}
+
+\begin{tablebox}{error\_logs - Application Error Logging}
+\textbf{Purpose:} Logs application errors, exceptions, and crashes for debugging.\\
+\textbf{Primary Key:} id\\
+\textbf{Indexes:} error\_type, severity, is\_resolved, created\_at
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+error\_hash & VARCHAR(255) & NOT NULL, Hash of error for grouping duplicates \\
+\hline
+error\_type & VARCHAR(255) & NOT NULL, Error class/type: 'DatabaseError', 'ValidationError' \\
+\hline
+error\_message & TEXT & NOT NULL, Error message \\
+\hline
+error\_code & VARCHAR(50) & NULL, Application error code \\
+\hline
+severity & ENUM & NOT NULL, DEFAULT 'error', Values: 'debug', 'info', 'warning', 'error', 'critical', 'fatal' \\
+\hline
+stack\_trace & TEXT & NULL, Full stack trace \\
+\hline
+context & JSON & NULL, Error context (request, user, session) \\
+\hline
+user\_id & BIGINT & NULL, User ID if error occurred during user action \\
+\hline
+session\_id & BIGINT & NULL, Session ID \\
+\hline
+request\_method & VARCHAR(10) & NULL, HTTP method \\
+\hline
+request\_url & VARCHAR(1000) & NULL, Request URL \\
+\hline
+request\_params & JSON & NULL, Request parameters \\
+\hline
+ip\_address & VARCHAR(45) & NULL, Client IP \\
+\hline
+user\_agent & TEXT & NULL, Browser/client info \\
+\hline
+environment & VARCHAR(50) & NOT NULL, Environment: 'production', 'staging', 'development' \\
+\hline
+app\_version & VARCHAR(50) & NULL, Application version \\
+\hline
+server\_name & VARCHAR(255) & NULL, Server/instance identifier \\
+\hline
+file\_path & VARCHAR(1000) & NULL, File where error occurred \\
+\hline
+line\_number & INT & NULL, Line number in file \\
+\hline
+function\_name & VARCHAR(255) & NULL, Function/method name \\
+\hline
+occurrence\_count & INT & NOT NULL, DEFAULT 1, Number of times this error occurred \\
+\hline
+first\_seen\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP, First occurrence \\
+\hline
+last\_seen\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP, Last occurrence \\
+\hline
+is\_resolved & BOOLEAN & NOT NULL, DEFAULT FALSE, Resolution status \\
+\hline
+resolved\_at & TIMESTAMP & NULL, Resolution timestamp \\
+\hline
+resolved\_by & BIGINT & NULL, Admin who resolved \\
+\hline
+resolution\_notes & TEXT & NULL, How error was fixed \\
+\hline
+is\_muted & BOOLEAN & NOT NULL, DEFAULT FALSE, Suppress alerts \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+\caption{error\_logs table structure}
+\end{longtable}
+
+\textbf{Error Grouping:}
+\begin{itemize}
+    \item Errors with same hash grouped together
+    \item occurrence\_count incremented for duplicates
+    \item last\_seen\_at updated on each occurrence
+    \item Prevents log spam and aids in pattern detection
+\end{itemize}
+
+\textbf{Alerting Rules:}
+\begin{itemize}
+    \item \textbf{Fatal/Critical:} Immediate alert to on-call engineer
+    \item \textbf{Error:} Alert if more than 10 occurrences in 5 minutes
+    \item \textbf{Warning:} Daily summary report
+    \item \textbf{New Errors:} Alert on first occurrence in production
+\end{itemize}
+
+\textbf{Integration:}
+\begin{itemize}
+    \item Send to Sentry/Rollbar for advanced error tracking
+    \item Slack/Discord notifications for critical errors
+    \item PagerDuty integration for on-call alerts
+    \item Dashboard visualization of error trends
+\end{itemize}
+
+\newpage
+
+\subsection{Table 79: webhooks}
+
+\begin{tablebox}{webhooks - Webhook Configuration}
+\textbf{Purpose:} Configures webhooks for event-driven integrations with external systems.\\
+\textbf{Primary Key:} id\\
+\textbf{Indexes:} event\_type, status, is\_active
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+webhook\_name & VARCHAR(255) & NOT NULL, Descriptive name \\
+\hline
+endpoint\_url & VARCHAR(1000) & NOT NULL, Destination URL \\
+\hline
+event\_type & VARCHAR(100) & NOT NULL, Event trigger: 'order.created', 'payment.completed' \\
+\hline
+event\_filters & JSON & NULL, Conditional filters \\
+\hline
+http\_method & VARCHAR(10) & NOT NULL, DEFAULT 'POST', HTTP method \\
+\hline
+headers & JSON & NULL, Custom HTTP headers \\
+\hline
+auth\_type & ENUM & NULL, Values: 'none', 'basic', 'bearer', 'api\_key', 'hmac' \\
+\hline
+auth\_credentials & VARCHAR(500) & NULL, ENCRYPTED, Authentication credentials \\
+\hline
+secret\_key & VARCHAR(255) & NULL, ENCRYPTED, HMAC signature secret \\
+\hline
+payload\_template & JSON & NULL, Custom payload structure \\
+\hline
+timeout\_seconds & INT & NOT NULL, DEFAULT 30, Request timeout \\
+\hline
+max\_retries & INT & NOT NULL, DEFAULT 3, Retry attempts \\
+\hline
+retry\_delay\_seconds & INT & NOT NULL, DEFAULT 60, Delay between retries \\
+\hline
+is\_active & BOOLEAN & NOT NULL, DEFAULT TRUE, Webhook enabled \\
+\hline
+is\_verified & BOOLEAN & NOT NULL, DEFAULT FALSE, Endpoint verification status \\
+\hline
+last\_triggered\_at & TIMESTAMP & NULL, Last webhook call \\
+\hline
+last\_success\_at & TIMESTAMP & NULL, Last successful call \\
+\hline
+last\_failure\_at & TIMESTAMP & NULL, Last failed call \\
+\hline
+total\_calls & BIGINT & NOT NULL, DEFAULT 0, Total webhook calls \\
+\hline
+success\_count & BIGINT & NOT NULL, DEFAULT 0, Successful calls \\
+\hline
+failure\_count & BIGINT & NOT NULL, DEFAULT 0, Failed calls \\
+\hline
+success\_rate & DECIMAL(5, 2) & NULL, Success percentage \\
+\hline
+average\_response\_time & INT & NULL, Average response time (ms) \\
+\hline
+consecutive\_failures & INT & NOT NULL, DEFAULT 0, Current failure streak \\
+\hline
+status & ENUM & NOT NULL, DEFAULT 'active', Values: 'active', 'paused', 'failed', 'disabled' \\
+\hline
+notes & TEXT & NULL, Internal notes \\
+\hline
+created\_by & BIGINT & NULL, Admin who created \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+updated\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP \\
+\hline
+\caption{webhooks table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item One-to-Many: webhook\_logs
+\end{itemize}
+
+\textbf{Webhook Events:}
+\begin{itemize}
+    \item \textbf{Orders:} order.created, order.updated, order.delivered, order.cancelled
+    \item \textbf{Payments:} payment.completed, payment.failed, payment.refunded
+    \item \textbf{Inventory:} product.out\_of\_stock, inventory.low\_stock
+    \item \textbf{Users:} user.created, user.verified, user.deleted
+    \item \textbf{Reviews:} review.created, review.flagged
+    \item \textbf{System:} system.error, backup.completed
+\end{itemize}
+
+\textbf{Security:}
+\begin{itemize}
+    \item HMAC-SHA256 signature in X-Webhook-Signature header
+    \item Timestamp validation to prevent replay attacks
+    \item IP whitelisting for sensitive webhooks
+    \item Retry with exponential backoff
+    \item Auto-disable after 10 consecutive failures
+\end{itemize}
+
+\newpage
+
+\subsection{Table 80: webhook\_logs}
+
+\begin{tablebox}{webhook\_logs - Webhook Delivery Logs}
+\textbf{Purpose:} Logs all webhook delivery attempts with request/response details.\\
+\textbf{Primary Key:} id\\
+\textbf{Foreign Keys:} webhook\_id\\
+\textbf{Indexes:} webhook\_id, event\_id, status, created\_at
+\end{tablebox}
+
+\begin{longtable}{|p{3.5cm}|p{2.5cm}|p{6cm}|}
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{tableHeader}
+\textcolor{white}{\textbf{Column Name}} & \textcolor{white}{\textbf{Data Type}} & \textcolor{white}{\textbf{Constraints \& Description}} \\
+\hline
+\endhead
+
+id & BIGINT & PRIMARY KEY, AUTO\_INCREMENT \\
+\hline
+webhook\_id & BIGINT & FOREIGN KEY, NOT NULL, References webhooks(id) ON DELETE CASCADE \\
+\hline
+event\_id & VARCHAR(100) & NOT NULL, Event identifier (UUID) \\
+\hline
+event\_type & VARCHAR(100) & NOT NULL, Event type: 'order.created' \\
+\hline
+event\_data & JSON & NOT NULL, Event payload data \\
+\hline
+attempt\_number & INT & NOT NULL, DEFAULT 1, Retry attempt number \\
+\hline
+request\_url & VARCHAR(1000) & NOT NULL, Destination URL \\
+\hline
+request\_method & VARCHAR(10) & NOT NULL, HTTP method \\
+\hline
+request\_headers & JSON & NULL, HTTP headers sent \\
+\hline
+request\_body & JSON & NULL, Request payload \\
+\hline
+request\_signature & VARCHAR(255) & NULL, HMAC signature sent \\
+\hline
+response\_status & INT & NULL, HTTP status code \\
+\hline
+response\_headers & JSON & NULL, Response headers \\
+\hline
+response\_body & TEXT & NULL, Response body (truncated if large) \\
+\hline
+response\_time\_ms & INT & NULL, Response time in milliseconds \\
+\hline
+status & ENUM & NOT NULL, Values: 'pending', 'success', 'failed', 'timeout', 'retry' \\
+\hline
+error\_message & TEXT & NULL, Error details if failed \\
+\hline
+will\_retry & BOOLEAN & NOT NULL, DEFAULT FALSE, Scheduled for retry \\
+\hline
+next\_retry\_at & TIMESTAMP & NULL, Next retry timestamp \\
+\hline
+delivered\_at & TIMESTAMP & NULL, Successful delivery timestamp \\
+\hline
+created\_at & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP \\
+\hline
+\caption{webhook\_logs table structure}
+\end{longtable}
+
+\textbf{Relationships:}
+\begin{itemize}
+    \item Many-to-One: webhooks (webhook\_id)
+\end{itemize}
+
+\textbf{Retry Strategy:}
+\begin{itemize}
+    \item Attempt 1: Immediate
+    \item Attempt 2: After 1 minute
+    \item Attempt 3: After 5 minutes
+    \item Attempt 4: After 30 minutes
+    \item Attempt 5+: After 1 hour (max 10 attempts)
+    \item After max retries, mark webhook as failed
+\end{itemize}
+
+\textbf{Data Retention:}
+\begin{itemize}
+    \item Keep successful deliveries for 7 days
+    \item Keep failed deliveries for 30 days
+    \item Archive to cold storage after retention period
+    \item Purge after 90 days
+\end{itemize}
+
+\newpage
+
+\section{Complete Schema Summary}
+
+\begin{tcolorbox}[colback=accentOrange!10,colframe=accentOrange,arc=3mm,boxrule=1mm]
+\textbf{\LARGE COMPLETE DATABASE SCHEMA - ALL 80 TABLES}
+
+\vspace{0.5cm}
+
+\textbf{Part 8 Complete: Tables 71-80 (Final)}
+
+\vspace{0.3cm}
+
+This document covers tables 71-80 of the SavoyConnect database schema:
+
+\begin{itemize}
+    \item \textbf{System Configuration (1 table):} system\_settings
+    \item \textbf{API Management (2 tables):} api\_keys, api\_logs
+    \item \textbf{Communication Templates (2 tables):} email\_templates, sms\_templates
+    \item \textbf{File Management (1 table):} file\_uploads
+    \item \textbf{Job Scheduling (1 table):} scheduled\_jobs
+    \item \textbf{Error Handling (1 table):} error\_logs
+    \item \textbf{Webhooks (2 tables):} webhooks, webhook\_logs
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{\large Key Features Implemented:}
+\begin{itemize}
+    \item Centralized system configuration with environment-specific settings
+    \item Secure API key management with rate limiting and IP whitelisting
+    \item Comprehensive API logging for monitoring and debugging
+    \item Email and SMS template management with variable substitution
+    \item File upload tracking with CDN integration and deduplication
+    \item Cron job scheduling with retry logic and monitoring
+    \item Application error logging with grouping and alerting
+    \item Webhook system for event-driven external integrations
+    \item Complete webhook delivery tracking with retry mechanism
+\end{itemize}
+
+\end{tcolorbox}
+
+\newpage
+
+\begin{tcolorbox}[colback=primaryBlue!10,colframe=primaryBlue,arc=3mm,boxrule=2mm]
+\textbf{\Huge FULL SCHEMA OVERVIEW}
+
+\vspace{0.5cm}
+
+\textbf{\large Complete SavoyConnect Database: 80 Tables Across 8 Documents}
+
+\vspace{0.5cm}
+
+\textbf{Part 1: Tables 1-10 - User Management \& Product Catalog}
+\begin{itemize}
+    \item users, user\_profiles, user\_preferences, user\_addresses
+    \item sessions, password\_resets
+    \item products, product\_categories, product\_nutrition, product\_allergens
+\end{itemize}
+
+\textbf{Part 2: Tables 11-20 - Order Management \& Delivery}
+\begin{itemize}
+    \item product\_images
+    \item orders, order\_items, order\_status\_history
+    \item payments, payment\_methods
+    \item locations, location\_inventory
+    \item delivery\_personnel, deliveries
+\end{itemize}
+
+\textbf{Part 3: Tables 21-30 - Loyalty \& Reviews}
+\begin{itemize}
+    \item icecoins\_wallet, icecoins\_transactions, loyalty\_tiers, reward\_redemptions
+    \item challenges, user\_challenges, challenge\_progress\_events
+    \item reviews, review\_responses, review\_votes
+\end{itemize}
+
+\textbf{Part 4: Tables 31-40 - Marketing \& Content}
+\begin{itemize}
+    \item referrals
+    \item promotions, promotion\_usage
+    \item notifications, notification\_templates
+    \item recipes, recipe\_products, recipe\_tries, recipe\_saves, recipe\_collections
+\end{itemize}
+
+\textbf{Part 5: Tables 41-50 - Community \& Innovation}
+\begin{itemize}
+    \item user\_follows, user\_posts, post\_likes, post\_comments
+    \item digital\_passports, passport\_scans, sustainability\_reports
+    \item custom\_boxes, custom\_box\_items
+    \item stock\_notifications
+\end{itemize}
+
+\textbf{Part 6: Tables 51-60 - Gamification \& Trust}
+\begin{itemize}
+    \item health\_goals, health\_goal\_logs
+    \item badges, user\_badges
+    \item leaderboards, leaderboard\_entries
+    \item user\_verifications, trust\_scores
+    \item feedback, feedback\_responses
+\end{itemize}
+
+\textbf{Part 7: Tables 61-70 - Analytics \& Administration}
+\begin{itemize}
+    \item page\_views, user\_activity\_logs
+    \item search\_queries, search\_results
+    \item click\_tracking, cart\_analytics, conversion\_tracking
+    \item admin\_users, admin\_roles, admin\_activity\_logs
+\end{itemize}
+
+\textbf{Part 8: Tables 71-80 - System \& Integration (THIS DOCUMENT)}
+\begin{itemize}
+    \item system\_settings
+    \item api\_keys, api\_logs
+    \item email\_templates, sms\_templates
+    \item file\_uploads
+    \item scheduled\_jobs
+    \item error\_logs
+    \item webhooks, webhook\_logs
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{\large Technical Specifications:}
+\begin{itemize}
+    \item \textbf{Database Engine:} MySQL 8.0+
+    \item \textbf{Total Tables:} 80
+    \item \textbf{Total Columns:} 2,000+ columns across all tables
+    \item \textbf{Primary Keys:} BIGINT AUTO\_INCREMENT on all tables
+    \item \textbf{Foreign Keys:} 200+ relationships with ON DELETE CASCADE/SET NULL
+    \item \textbf{Indexes:} 400+ indexes for query optimization
+    \item \textbf{ENUM Types:} 200+ enumerated types for data integrity
+    \item \textbf{JSON Fields:} 100+ JSON columns for flexible data structures
+    \item \textbf{Timestamps:} created\_at, updated\_at on all tables
+    \item \textbf{Soft Deletes:} deleted\_at on applicable tables
+    \item \textbf{Encryption:} Sensitive fields marked ENCRYPTED
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{\large Feature Coverage:}
+\begin{itemize}
+    \item ✅ Complete e-commerce functionality (users, products, orders, payments)
+    \item ✅ Multi-location inventory management
+    \item ✅ Real-time delivery tracking
+    \item ✅ IceCoins loyalty program with 5-tier system
+    \item ✅ Gamification (challenges, badges, leaderboards)
+    \item ✅ Recipe platform with social features
+    \item ✅ Review system with voting
+    \item ✅ Referral program
+    \item ✅ Promotional campaigns
+    \item ✅ Multi-channel notifications
+    \item ✅ Social networking features
+    \item ✅ Digital product passports
+    \item ✅ Sustainability tracking
+    \item ✅ Custom box builder
+    \item ✅ Health goal tracking
+    \item ✅ Trust \& verification system
+    \item ✅ Comprehensive analytics
+    \item ✅ Admin management with RBAC
+    \item ✅ API management
+    \item ✅ Webhook integrations
+    \item ✅ Error logging \& monitoring
+    \item ✅ File management
+    \item ✅ Job scheduling
+    \item ✅ Communication templates
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{\large Security \& Compliance:}
+\begin{itemize}
+    \item GDPR compliant data handling
+    \item PCI-DSS compliant payment processing
+    \item Encrypted storage for sensitive data
+    \item Role-based access control (RBAC)
+    \item Two-factor authentication support
+    \item Comprehensive audit trails
+    \item Data retention policies
+    \item Privacy by design principles
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{\large Next Steps for Development:}
+\begin{enumerate}
+    \item Create database migration scripts for all 80 tables
+    \item Implement stored procedures for complex queries
+    \item Set up database indexes and optimization
+    \item Configure replication and backup strategies
+    \item Implement data seeding scripts for testing
+    \item Set up monitoring and alerting
+    \item Document API endpoints based on schema
+    \item Create ORM models/entities for backend
+    \item Implement data validation layers
+    \item Set up automated testing for data integrity
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\begin{center}
+\textbf{\LARGE DATABASE SCHEMA DOCUMENTATION COMPLETE}
+
+\vspace{0.3cm}
+
+\textcolor{accentOrange}{\textbf{All 80 Tables Documented}}
+
+\vspace{0.2cm}
+
+Ready for Development Team Handoff
+\end{center}
+
+\end{tcolorbox}
+
+\end{document}
