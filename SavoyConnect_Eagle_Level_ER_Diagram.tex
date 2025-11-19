@@ -1,0 +1,688 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{shapes.multipart, positioning, arrows.meta, calc}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{longtable}
+
+\definecolor{entityColor}{RGB}{52, 152, 219}
+\definecolor{junctionColor}{RGB}{241, 196, 15}
+\definecolor{headerColor}{RGB}{44, 62, 80}
+
+\title{\textbf{SavoyConnect Eagle Level ER Diagram}}
+\author{Database Design - 7 Core Entities}
+\date{November 19, 2025}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+%==============================================
+\section{Entity Definitions}
+%==============================================
+
+\subsection{Core Entities (7)}
+
+\begin{longtable}{|p{3cm}|p{3cm}|p{8cm}|}
+\hline
+\rowcolor{headerColor}
+\textcolor{white}{\textbf{Entity}} & \textcolor{white}{\textbf{Keys}} & \textcolor{white}{\textbf{Description}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{headerColor}
+\textcolor{white}{\textbf{Entity}} & \textcolor{white}{\textbf{Keys}} & \textcolor{white}{\textbf{Description}} \\
+\hline
+\endhead
+
+\textbf{ORGANIZATION} & 
+\textbf{PK:} id & 
+The company (Savoy). Central hub entity that owns all other entities. \\
+\hline
+
+\textbf{LOCATION} & 
+\textbf{PK:} id \newline \textbf{FK:} organization\_id & 
+Physical stores, depots, warehouses, kiosks where products are stocked. \\
+\hline
+
+\textbf{EMPLOYEE} & 
+\textbf{PK:} id \newline \textbf{FK:} organization\_id & 
+Staff members including store managers, delivery drivers, warehouse workers, sales reps. \\
+\hline
+
+\textbf{PRODUCT} & 
+\textbf{PK:} id \newline \textbf{FK:} organization\_id & 
+Ice cream products manufactured and sold by the organization. \\
+\hline
+
+\textbf{RETAILER} & 
+\textbf{PK:} id \newline \textbf{FK:} organization\_id \newline \textbf{FK:} location\_id & 
+Business partners (supermarkets, convenience stores) who sell Savoy products. Each retailer is supplied by one location. \\
+\hline
+
+\textbf{GALLERY} & 
+\textbf{PK:} id \newline \textbf{FK:} organization\_id \newline \textbf{FK:} created\_by\_employee\_id & 
+Marketing content including photos, videos, banners showcasing products. Each gallery item is created by one employee. \\
+\hline
+
+\textbf{CONSUMER} & 
+\textbf{PK:} id \newline \textbf{FK:} organization\_id & 
+End customers who purchase ice cream products directly or through retailers. \\
+\hline
+
+\end{longtable}
+
+%==============================================
+\subsection{Junction Tables (10)}
+
+\begin{longtable}{|p{4cm}|p{3cm}|p{7cm}|}
+\hline
+\rowcolor{headerColor}
+\textcolor{white}{\textbf{Junction Table}} & \textcolor{white}{\textbf{Foreign Keys}} & \textcolor{white}{\textbf{Purpose}} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{headerColor}
+\textcolor{white}{\textbf{Junction Table}} & \textcolor{white}{\textbf{Foreign Keys}} & \textcolor{white}{\textbf{Purpose}} \\
+\hline
+\endhead
+
+\textbf{location\_employees} & 
+location\_id \newline employee\_id & 
+Employees work at multiple locations (shift rotation, multi-site staff). \\
+\hline
+
+\textbf{location\_inventory} & 
+\textbf{PK:} id \newline location\_id \newline product\_id & 
+Tracks which products are stocked at which locations with quantities. \\
+\hline
+
+\textbf{employee\_retailers} & 
+employee\_id \newline retailer\_id & 
+Sales reps and account managers handle multiple retailer relationships. \\
+\hline
+
+\textbf{retailer\_products} & 
+\textbf{PK:} id \newline retailer\_id \newline product\_id & 
+Which products each retailer sells with wholesale pricing and stock levels. \\
+\hline
+
+\textbf{gallery\_products} & 
+gallery\_id \newline product\_id & 
+Which products are featured in which gallery content (photos/videos). \\
+\hline
+
+\textbf{consumer\_locations} & 
+consumer\_id \newline location\_id & 
+Which locations each consumer orders from (preferred stores, delivery areas). \\
+\hline
+
+\textbf{consumer\_products} & 
+\textbf{PK:} id \newline consumer\_id \newline product\_id & 
+Purchase history - which consumers bought which products. \\
+\hline
+
+\textbf{retailer\_consumers} & 
+\textbf{PK:} id \newline retailer\_id \newline consumer\_id & 
+Tracks which consumers shop at which retailers. \\
+\hline
+
+\textbf{gallery\_views} & 
+\textbf{PK:} id \newline gallery\_id \newline consumer\_id & 
+Tracks which consumers viewed which gallery content for engagement analytics. \\
+\hline
+
+\textbf{employee\_consumers} & 
+\textbf{PK:} id \newline employee\_id \newline consumer\_id & 
+Service relationships - which employees served which consumers (deliveries, support). \\
+\hline
+
+\end{longtable}
+
+\newpage
+
+%==============================================
+\section{Relationship Matrix}
+%==============================================
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+\hline
+\rowcolor{headerColor}
+\textcolor{white}{} & \textcolor{white}{\textbf{ORG}} & \textcolor{white}{\textbf{LOC}} & \textcolor{white}{\textbf{EMP}} & \textcolor{white}{\textbf{PROD}} & \textcolor{white}{\textbf{RET}} & \textcolor{white}{\textbf{GAL}} & \textcolor{white}{\textbf{CON}} \\
+\hline
+\textbf{ORG} & - & 1:* & 1:* & 1:* & 1:* & 1:* & 1:* \\
+\hline
+\textbf{LOCATION} & *:1 & - & *:* & *:* & 1:* & - & *:* \\
+\hline
+\textbf{EMPLOYEE} & *:1 & *:* & - & - & *:* & *:1 & *:* \\
+\hline
+\textbf{PRODUCT} & *:1 & *:* & - & - & *:* & *:* & *:* \\
+\hline
+\textbf{RETAILER} & *:1 & *:1 & *:* & *:* & - & - & *:* \\
+\hline
+\textbf{GALLERY} & *:1 & - & 1:* & *:* & - & - & *:* \\
+\hline
+\textbf{CONSUMER} & *:1 & *:* & *:* & *:* & *:* & *:* & - \\
+\hline
+\end{tabular}
+\caption{Complete Relationship Matrix}
+\end{table}
+
+\textbf{Legend:}
+\begin{itemize}
+    \item \textbf{1:*} = One-to-Many (Direct Foreign Key)
+    \item \textbf{*:*} = Many-to-Many (Junction Table Required)
+    \item \textbf{*:1} = Many-to-One (Inverse of 1:*)
+    \item \textbf{-} = No Direct Relationship
+\end{itemize}
+
+\newpage
+
+%==============================================
+\section{Detailed Relationships}
+%==============================================
+
+\subsection{1:N Relationships (Direct Foreign Keys)}
+
+\subsubsection{ORGANIZATION as Central Hub}
+
+\textbf{ORGANIZATION $\rightarrow$ LOCATION (1:N)}
+\begin{itemize}
+    \item One organization owns many locations
+    \item \texttt{locations.organization\_id} references \texttt{organizations.id}
+    \item Example: Savoy owns Dhanmondi Store, Gulshan Depot, Central Warehouse
+\end{itemize}
+
+\textbf{ORGANIZATION $\rightarrow$ EMPLOYEE (1:N)}
+\begin{itemize}
+    \item One organization employs many employees
+    \item \texttt{employees.organization\_id} references \texttt{organizations.id}
+    \item Example: Savoy employs store managers, drivers, warehouse staff
+\end{itemize}
+
+\textbf{ORGANIZATION $\rightarrow$ PRODUCT (1:N)}
+\begin{itemize}
+    \item One organization manufactures many products
+    \item \texttt{products.organization\_id} references \texttt{organizations.id}
+    \item Example: Savoy produces Belgian Chocolate, French Vanilla, Strawberry
+\end{itemize}
+
+\textbf{ORGANIZATION $\rightarrow$ RETAILER (1:N)}
+\begin{itemize}
+    \item One organization partners with many retailers
+    \item \texttt{retailers.organization\_id} references \texttt{organizations.id}
+    \item Example: Savoy partners with ABC Supermarket, XYZ Convenience Stores
+\end{itemize}
+
+\textbf{ORGANIZATION $\rightarrow$ GALLERY (1:N)}
+\begin{itemize}
+    \item One organization owns many gallery items
+    \item \texttt{gallery.organization\_id} references \texttt{organizations.id}
+    \item Example: Savoy owns product photos, promotional videos, marketing banners
+\end{itemize}
+
+\textbf{ORGANIZATION $\rightarrow$ CONSUMER (1:N)}
+\begin{itemize}
+    \item One organization serves many consumers
+    \item \texttt{consumers.organization\_id} references \texttt{organizations.id}
+    \item Example: Savoy serves thousands of customers
+\end{itemize}
+
+\subsubsection{Other 1:N Relationships}
+
+\textbf{LOCATION $\rightarrow$ RETAILER (1:N)}
+\begin{itemize}
+    \item One location supplies many retailers
+    \item \texttt{retailers.location\_id} references \texttt{locations.id}
+    \item Example: Central Warehouse supplies ABC Supermarket, XYZ Stores, LMN Outlets
+\end{itemize}
+
+\textbf{EMPLOYEE $\rightarrow$ GALLERY (1:N)}
+\begin{itemize}
+    \item One employee creates many gallery items
+    \item \texttt{gallery.created\_by\_employee\_id} references \texttt{employees.id}
+    \item Example: Marketing Manager creates multiple product photoshoots
+\end{itemize}
+
+\newpage
+
+\subsection{M:N Relationships (Junction Tables)}
+
+\subsubsection{LOCATION Relationships}
+
+\textbf{LOCATION $\leftrightarrow$ EMPLOYEE (M:N)}
+\begin{itemize}
+    \item Junction Table: \texttt{location\_employees}
+    \item Employees work at multiple locations
+    \item Locations have multiple employees
+    \item Example: Delivery driver covers Dhanmondi \& Gulshan stores
+\end{itemize}
+
+\textbf{LOCATION $\leftrightarrow$ PRODUCT (M:N)}
+\begin{itemize}
+    \item Junction Table: \texttt{location\_inventory}
+    \item Locations stock multiple products with quantities
+    \item Products stocked at multiple locations
+    \item Example: Dhanmondi Store stocks 50 Chocolate tubs + 30 Vanilla tubs
+\end{itemize}
+
+\textbf{LOCATION $\leftrightarrow$ CONSUMER (M:N)}
+\begin{itemize}
+    \item Junction Table: \texttt{consumer\_locations}
+    \item Consumers order from multiple locations
+    \item Locations serve multiple consumers
+    \item Example: Customer orders from nearest store based on delivery address
+\end{itemize}
+
+\subsubsection{EMPLOYEE Relationships}
+
+\textbf{EMPLOYEE $\leftrightarrow$ RETAILER (M:N)}
+\begin{itemize}
+    \item Junction Table: \texttt{employee\_retailers}
+    \item Sales reps manage multiple retailer accounts
+    \item Retailers interact with multiple employees
+    \item Example: Sales manager handles ABC Supermarket + XYZ Stores accounts
+\end{itemize}
+
+\textbf{EMPLOYEE $\leftrightarrow$ CONSUMER (M:N)}
+\begin{itemize}
+    \item Junction Table: \texttt{employee\_consumers}
+    \item Employees serve multiple consumers (deliveries, support)
+    \item Consumers served by multiple employees over time
+    \item Example: Different delivery drivers fulfill orders for same customer
+\end{itemize}
+
+\subsubsection{PRODUCT Relationships}
+
+\textbf{PRODUCT $\leftrightarrow$ RETAILER (M:N)}
+\begin{itemize}
+    \item Junction Table: \texttt{retailer\_products}
+    \item Retailers sell multiple products with pricing
+    \item Products sold by multiple retailers
+    \item Example: ABC Supermarket sells Chocolate + Vanilla at retail markup
+\end{itemize}
+
+\textbf{PRODUCT $\leftrightarrow$ GALLERY (M:N)}
+\begin{itemize}
+    \item Junction Table: \texttt{gallery\_products}
+    \item Gallery items showcase multiple products
+    \item Products featured in multiple gallery items
+    \item Example: Summer promotion photo features 3 flavors together
+\end{itemize}
+
+\textbf{PRODUCT $\leftrightarrow$ CONSUMER (M:N)}
+\begin{itemize}
+    \item Junction Table: \texttt{consumer\_products}
+    \item Consumers purchase multiple products (purchase history)
+    \item Products purchased by multiple consumers
+    \item Example: Customer bought Chocolate yesterday, Vanilla last week
+\end{itemize}
+
+\subsubsection{RETAILER Relationships}
+
+\textbf{RETAILER $\leftrightarrow$ CONSUMER (M:N)}
+\begin{itemize}
+    \item Junction Table: \texttt{retailer\_consumers}
+    \item Retailers serve multiple consumers
+    \item Consumers shop at multiple retailers
+    \item Example: Customer buys from ABC Supermarket + convenience store
+\end{itemize}
+
+\subsubsection{GALLERY Relationships}
+
+\textbf{GALLERY $\leftrightarrow$ CONSUMER (M:N)}
+\begin{itemize}
+    \item Junction Table: \texttt{gallery\_views}
+    \item Consumers view multiple gallery items
+    \item Gallery items viewed by multiple consumers
+    \item Example: Track engagement metrics, popular content analytics
+\end{itemize}
+
+\newpage
+
+%==============================================
+\section{ER Diagram (Text Representation)}
+%==============================================
+
+\begin{verbatim}
+                    ╔═══════════════╗
+                    ║ ORGANIZATION  ║
+                    ║               ║
+                    ║ PK: id        ║
+                    ╚═══════════════╝
+                           │
+          ┌────────────────┼────────────────┐
+          │                │                │
+     (1:N)│           (1:N)│           (1:N)│
+          ▼                ▼                ▼
+  ╔═══════════════╗ ╔═══════════════╗ ╔═══════════════╗
+  ║   LOCATION    ║ ║   EMPLOYEE    ║ ║   PRODUCT     ║
+  ║               ║ ║               ║ ║               ║
+  ║ PK: id        ║ ║ PK: id        ║ ║ PK: id        ║
+  ║ FK: org_id    ║ ║ FK: org_id    ║ ║ FK: org_id    ║
+  ╚═══════════════╝ ╚═══════════════╝ ╚═══════════════╝
+          │                │                │
+          │                │                │
+     (1:N)│           (1:N)│           (M:N)│
+          ▼                ▼                ▼
+  ╔═══════════════╗ ╔═══════════════╗ ╔═══════════════╗
+  ║   RETAILER    ║ ║    GALLERY    ║ ║  CONSUMER     ║
+  ║               ║ ║               ║ ║               ║
+  ║ PK: id        ║ ║ PK: id        ║ ║ PK: id        ║
+  ║ FK: org_id    ║ ║ FK: org_id    ║ ║ FK: org_id    ║
+  ║ FK: loc_id    ║ ║ FK: emp_id    ║ ║               ║
+  ╚═══════════════╝ ╚═══════════════╝ ╚═══════════════╝
+
+
+  JUNCTION TABLES (M:N Relationships)
+  ═══════════════════════════════════
+
+  [location_employees]      [location_inventory]
+     location_id FK            location_id FK
+     employee_id FK            product_id FK
+
+  [employee_retailers]      [retailer_products]
+     employee_id FK            retailer_id FK
+     retailer_id FK            product_id FK
+
+  [gallery_products]        [consumer_locations]
+     gallery_id FK             consumer_id FK
+     product_id FK             location_id FK
+
+  [consumer_products]       [retailer_consumers]
+     consumer_id FK            retailer_id FK
+     product_id FK             consumer_id FK
+
+  [gallery_views]           [employee_consumers]
+     gallery_id FK             employee_id FK
+     consumer_id FK            consumer_id FK
+\end{verbatim}
+
+\newpage
+
+%==============================================
+\section{Foreign Key Constraints}
+%==============================================
+
+\subsection{Direct Foreign Keys (1:N)}
+
+\begin{verbatim}
+-- ORGANIZATION relationships
+ALTER TABLE locations ADD CONSTRAINT fk_location_org
+    FOREIGN KEY (organization_id) REFERENCES organizations(id)
+    ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE employees ADD CONSTRAINT fk_employee_org
+    FOREIGN KEY (organization_id) REFERENCES organizations(id)
+    ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE products ADD CONSTRAINT fk_product_org
+    FOREIGN KEY (organization_id) REFERENCES organizations(id)
+    ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE retailers ADD CONSTRAINT fk_retailer_org
+    FOREIGN KEY (organization_id) REFERENCES organizations(id)
+    ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE gallery ADD CONSTRAINT fk_gallery_org
+    FOREIGN KEY (organization_id) REFERENCES organizations(id)
+    ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE consumers ADD CONSTRAINT fk_consumer_org
+    FOREIGN KEY (organization_id) REFERENCES organizations(id)
+    ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- Other 1:N relationships
+ALTER TABLE retailers ADD CONSTRAINT fk_retailer_location
+    FOREIGN KEY (location_id) REFERENCES locations(id)
+    ON DELETE SET NULL ON UPDATE CASCADE;
+
+ALTER TABLE gallery ADD CONSTRAINT fk_gallery_employee
+    FOREIGN KEY (created_by_employee_id) REFERENCES employees(id)
+    ON DELETE SET NULL ON UPDATE CASCADE;
+\end{verbatim}
+
+\subsection{Junction Table Constraints (M:N)}
+
+\begin{verbatim}
+-- location_employees
+ALTER TABLE location_employees
+    ADD CONSTRAINT fk_locemp_location
+        FOREIGN KEY (location_id) REFERENCES locations(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT fk_locemp_employee
+        FOREIGN KEY (employee_id) REFERENCES employees(id)
+        ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- location_inventory
+ALTER TABLE location_inventory
+    ADD CONSTRAINT fk_locinv_location
+        FOREIGN KEY (location_id) REFERENCES locations(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT fk_locinv_product
+        FOREIGN KEY (product_id) REFERENCES products(id)
+        ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- employee_retailers
+ALTER TABLE employee_retailers
+    ADD CONSTRAINT fk_empret_employee
+        FOREIGN KEY (employee_id) REFERENCES employees(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT fk_empret_retailer
+        FOREIGN KEY (retailer_id) REFERENCES retailers(id)
+        ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- retailer_products
+ALTER TABLE retailer_products
+    ADD CONSTRAINT fk_retprod_retailer
+        FOREIGN KEY (retailer_id) REFERENCES retailers(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT fk_retprod_product
+        FOREIGN KEY (product_id) REFERENCES products(id)
+        ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- gallery_products
+ALTER TABLE gallery_products
+    ADD CONSTRAINT fk_galprod_gallery
+        FOREIGN KEY (gallery_id) REFERENCES gallery(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT fk_galprod_product
+        FOREIGN KEY (product_id) REFERENCES products(id)
+        ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- consumer_locations
+ALTER TABLE consumer_locations
+    ADD CONSTRAINT fk_conloc_consumer
+        FOREIGN KEY (consumer_id) REFERENCES consumers(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT fk_conloc_location
+        FOREIGN KEY (location_id) REFERENCES locations(id)
+        ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- consumer_products
+ALTER TABLE consumer_products
+    ADD CONSTRAINT fk_conprod_consumer
+        FOREIGN KEY (consumer_id) REFERENCES consumers(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT fk_conprod_product
+        FOREIGN KEY (product_id) REFERENCES products(id)
+        ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- retailer_consumers
+ALTER TABLE retailer_consumers
+    ADD CONSTRAINT fk_retcon_retailer
+        FOREIGN KEY (retailer_id) REFERENCES retailers(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT fk_retcon_consumer
+        FOREIGN KEY (consumer_id) REFERENCES consumers(id)
+        ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- gallery_views
+ALTER TABLE gallery_views
+    ADD CONSTRAINT fk_galview_gallery
+        FOREIGN KEY (gallery_id) REFERENCES gallery(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT fk_galview_consumer
+        FOREIGN KEY (consumer_id) REFERENCES consumers(id)
+        ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- employee_consumers
+ALTER TABLE employee_consumers
+    ADD CONSTRAINT fk_empcon_employee
+        FOREIGN KEY (employee_id) REFERENCES employees(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT fk_empcon_consumer
+        FOREIGN KEY (consumer_id) REFERENCES consumers(id)
+        ON DELETE CASCADE ON UPDATE CASCADE;
+\end{verbatim}
+
+\newpage
+
+%==============================================
+\section{Database Statistics}
+%==============================================
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|r|}
+\hline
+\rowcolor{headerColor}
+\textcolor{white}{\textbf{Metric}} & \textcolor{white}{\textbf{Count}} \\
+\hline
+Core Entities & 7 \\
+\hline
+Junction Tables & 10 \\
+\hline
+Total Tables & 17 \\
+\hline
+Direct Foreign Keys (1:N) & 8 \\
+\hline
+Many-to-Many Relationships & 10 \\
+\hline
+Total Foreign Keys & 28+ \\
+\hline
+\end{tabular}
+\caption{Database Schema Statistics}
+\end{table}
+
+\subsection{Cardinality Breakdown}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|r|}
+\hline
+\rowcolor{headerColor}
+\textcolor{white}{\textbf{Relationship Type}} & \textcolor{white}{\textbf{Count}} \\
+\hline
+One-to-Many (1:N) & 8 \\
+\hline
+Many-to-Many (M:N) & 10 \\
+\hline
+\textbf{Total Relationships} & \textbf{18} \\
+\hline
+\end{tabular}
+\caption{Relationship Distribution}
+\end{table}
+
+%==============================================
+\section{Design Principles}
+%==============================================
+
+\subsection{Normalization}
+\begin{itemize}
+    \item All entities follow Third Normal Form (3NF)
+    \item No redundant data across entities
+    \item All M:N relationships properly resolved with junction tables
+    \item Atomic values in all columns
+\end{itemize}
+
+\subsection{Multi-Tenancy}
+\begin{itemize}
+    \item \texttt{organization\_id} foreign key in all core entities
+    \item Enables single database to serve multiple organizations
+    \item Row-level security can be implemented based on organization context
+\end{itemize}
+
+\subsection{Referential Integrity}
+\begin{itemize}
+    \item All foreign keys enforced with constraints
+    \item CASCADE on DELETE for junction tables (cleanup)
+    \item RESTRICT on DELETE for core entity relationships (prevent orphans)
+    \item SET NULL for optional relationships (gallery creator, retailer location)
+\end{itemize}
+
+\subsection{Scalability}
+\begin{itemize}
+    \item Junction tables enable unlimited M:N relationships
+    \item No hard-coded limits on entity associations
+    \item Indexes on all foreign keys for query performance
+    \item Prepared for horizontal partitioning by organization\_id
+\end{itemize}
+
+%==============================================
+\section{Implementation Notes}
+%==============================================
+
+\subsection{Required Indexes}
+
+\begin{verbatim}
+-- All foreign keys should have indexes
+CREATE INDEX idx_location_org ON locations(organization_id);
+CREATE INDEX idx_employee_org ON employees(organization_id);
+CREATE INDEX idx_product_org ON products(organization_id);
+CREATE INDEX idx_retailer_org ON retailers(organization_id);
+CREATE INDEX idx_retailer_loc ON retailers(location_id);
+CREATE INDEX idx_gallery_org ON gallery(organization_id);
+CREATE INDEX idx_gallery_emp ON gallery(created_by_employee_id);
+CREATE INDEX idx_consumer_org ON consumers(organization_id);
+
+-- Junction tables composite indexes
+CREATE INDEX idx_locemp_loc ON location_employees(location_id);
+CREATE INDEX idx_locemp_emp ON location_employees(employee_id);
+CREATE INDEX idx_locinv_loc ON location_inventory(location_id);
+CREATE INDEX idx_locinv_prod ON location_inventory(product_id);
+-- ... continue for all junction tables
+\end{verbatim}
+
+\subsection{Data Integrity Rules}
+
+\begin{itemize}
+    \item ORGANIZATION cannot be deleted if it has dependent entities
+    \item LOCATION can be soft-deleted (mark inactive) rather than hard-deleted
+    \item EMPLOYEE can be terminated (mark inactive) but historical data preserved
+    \item PRODUCT can be discontinued (mark inactive) but order history preserved
+    \item RETAILER relationships tracked even after partnership ends
+    \item CONSUMER data retained for regulatory compliance (GDPR with consent)
+\end{itemize}
+
+%==============================================
+\section{Future Extensions}
+%==============================================
+
+\subsection{Potential Additional Entities}
+\begin{itemize}
+    \item \textbf{ORDER} - Transaction records (consumer purchases)
+    \item \textbf{PAYMENT} - Financial transactions
+    \item \textbf{DELIVERY} - Shipment tracking
+    \item \textbf{CATEGORY} - Product categorization hierarchy
+    \item \textbf{PROMOTION} - Marketing campaigns and discounts
+    \item \textbf{REVIEW} - Product and location reviews
+\end{itemize}
+
+\subsection{Relationship Evolution}
+\begin{itemize}
+    \item ORDER would connect CONSUMER, PRODUCT, LOCATION, EMPLOYEE
+    \item PAYMENT would link ORDER and CONSUMER
+    \item DELIVERY would link ORDER, EMPLOYEE (driver), LOCATION (origin)
+    \item CATEGORY would organize PRODUCT in hierarchical taxonomy
+\end{itemize}
+
+\end{document}
