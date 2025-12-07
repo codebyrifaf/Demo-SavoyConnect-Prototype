@@ -1,0 +1,238 @@
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usepackage{fontawesome5}
+\usepackage{lmodern}
+\usepackage{tikz}
+\usepackage{titlesec}
+
+% Page geometry
+\geometry{
+    left=2cm,
+    right=2cm,
+    top=2.5cm,
+    bottom=2.5cm
+}
+
+% Color definitions
+\definecolor{primaryBlue}{RGB}{33, 150, 243}
+\definecolor{accentTeal}{RGB}{0, 188, 212}
+\definecolor{darkNavy}{RGB}{25, 42, 86}
+\definecolor{lightGray}{RGB}{250, 250, 250}
+\definecolor{mediumGray}{RGB}{189, 189, 189}
+\definecolor{successGreen}{RGB}{76, 175, 80}
+\definecolor{warningOrange}{RGB}{255, 152, 0}
+
+% Title formatting with modern design
+\titleformat{\section}
+  {\color{white}\LARGE\bfseries\sffamily}
+  {\tikz[baseline=(char.base)]{\node[shape=circle,fill=white,text=primaryBlue,minimum size=1.2cm,font=\Large\bfseries] (char) {\thesection};}}{0.5em}{}[
+  \vspace{-1.2em}
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[primaryBlue] (0,0) rectangle (\textwidth, 0.8cm);
+    \node[anchor=west, text=white] at (1.5cm, 0.4cm) {\LARGE\bfseries\sffamily};
+  \end{tikzpicture}
+  \vspace{0.3cm}
+]
+
+\titleformat{\subsection}
+  {\color{darkNavy}\large\bfseries\sffamily}
+  {\tikz[baseline=(char.base)]{\node[shape=rectangle,rounded corners,fill=accentTeal!20,text=accentTeal,inner sep=4pt,minimum width=1.5cm,font=\normalsize\bfseries] (char) {\thesubsection};}}{0.5em}{}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryBlue,
+    urlcolor=primaryBlue,
+    pdftitle={SavoyConnect Features - Database Reference},
+    pdfauthor={Rifaf Rahman},
+    pdfsubject={Feature Documentation for Database Design}
+}
+
+% Header and footer with modern styling
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\color{primaryBlue}\sffamily\textbf{SAVOYCONNECT} \color{mediumGray}| \color{darkNavy}Features Reference}
+\fancyhead[R]{\tikz{\node[circle,fill=primaryBlue,text=white,minimum size=0.7cm,font=\small\bfseries]{\thepage};}}
+\fancyfoot[L]{\color{mediumGray}\small\sffamily Database Design Reference}
+\fancyfoot[R]{\color{mediumGray}\small\sffamily November 2025}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primaryBlue}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrulewidth}{0.5pt}
+\renewcommand{\footrule}{\hbox to\headwidth{\color{mediumGray}\leaders\hrule height \footrulewidth\hfill}}
+
+\begin{document}
+
+% Modern Title Page
+\begin{titlepage}
+    % Top colored header
+    \begin{tikzpicture}[remember picture,overlay]
+        \fill[primaryBlue] (current page.north west) rectangle ([yshift=-6cm]current page.north east);
+        \fill[accentTeal] ([yshift=-6cm]current page.north west) rectangle ([yshift=-6.3cm]current page.north east);
+    \end{tikzpicture}
+    
+    \vspace*{1.5cm}
+    
+    % Title
+    {\color{white}\sffamily
+    {\Huge\bfseries SAVOYCONNECT}\\[0.5cm]
+    {\LARGE Features Reference}\\[0.2cm]
+    {\large Database Design Documentation}
+    }
+    
+    \vspace{3cm}
+    
+    % Info box
+    \begin{tcolorbox}[
+        colback=white,
+        colframe=primaryBlue,
+        boxrule=2pt,
+        arc=4mm,
+        width=0.75\textwidth,
+        left=10pt,
+        right=10pt,
+        top=15pt,
+        bottom=15pt
+    ]
+    \sffamily
+    \begin{tabular}{@{}ll}
+        \textcolor{primaryBlue}{\faUser\ \textbf{Prepared by:}} & Rifaf Rahman \\[0.4cm]
+        \textcolor{primaryBlue}{\faBriefcase\ \textbf{Role:}} & Intern, Data Limited \\[0.4cm]
+        \textcolor{primaryBlue}{\faCalendar\ \textbf{Date:}} & November 2025 \\[0.4cm]
+        \textcolor{primaryBlue}{\faDatabase\ \textbf{Purpose:}} & Database Schema Design \\[0.4cm]
+        \textcolor{primaryBlue}{\faList\ \textbf{Total Features:}} & 29 Features across 10 Categories \\
+    \end{tabular}
+    \end{tcolorbox}
+    
+    \vfill
+    
+ 
+    
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% Main content
+\section{Core Commerce Features}
+
+\subsection{Ordering Flow}
+Order ice cream by pieces (boxes) or liters with real-time price calculation, delivery fee threshold, minimum order validation, and structured delivery form.
+
+\subsection{Delivery Tracking}
+Real-time order tracking with live status updates (Order Confirmed, Preparing, Out for Delivery, Delivered), delivery personnel details, estimated arrival time, live GPS map, and push notifications for status changes.
+
+\subsection{Payment Methods \& Preferences}
+Save and manage multiple payment methods (card, mobile wallet, cash on delivery) with default selection and payment preferences.
+
+\subsection{Customer Care \& Help Center}
+Customer support access with FAQs, contact forms, chat support, and company information (About Us, Terms, Privacy Policy).
+
+\section{User Engagement \& Social Features}
+
+\subsection{Flavor Ratings \& Reviews}
+Users can rate flavors (1-5 stars) and write text reviews with optional photos. Reviews can be reported for moderation.
+
+\subsection{Store Reviews}
+Location-specific reviews for physical stores, depots, and outlets with ratings and feedback on service quality.
+
+\subsection{Community Feed}
+Social feed where users post photos, share flavor reviews, celebrate challenge completions, and interact through likes, comments, and shares. Includes hashtag support and moderation.
+
+\section{Content \& Discovery}
+
+\subsection{Recipe Discovery}
+Browse recipes with categories, filters, detailed ingredients, step-by-step instructions, photos, and links to products used.
+
+\subsection{Search \& History}
+Search for recipes with search history tracking and recently viewed recipes.
+
+\subsection{News \& Campaign Feed}
+In-app news feed for flavor launches, seasonal offers, CSR updates, and promotional campaigns.
+
+\section{Loyalty \& Rewards}
+
+\subsection{Wallet \& Loyalty (IceCoins)}
+Virtual currency wallet showing balance, transaction history, ways to earn coins (purchases, challenges, referrals), and redemption options for rewards.
+
+\subsection{Challenges \& Missions}
+Goal-based challenges with progress tracking and IceCoins rewards. Examples: "Try 5 new flavors", "Share 3 photos", "Use reusable cup 5 times".
+
+\subsection{Referral Rewards}
+Invite friends via referral link/code with rewards for both referrer and referee. Supports tiered bonuses.
+
+\subsection{Promotions \& Ads Center}
+Centralized promotional banners, special offers, and campaign announcements with deep links to features, products, or offers.
+
+\section{Location \& Inventory}
+
+\subsection{Nearby Availability Finder}
+Search for flavors and see real-time stock availability at nearby locations (stores, depots, freezers) with substitute suggestions when out of stock.
+
+\subsection{Map View \& Directions}
+Interactive map showing nearby Savoy locations with filters (open now, services available) and one-tap navigation to selected location.
+
+\subsection{Stock Notification System}
+"Notify me" alerts when out-of-stock flavors become available at nearby locations. Notifications via push, email, or in-app.
+
+\section{Personalization \& AI}
+
+\subsection{AI Flavor Recommendation Engine}
+Personalized flavor suggestions based on purchase history, preferences, seasonal trends, weather, and user behavior.
+
+\subsection{Digital Ice Cream Passport}
+Track flavors tried with visual progress, earn badges ("Chocolate Lover", "Explorer"), and view flavor journey timeline.
+
+\subsection{Make-Your-Own-Box}
+Create custom gift boxes by selecting individual flavors per slot, choose packaging, add gift message, recipient details, and schedule delivery or pickup.
+
+\subsection{Birthday Gift Feature}
+Automatic birthday detection with special offers, time-bound coupons, or personalized greetings sent to users.
+
+\section{Health \& Sustainability}
+
+\subsection{Health \& Nutrition Hub}
+Health profile with weight, height, BMI calculator, dietary preferences, allergen alerts, daily calorie goal tracking, nutrition comparison between flavors, and "Perfect Match" recommendations.
+
+\subsection{Eco Meter \& Sustainability Tracker}
+Track personal environmental impact per purchase (plastic saved, carbon offset, trees planted) with badges, levels (Eco Beginner to Eco Hero), and cumulative progress.
+
+\section{Gamification \& Engagement}
+
+\subsection{Games Hub}
+Collection of online games, offline games, AR location-based games, and city-wise competitions. Supports game subscriptions purchasable with IceCoins.
+
+\subsection{Leaderboards}
+Ranking system showing top users by IceCoins earned, challenges completed, or game scores with period filters (weekly, monthly, all-time).
+
+\section{Trust \& Transparency}
+
+\subsection{Barcode/QR Scan}
+Scan product QR codes or barcodes to verify authenticity, view detailed ingredients/allergens, access active promotions, and earn bonus IceCoins.
+
+\subsection{In-App Feedback \& CSAT}
+Feedback submission form with category selection (Bug, Suggestion, Compliment, Other), satisfaction rating, free-text comments, and optional screenshot attachment.
+
+\section{Infrastructure \& Platform}
+
+\subsection{Accounts \& Authentication}
+User registration with email/password, profile information (name, email, phone, DOB, gender, address, city), login, password reset, and acceptance of Terms \& Privacy Policy.
+
+\subsection{Notifications \& Toasts}
+System notifications for order updates, delivery status, promotional alerts, challenge completions, wallet transactions, and in-app toast messages for user actions.
+
+\vspace{1.5cm}
+
+
+
+\end{document}
