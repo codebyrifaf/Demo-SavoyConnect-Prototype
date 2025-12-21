@@ -1,0 +1,2894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="SavoyConnect - Your Ice Cream Loyalty & Lifestyle Platform">
+    <title>SavoyConnect - Ice Cream Loyalty Platform</title>
+    
+    <!-- Fonts - Premium Royal Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/tokens.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/premium.css">
+</head>
+<body>
+    <!-- App Wrapper -->
+    <div class="app-wrapper">
+        
+        <!-- Desktop Sidebar Navigation -->
+        <aside class="sidebar premium-sidebar" id="sidebar">
+            <div class="sidebar-header premium-sidebar-header">
+                <div class="sidebar-logo-container">
+                    <img src="../assets/savoy.png" alt="Savoy Logo" class="sidebar-logo">
+                </div>
+                <div class="sidebar-brand-container">
+                    <h1 class="sidebar-brand">SavoyConnect</h1>
+                    <p class="sidebar-tagline">Premium Experience</p>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav premium-nav">
+                <div class="nav-section">
+                    <a href="#home" class="nav-link premium-nav-link active" onclick="navigateTo('home')">
+                        <div class="nav-link-inner">
+                            <span class="nav-icon premium-icon">🏠</span>
+                            <span class="nav-text">Home</span>
+                        </div>
+                        <div class="nav-indicator"></div>
+                    </a>
+                    <a href="#explore" class="nav-link premium-nav-link" onclick="navigateTo('explore')">
+                        <div class="nav-link-inner">
+                            <span class="nav-icon premium-icon">🍦</span>
+                            <span class="nav-text">Explore Flavors</span>
+                        </div>
+                        <div class="nav-indicator"></div>
+                    </a>
+                    <a href="#wallet" class="nav-link premium-nav-link" onclick="navigateTo('wallet')">
+                        <div class="nav-link-inner">
+                            <span class="nav-icon premium-icon">💰</span>
+                            <span class="nav-text">IceCoins Wallet</span>
+                        </div>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <span class="nav-section-title">Engage</span>
+                    <a href="#challenges" class="nav-link premium-nav-link" onclick="navigateTo('challenges')">
+                        <div class="nav-link-inner">
+                            <span class="nav-icon premium-icon">🎯</span>
+                            <span class="nav-text">Challenges</span>
+                        </div>
+                        <div class="nav-indicator"></div>
+                    </a>
+                    <a href="#recipes" class="nav-link premium-nav-link" onclick="navigateTo('recipes')">
+                        <div class="nav-link-inner">
+                            <span class="nav-icon premium-icon">📖</span>
+                            <span class="nav-text">Recipes</span>
+                        </div>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <span class="nav-section-title">More</span>
+                    <a href="#health-tracker" class="nav-link premium-nav-link" onclick="navigateTo('health-tracker')">
+                        <div class="nav-link-inner">
+                            <span class="nav-icon premium-icon">❤️</span>
+                            <span class="nav-text">Health Tracker</span>
+                        </div>
+                        <div class="nav-indicator"></div>
+                    </a>
+                    <a href="#store-locator" class="nav-link premium-nav-link" onclick="navigateTo('store-locator')">
+                        <div class="nav-link-inner">
+                            <span class="nav-icon premium-icon">📍</span>
+                            <span class="nav-text">Store Locator</span>
+                        </div>
+                        <div class="nav-indicator"></div>
+                    </a>
+                    <a href="#profile" class="nav-link premium-nav-link" onclick="navigateTo('profile')">
+                        <div class="nav-link-inner">
+                            <span class="nav-icon premium-icon">👤</span>
+                            <span class="nav-text">Profile</span>
+                        </div>
+                        <div class="nav-indicator"></div>
+                    </a>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer premium-sidebar-footer">
+                <a href="#settings" class="nav-link premium-nav-link" onclick="navigateTo('settings')">
+                    <div class="nav-link-inner">
+                        <span class="nav-icon premium-icon">⚙️</span>
+                        <span class="nav-text">Settings</span>
+                    </div>
+                    <div class="nav-indicator"></div>
+                </a>
+                <div class="sidebar-user-card">
+                    <div class="user-avatar">R</div>
+                    <div class="user-info">
+                        <span class="user-name">Rifaf</span>
+                        <span class="user-tier">Gold Member</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Top Bar (Mobile & Tablet) -->
+            <header class="top-bar">
+                <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+                <h2 class="page-title" id="pageTitle">Home</h2>
+                <div class="top-bar-actions">
+                    <button class="icon-btn" onclick="openNotifications()">
+                        <span>🔔</span>
+                        <span class="notification-badge">3</span>
+                    </button>
+                    <button class="icon-btn desktop-only" onclick="openSearch()">
+                        <span>🔍</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Container (Screens) -->
+            <div class="content-wrapper">
+                
+                <!-- Home Screen -->
+                <section id="home" class="screen active">
+                    <div class="container">
+                        
+                        <!-- Premium Hero Section -->
+                        <div class="premium-hero">
+                            <div class="hero-content">
+                                <div class="hero-greeting">
+                                    <h1 class="hero-title">Welcome back, <span class="gradient-text">Rifaf</span>! 👋</h1>
+                                    <p class="hero-subtitle">Your journey to flavor excellence continues</p>
+                                </div>
+                                <div class="hero-badge">
+                                    <div class="tier-badge gold-tier">
+                                        <span class="tier-icon">⭐</span>
+                                        <div class="tier-info">
+                                            <span class="tier-name">Gold Member</span>
+                                            <span class="tier-progress">Level 12</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hero-decoration">
+                                <div class="floating-icon icon-1">🍦</div>
+                                <div class="floating-icon icon-2">🍫</div>
+                                <div class="floating-icon icon-3">🍓</div>
+                            </div>
+                        </div>
+
+                        <!-- Daily Streak & Progress Section -->
+                        <div class="premium-stats-row">
+                            <div class="daily-streak-card">
+                                <div class="streak-icon">🔥</div>
+                                <div class="streak-content">
+                                    <h3 class="streak-number">7 Days</h3>
+                                    <p class="streak-label">Daily Streak</p>
+                                    <div class="streak-bar">
+                                        <div class="streak-fill" style="width: 70%"></div>
+                                    </div>
+                                    <p class="streak-goal">3 more days to unlock Premium Rewards!</p>
+                                </div>
+                            </div>
+                            
+                            <div class="circular-progress-card">
+                                <svg class="progress-ring" width="120" height="120">
+                                    <circle class="progress-ring-bg" cx="60" cy="60" r="52" />
+                                    <circle class="progress-ring-circle" cx="60" cy="60" r="52" 
+                                            style="stroke-dasharray: 326.73; stroke-dashoffset: 81.68;" />
+                                </svg>
+                                <div class="progress-center">
+                                    <span class="progress-value">75%</span>
+                                    <span class="progress-label">Weekly Goal</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Enhanced Stats Grid -->
+                        <div class="premium-stats-grid">
+                            <div class="premium-stat-card">
+                                <div class="stat-header">
+                                    <span class="stat-icon-premium">💰</span>
+                                    <span class="stat-trend up">+12%</span>
+                                </div>
+                                <h3 class="stat-value-premium">2,450</h3>
+                                <p class="stat-label-premium">IceCoins</p>
+                                <div class="stat-sparkline"></div>
+                            </div>
+                            
+                            <div class="premium-stat-card">
+                                <div class="stat-header">
+                                    <span class="stat-icon-premium">🎯</span>
+                                    <span class="stat-trend up">+3</span>
+                                </div>
+                                <h3 class="stat-value-premium">12</h3>
+                                <p class="stat-label-premium">Active Challenges</p>
+                                <div class="stat-sparkline"></div>
+                            </div>
+                            
+                            <div class="premium-stat-card">
+                                <div class="stat-header">
+                                    <span class="stat-icon-premium">🍦</span>
+                                    <span class="stat-trend neutral">New</span>
+                                </div>
+                                <h3 class="stat-value-premium">8</h3>
+                                <p class="stat-label-premium">Flavors Tried</p>
+                                <div class="stat-sparkline"></div>
+                            </div>
+                            
+                            <div class="premium-stat-card">
+                                <div class="stat-header">
+                                    <span class="stat-icon-premium">🏆</span>
+                                    <span class="stat-trend up">+2</span>
+                                </div>
+                                <h3 class="stat-value-premium">24</h3>
+                                <p class="stat-label-premium">Achievements</p>
+                                <div class="stat-sparkline"></div>
+                            </div>
+                        </div>
+
+                        <!-- Trending Flavors Carousel -->
+                        <div class="premium-section">
+                            <div class="section-header-premium">
+                                <h2 class="section-title-premium">🔥 Trending This Week</h2>
+                                <a href="#" onclick="navigateTo('explore')" class="section-link">View All →</a>
+                            </div>
+                            <div class="horizontal-scroll-container">
+                                <div class="flavor-carousel">
+                                    <div class="flavor-card-mini" onclick="viewFlavorDetail('chocolate-delight')">
+                                        <div class="flavor-mini-image">🍫</div>
+                                        <div class="flavor-mini-badge">🔥 #1</div>
+                                        <h4 class="flavor-mini-name">Chocolate Delight</h4>
+                                        <p class="flavor-mini-rating">⭐ 4.8 (2.3k)</p>
+                                    </div>
+                                    
+                                    <div class="flavor-card-mini" onclick="viewFlavorDetail('strawberry-bliss')">
+                                        <div class="flavor-mini-image">🍓</div>
+                                        <div class="flavor-mini-badge">🔥 #2</div>
+                                        <h4 class="flavor-mini-name">Strawberry Bliss</h4>
+                                        <p class="flavor-mini-rating">⭐ 4.7 (1.8k)</p>
+                                    </div>
+                                    
+                                    <div class="flavor-card-mini" onclick="viewFlavorDetail('mango-tango')">
+                                        <div class="flavor-mini-image">🥭</div>
+                                        <div class="flavor-mini-badge">✨ New</div>
+                                        <h4 class="flavor-mini-name">Mango Tango</h4>
+                                        <p class="flavor-mini-rating">⭐ 4.9 (856)</p>
+                                    </div>
+                                    
+                                    <div class="flavor-card-mini" onclick="viewFlavorDetail('vanilla-classic')">
+                                        <div class="flavor-mini-image">🍦</div>
+                                        <div class="flavor-mini-badge">👑 Classic</div>
+                                        <h4 class="flavor-mini-name">Vanilla Classic</h4>
+                                        <p class="flavor-mini-rating">⭐ 4.6 (3.1k)</p>
+                                    </div>
+                                    
+                                    <div class="flavor-card-mini" onclick="viewFlavorDetail('pistachio-dream')">
+                                        <div class="flavor-mini-image">🌰</div>
+                                        <div class="flavor-mini-badge">💎 Premium</div>
+                                        <h4 class="flavor-mini-name">Pistachio Dream</h4>
+                                        <p class="flavor-mini-rating">⭐ 4.8 (1.2k)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity Feed -->
+                        <div class="premium-section">
+                            <div class="section-header-premium">
+                                <h2 class="section-title-premium">📖 Your Recent Journey</h2>
+                            </div>
+                            <div class="activity-feed">
+                                <div class="activity-item">
+                                    <div class="activity-icon">🍫</div>
+                                    <div class="activity-content">
+                                        <h4 class="activity-title">Tried Chocolate Delight</h4>
+                                        <p class="activity-time">2 hours ago</p>
+                                    </div>
+                                    <div class="activity-reward">+50 🪙</div>
+                                </div>
+                                
+                                <div class="activity-item">
+                                    <div class="activity-icon">🎯</div>
+                                    <div class="activity-content">
+                                        <h4 class="activity-title">Completed Challenge</h4>
+                                        <p class="activity-time">1 day ago</p>
+                                    </div>
+                                    <div class="activity-reward">+100 🪙</div>
+                                </div>
+                                
+                                <div class="activity-item">
+                                    <div class="activity-icon">🏆</div>
+                                    <div class="activity-content">
+                                        <h4 class="activity-title">Unlocked Achievement</h4>
+                                        <p class="activity-time">3 days ago</p>
+                                    </div>
+                                    <div class="activity-badge">🌟 Flavor Explorer</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Achievement Showcase -->
+                        <div class="premium-section">
+                            <div class="section-header-premium">
+                                <h2 class="section-title-premium">🏆 Recent Achievements</h2>
+                                <a href="#" onclick="navigateTo('challenges')" class="section-link">View All →</a>
+                            </div>
+                            <div class="achievement-showcase">
+                                <div class="achievement-card">
+                                    <div class="achievement-glow"></div>
+                                    <div class="achievement-icon">🌟</div>
+                                    <h4 class="achievement-name">Flavor Explorer</h4>
+                                    <p class="achievement-desc">Tried 8 different flavors</p>
+                                </div>
+                                
+                                <div class="achievement-card">
+                                    <div class="achievement-glow"></div>
+                                    <div class="achievement-icon">🔥</div>
+                                    <h4 class="achievement-name">Week Warrior</h4>
+                                    <p class="achievement-desc">7-day login streak</p>
+                                </div>
+                                
+                                <div class="achievement-card locked">
+                                    <div class="achievement-icon">🔒</div>
+                                    <h4 class="achievement-name">Ice Cream Master</h4>
+                                    <p class="achievement-desc">Try 15 flavors to unlock</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Premium CTA Banner -->
+                        <div class="premium-cta-banner">
+                            <div class="cta-content">
+                                <h3 class="cta-title">🎉 Double IceCoins Week!</h3>
+                                <p class="cta-subtitle">Earn 2x points on all purchases. Limited time offer.</p>
+                            </div>
+                            <button class="cta-button" onclick="openOrderModal()">Order Now →</button>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="premium-section">
+                            <div class="section-header-premium">
+                                <h2 class="section-title-premium">⚡ Quick Actions</h2>
+                            </div>
+                            <div class="quick-actions-premium">
+                                <button class="action-card-premium" onclick="navigateTo('scan')">
+                                    <div class="action-icon-circle">📱</div>
+                                    <h4 class="action-title">Scan QR</h4>
+                                    <p class="action-desc">Instant rewards</p>
+                                </button>
+                                
+                                <button class="action-card-premium" onclick="navigateTo('explore')">
+                                    <div class="action-icon-circle">🍦</div>
+                                    <h4 class="action-title">Explore</h4>
+                                    <p class="action-desc">Discover flavors</p>
+                                </button>
+                                
+                                <button class="action-card-premium" onclick="navigateTo('store-locator')">
+                                    <div class="action-icon-circle">📍</div>
+                                    <h4 class="action-title">Find Store</h4>
+                                    <p class="action-desc">Nearby locations</p>
+                                </button>
+                                
+                                <button class="action-card-premium" onclick="navigateTo('recipes')">
+                                    <div class="action-icon-circle">📖</div>
+                                    <h4 class="action-title">Recipes</h4>
+                                    <p class="action-desc">Get inspired</p>
+                                </button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </section>
+
+                <!-- Explore Flavors Screen -->
+                <section id="explore" class="screen">
+                    <div class="container">
+                        <!-- Search Bar -->
+                        <div class="search-section">
+                            <div class="search-bar">
+                                <span class="search-icon">🔍</span>
+                                <input type="text" placeholder="Search flavors..." id="flavorSearch" oninput="searchFlavors()">
+                            </div>
+                        </div>
+
+                        <!-- Category Tabs -->
+                        <div class="category-tabs">
+                            <button class="category-tab active" onclick="filterByCategory('all')">All Flavors</button>
+                            <button class="category-tab" onclick="filterByCategory('trending')">🔥 Trending</button>
+                            <button class="category-tab" onclick="filterByCategory('new')">✨ New</button>
+                            <button class="category-tab" onclick="filterByCategory('seasonal')">🍂 Seasonal</button>
+                        </div>
+
+                        <!-- Flavors Grid -->
+                        <div class="flavors-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md" id="flavorsGrid">
+                            <!-- Chocolate Delight -->
+                            <div class="flavor-card" data-category="trending">
+                                <div class="flavor-image-wrapper">
+                                    <div class="flavor-icon">🍫</div>
+                                    <span class="flavor-badge badge-trending">🔥 Trending</span>
+                                </div>
+                                <div class="flavor-content">
+                                    <h3 class="flavor-name">Chocolate Delight</h3>
+                                    <p class="flavor-tagline">Rich & Creamy</p>
+                                    <div class="flavor-meta">
+                                        <span class="flavor-rating">⭐ 4.8</span>
+                                        <span class="flavor-price">৳350/500g</span>
+                                    </div>
+                                    <div class="flavor-actions">
+                                        <button class="btn-secondary" onclick="viewFlavorDetail('chocolate-delight')">View Details</button>
+                                        <button class="btn-icon-action" onclick="addToCart('chocolate-delight')">🛒</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Strawberry Bliss -->
+                            <div class="flavor-card" data-category="trending">
+                                <div class="flavor-image-wrapper">
+                                    <div class="flavor-icon">🍓</div>
+                                    <span class="flavor-badge badge-trending">🔥 Trending</span>
+                                </div>
+                                <div class="flavor-content">
+                                    <h3 class="flavor-name">Strawberry Bliss</h3>
+                                    <p class="flavor-tagline">Fresh & Fruity</p>
+                                    <div class="flavor-meta">
+                                        <span class="flavor-rating">⭐ 4.9</span>
+                                        <span class="flavor-price">৳380/500g</span>
+                                    </div>
+                                    <div class="flavor-actions">
+                                        <button class="btn-secondary" onclick="viewFlavorDetail('strawberry-bliss')">View Details</button>
+                                        <button class="btn-icon-action" onclick="addToCart('strawberry-bliss')">🛒</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mango Tango -->
+                            <div class="flavor-card" data-category="seasonal">
+                                <div class="flavor-image-wrapper">
+                                    <div class="flavor-icon">🥭</div>
+                                    <span class="flavor-badge badge-seasonal">🍂 Seasonal</span>
+                                </div>
+                                <div class="flavor-content">
+                                    <h3 class="flavor-name">Mango Tango</h3>
+                                    <p class="flavor-tagline">Tropical Paradise</p>
+                                    <div class="flavor-meta">
+                                        <span class="flavor-rating">⭐ 4.7</span>
+                                        <span class="flavor-price">৳400/500g</span>
+                                    </div>
+                                    <div class="flavor-actions">
+                                        <button class="btn-secondary" onclick="viewFlavorDetail('mango-tango')">View Details</button>
+                                        <button class="btn-icon-action" onclick="addToCart('mango-tango')">🛒</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Vanilla Classic -->
+                            <div class="flavor-card" data-category="all">
+                                <div class="flavor-image-wrapper">
+                                    <div class="flavor-icon">🍦</div>
+                                </div>
+                                <div class="flavor-content">
+                                    <h3 class="flavor-name">Vanilla Classic</h3>
+                                    <p class="flavor-tagline">Timeless Favorite</p>
+                                    <div class="flavor-meta">
+                                        <span class="flavor-rating">⭐ 4.6</span>
+                                        <span class="flavor-price">৳320/500g</span>
+                                    </div>
+                                    <div class="flavor-actions">
+                                        <button class="btn-secondary" onclick="viewFlavorDetail('vanilla-classic')">View Details</button>
+                                        <button class="btn-icon-action" onclick="addToCart('vanilla-classic')">🛒</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Cookies & Cream -->
+                            <div class="flavor-card" data-category="trending">
+                                <div class="flavor-image-wrapper">
+                                    <div class="flavor-icon">🍪</div>
+                                    <span class="flavor-badge badge-trending">🔥 Trending</span>
+                                </div>
+                                <div class="flavor-content">
+                                    <h3 class="flavor-name">Cookies & Cream</h3>
+                                    <p class="flavor-tagline">Crunchy Delight</p>
+                                    <div class="flavor-meta">
+                                        <span class="flavor-rating">⭐ 4.8</span>
+                                        <span class="flavor-price">৳360/500g</span>
+                                    </div>
+                                    <div class="flavor-actions">
+                                        <button class="btn-secondary" onclick="viewFlavorDetail('cookies-cream')">View Details</button>
+                                        <button class="btn-icon-action" onclick="addToCart('cookies-cream')">🛒</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mint Chocolate -->
+                            <div class="flavor-card" data-category="all">
+                                <div class="flavor-image-wrapper">
+                                    <div class="flavor-icon">🌿</div>
+                                </div>
+                                <div class="flavor-content">
+                                    <h3 class="flavor-name">Mint Chocolate</h3>
+                                    <p class="flavor-tagline">Cool & Refreshing</p>
+                                    <div class="flavor-meta">
+                                        <span class="flavor-rating">⭐ 4.5</span>
+                                        <span class="flavor-price">৳370/500g</span>
+                                    </div>
+                                    <div class="flavor-actions">
+                                        <button class="btn-secondary" onclick="viewFlavorDetail('mint-chocolate')">View Details</button>
+                                        <button class="btn-icon-action" onclick="addToCart('mint-chocolate')">🛒</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pistachio Dream -->
+                            <div class="flavor-card" data-category="new">
+                                <div class="flavor-image-wrapper">
+                                    <div class="flavor-icon">🌰</div>
+                                    <span class="flavor-badge badge-new">✨ New</span>
+                                </div>
+                                <div class="flavor-content">
+                                    <h3 class="flavor-name">Pistachio Dream</h3>
+                                    <p class="flavor-tagline">Nutty Perfection</p>
+                                    <div class="flavor-meta">
+                                        <span class="flavor-rating">⭐ 4.9</span>
+                                        <span class="flavor-price">৳450/500g</span>
+                                    </div>
+                                    <div class="flavor-actions">
+                                        <button class="btn-secondary" onclick="viewFlavorDetail('pistachio-dream')">View Details</button>
+                                        <button class="btn-icon-action" onclick="addToCart('pistachio-dream')">🛒</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Caramel Swirl -->
+                            <div class="flavor-card" data-category="new">
+                                <div class="flavor-image-wrapper">
+                                    <div class="flavor-icon">🍮</div>
+                                    <span class="flavor-badge badge-new">✨ New</span>
+                                </div>
+                                <div class="flavor-content">
+                                    <h3 class="flavor-name">Caramel Swirl</h3>
+                                    <p class="flavor-tagline">Sweet Indulgence</p>
+                                    <div class="flavor-meta">
+                                        <span class="flavor-rating">⭐ 4.7</span>
+                                        <span class="flavor-price">৳390/500g</span>
+                                    </div>
+                                    <div class="flavor-actions">
+                                        <button class="btn-secondary" onclick="viewFlavorDetail('caramel-swirl')">View Details</button>
+                                        <button class="btn-icon-action" onclick="addToCart('caramel-swirl')">🛒</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Coffee Crunch -->
+                            <div class="flavor-card" data-category="all">
+                                <div class="flavor-image-wrapper">
+                                    <div class="flavor-icon">☕</div>
+                                </div>
+                                <div class="flavor-content">
+                                    <h3 class="flavor-name">Coffee Crunch</h3>
+                                    <p class="flavor-tagline">Bold & Smooth</p>
+                                    <div class="flavor-meta">
+                                        <span class="flavor-rating">⭐ 4.6</span>
+                                        <span class="flavor-price">৳380/500g</span>
+                                    </div>
+                                    <div class="flavor-actions">
+                                        <button class="btn-secondary" onclick="viewFlavorDetail('coffee-crunch')">View Details</button>
+                                        <button class="btn-icon-action" onclick="addToCart('coffee-crunch')">🛒</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- IceCoins Wallet Screen -->
+                <section id="wallet" class="screen">
+                    <div class="container">
+                        <!-- Wallet Balance Card -->
+                        <div class="wallet-balance-card">
+                            <div class="wallet-header-section">
+                                <div>
+                                    <p class="wallet-label">Total Balance</p>
+                                    <h1 class="wallet-amount">2,450 <span class="wallet-currency">IceCoins</span></h1>
+                                </div>
+                                <div class="wallet-icon-large">💰</div>
+                            </div>
+                            
+                            <div class="wallet-tier-info">
+                                <div class="tier-badge-display">
+                                    <span class="tier-emoji">🏅</span>
+                                    <span class="tier-text">Gold Tier</span>
+                                </div>
+                                <div class="tier-progress-info">
+                                    <span class="tier-progress-text">550 IceCoins to Platinum</span>
+                                </div>
+                            </div>
+                            
+                            <div class="wallet-quick-actions">
+                                <button class="wallet-action-btn btn-earn" onclick="navigateTo('challenges')">
+                                    <span>✨</span>
+                                    <span>Earn More</span>
+                                </button>
+                                <button class="wallet-action-btn btn-redeem" onclick="showRewards()">
+                                    <span>🎁</span>
+                                    <span>Redeem</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Stats Overview -->
+                        <div class="wallet-stats-grid grid grid-cols-2 md:grid-cols-4 gap-md mt-lg">
+                            <div class="wallet-stat-card">
+                                <div class="wallet-stat-icon">📈</div>
+                                <div class="wallet-stat-value">+850</div>
+                                <div class="wallet-stat-label">Earned This Month</div>
+                            </div>
+                            <div class="wallet-stat-card">
+                                <div class="wallet-stat-icon">💸</div>
+                                <div class="wallet-stat-value">500</div>
+                                <div class="wallet-stat-label">Spent This Month</div>
+                            </div>
+                            <div class="wallet-stat-card">
+                                <div class="wallet-stat-icon">🎯</div>
+                                <div class="wallet-stat-value">12</div>
+                                <div class="wallet-stat-label">Challenges Active</div>
+                            </div>
+                            <div class="wallet-stat-card">
+                                <div class="wallet-stat-icon">🏆</div>
+                                <div class="wallet-stat-value">8</div>
+                                <div class="wallet-stat-label">Rewards Claimed</div>
+                            </div>
+                        </div>
+
+                        <!-- Transaction History -->
+                        <div class="section-card mt-xl">
+                            <div class="flex items-center justify-between mb-md">
+                                <h3 class="section-heading m-0">Recent Transactions</h3>
+                                <button class="btn-text" onclick="showAllTransactions()">View All</button>
+                            </div>
+                            
+                            <div class="transaction-list">
+                                <div class="transaction-item">
+                                    <div class="transaction-icon-wrapper positive">
+                                        <span>✅</span>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <h4 class="transaction-title">Challenge Completed</h4>
+                                        <p class="transaction-date">Today, 2:30 PM</p>
+                                    </div>
+                                    <div class="transaction-amount positive">+100</div>
+                                </div>
+                                
+                                <div class="transaction-item">
+                                    <div class="transaction-icon-wrapper negative">
+                                        <span>🎁</span>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <h4 class="transaction-title">Reward Redeemed</h4>
+                                        <p class="transaction-date">Yesterday, 5:15 PM</p>
+                                    </div>
+                                    <div class="transaction-amount negative">-200</div>
+                                </div>
+                                
+                                <div class="transaction-item">
+                                    <div class="transaction-icon-wrapper positive">
+                                        <span>🛒</span>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <h4 class="transaction-title">Purchase Bonus</h4>
+                                        <p class="transaction-date">Dec 7, 3:45 PM</p>
+                                    </div>
+                                    <div class="transaction-amount positive">+50</div>
+                                </div>
+                                
+                                <div class="transaction-item">
+                                    <div class="transaction-icon-wrapper positive">
+                                        <span>📱</span>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <h4 class="transaction-title">QR Code Scanned</h4>
+                                        <p class="transaction-date">Dec 6, 1:20 PM</p>
+                                    </div>
+                                    <div class="transaction-amount positive">+25</div>
+                                </div>
+                                
+                                <div class="transaction-item">
+                                    <div class="transaction-icon-wrapper positive">
+                                        <span>👥</span>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <h4 class="transaction-title">Referral Reward</h4>
+                                        <p class="transaction-date">Dec 5, 11:00 AM</p>
+                                    </div>
+                                    <div class="transaction-amount positive">+500</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Available Rewards -->
+                        <div class="section-card mt-lg">
+                            <h3 class="section-heading">🎁 Available Rewards</h3>
+                            <div class="rewards-grid-compact grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+                                <div class="reward-compact-card">
+                                    <div class="reward-compact-icon">🍦</div>
+                                    <div class="reward-compact-info">
+                                        <h4>Free Scoop</h4>
+                                        <p class="reward-cost">500 IceCoins</p>
+                                    </div>
+                                    <button class="btn-redeem-compact" onclick="redeemReward('free-scoop', 500)">Redeem</button>
+                                </div>
+                                
+                                <div class="reward-compact-card">
+                                    <div class="reward-compact-icon">💳</div>
+                                    <div class="reward-compact-info">
+                                        <h4>10% Off Coupon</h4>
+                                        <p class="reward-cost">300 IceCoins</p>
+                                    </div>
+                                    <button class="btn-redeem-compact" onclick="redeemReward('10-off', 300)">Redeem</button>
+                                </div>
+                                
+                                <div class="reward-compact-card">
+                                    <div class="reward-compact-icon">📦</div>
+                                    <div class="reward-compact-info">
+                                        <h4>Free Delivery</h4>
+                                        <p class="reward-cost">200 IceCoins</p>
+                                    </div>
+                                    <button class="btn-redeem-compact" onclick="redeemReward('free-delivery', 200)">Redeem</button>
+                                </div>
+                                
+                                <div class="reward-compact-card">
+                                    <div class="reward-compact-icon">🎂</div>
+                                    <div class="reward-compact-info">
+                                        <h4>Birthday Special</h4>
+                                        <p class="reward-cost">1000 IceCoins</p>
+                                    </div>
+                                    <button class="btn-redeem-compact" onclick="redeemReward('birthday', 1000)">Redeem</button>
+                                </div>
+                                
+                                <div class="reward-compact-card">
+                                    <div class="reward-compact-icon">🌟</div>
+                                    <div class="reward-compact-info">
+                                        <h4>Premium Flavor</h4>
+                                        <p class="reward-cost">800 IceCoins</p>
+                                    </div>
+                                    <button class="btn-redeem-compact" onclick="redeemReward('premium', 800)">Redeem</button>
+                                </div>
+                                
+                                <div class="reward-compact-card">
+                                    <div class="reward-compact-icon">🎁</div>
+                                    <div class="reward-compact-info">
+                                        <h4>Gift Box</h4>
+                                        <p class="reward-cost">1500 IceCoins</p>
+                                    </div>
+                                    <button class="btn-redeem-compact disabled" disabled>Not Enough</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Challenges & Engage Screen -->
+                <section id="challenges" class="screen">
+                    <div class="container">
+                        <!-- Engage Tabs -->
+                        <div class="engage-tabs-container">
+                            <div class="engage-tabs">
+                                <button class="engage-tab active" onclick="switchEngageTab('challenges')">
+                                    <span>🎯</span>
+                                    <span>Challenges</span>
+                                </button>
+                                <button class="engage-tab" onclick="switchEngageTab('leaderboard')">
+                                    <span>🏆</span>
+                                    <span>Leaderboard</span>
+                                </button>
+                                <button class="engage-tab" onclick="switchEngageTab('community')">
+                                    <span>👥</span>
+                                    <span>Community</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Challenges Tab Content -->
+                        <div id="challenges-content" class="engage-tab-content active">
+                            <!-- Challenge Stats -->
+                            <div class="challenge-stats-grid grid grid-cols-3 gap-md mb-lg">
+                                <div class="challenge-stat-card">
+                                    <div class="challenge-stat-value">12</div>
+                                    <div class="challenge-stat-label">Active</div>
+                                </div>
+                                <div class="challenge-stat-card">
+                                    <div class="challenge-stat-value">8</div>
+                                    <div class="challenge-stat-label">Completed</div>
+                                </div>
+                                <div class="challenge-stat-card">
+                                    <div class="challenge-stat-value">800</div>
+                                    <div class="challenge-stat-label">Coins Earned</div>
+                                </div>
+                            </div>
+
+                            <!-- Active Challenges -->
+                            <div class="section-card">
+                                <h3 class="section-heading">🔥 Active Challenges</h3>
+                                <div class="challenges-list">
+                                    <div class="challenge-card">
+                                        <div class="challenge-icon">🍦</div>
+                                        <div class="challenge-info">
+                                            <h4 class="challenge-title">Flavor Explorer</h4>
+                                            <p class="challenge-description">Try 5 new flavors this month</p>
+                                            <div class="challenge-progress-bar">
+                                                <div class="challenge-progress-fill" style="width: 60%"></div>
+                                            </div>
+                                            <div class="challenge-meta">
+                                                <span class="challenge-progress-text">3/5 completed</span>
+                                                <span class="challenge-reward">+100 💰</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="challenge-card">
+                                        <div class="challenge-icon">📸</div>
+                                        <div class="challenge-info">
+                                            <h4 class="challenge-title">Social Star</h4>
+                                            <p class="challenge-description">Share 3 ice cream photos</p>
+                                            <div class="challenge-progress-bar">
+                                                <div class="challenge-progress-fill" style="width: 33%"></div>
+                                            </div>
+                                            <div class="challenge-meta">
+                                                <span class="challenge-progress-text">1/3 completed</span>
+                                                <span class="challenge-reward">+50 💰</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="challenge-card">
+                                        <div class="challenge-icon">♻️</div>
+                                        <div class="challenge-info">
+                                            <h4 class="challenge-title">Eco Warrior</h4>
+                                            <p class="challenge-description">Use reusable cup 5 times</p>
+                                            <div class="challenge-progress-bar">
+                                                <div class="challenge-progress-fill" style="width: 80%"></div>
+                                            </div>
+                                            <div class="challenge-meta">
+                                                <span class="challenge-progress-text">4/5 completed</span>
+                                                <span class="challenge-reward">+75 💰</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="challenge-card">
+                                        <div class="challenge-icon">🎯</div>
+                                        <div class="challenge-info">
+                                            <h4 class="challenge-title">Daily Check-in</h4>
+                                            <p class="challenge-description">Visit app 7 days in a row</p>
+                                            <div class="challenge-progress-bar">
+                                                <div class="challenge-progress-fill" style="width: 43%"></div>
+                                            </div>
+                                            <div class="challenge-meta">
+                                                <span class="challenge-progress-text">3/7 days</span>
+                                                <span class="challenge-reward">+200 💰</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Leaderboard Tab Content -->
+                        <div id="leaderboard-content" class="engage-tab-content">
+                            <!-- Period Filter -->
+                            <div class="leaderboard-filters">
+                                <button class="period-btn active" onclick="filterLeaderboard('weekly')">Weekly</button>
+                                <button class="period-btn" onclick="filterLeaderboard('monthly')">Monthly</button>
+                                <button class="period-btn" onclick="filterLeaderboard('alltime')">All Time</button>
+                            </div>
+
+                            <!-- Your Rank Card -->
+                            <div class="your-rank-card">
+                                <div class="rank-badge">
+                                    <span class="rank-number">#24</span>
+                                </div>
+                                <div class="rank-info">
+                                    <h4>Your Rank</h4>
+                                    <p>2,450 IceCoins</p>
+                                </div>
+                                <div class="rank-trend">
+                                    <span class="trend-up">↑ 5</span>
+                                </div>
+                            </div>
+
+                            <!-- Top Rankers -->
+                            <div class="section-card mt-lg">
+                                <h3 class="section-heading">🏆 Top Rankers</h3>
+                                <div class="leaderboard-list">
+                                    <div class="leaderboard-item rank-1">
+                                        <div class="leaderboard-rank">🥇</div>
+                                        <div class="leaderboard-avatar">👤</div>
+                                        <div class="leaderboard-info">
+                                            <h4>Sarah Ahmed</h4>
+                                            <p>5,640 IceCoins</p>
+                                        </div>
+                                        <div class="leaderboard-badge">👑</div>
+                                    </div>
+
+                                    <div class="leaderboard-item rank-2">
+                                        <div class="leaderboard-rank">🥈</div>
+                                        <div class="leaderboard-avatar">👤</div>
+                                        <div class="leaderboard-info">
+                                            <h4>Karim Hassan</h4>
+                                            <p>4,280 IceCoins</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="leaderboard-item rank-3">
+                                        <div class="leaderboard-rank">🥉</div>
+                                        <div class="leaderboard-avatar">👤</div>
+                                        <div class="leaderboard-info">
+                                            <h4>Nadia Islam</h4>
+                                            <p>3,850 IceCoins</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="leaderboard-item">
+                                        <div class="leaderboard-rank">4</div>
+                                        <div class="leaderboard-avatar">👤</div>
+                                        <div class="leaderboard-info">
+                                            <h4>Rafiq Khan</h4>
+                                            <p>3,120 IceCoins</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="leaderboard-item">
+                                        <div class="leaderboard-rank">5</div>
+                                        <div class="leaderboard-avatar">👤</div>
+                                        <div class="leaderboard-info">
+                                            <h4>Fatima Begum</h4>
+                                            <p>2,890 IceCoins</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Community Tab Content -->
+                        <div id="community-content" class="engage-tab-content">
+                            <div class="community-stats-grid grid grid-cols-2 md:grid-cols-4 gap-md mb-lg">
+                                <div class="community-stat-card">
+                                    <div class="community-stat-icon">👥</div>
+                                    <div class="community-stat-value">1.2k</div>
+                                    <div class="community-stat-label">Members</div>
+                                </div>
+                                <div class="community-stat-card">
+                                    <div class="community-stat-icon">📝</div>
+                                    <div class="community-stat-value">248</div>
+                                    <div class="community-stat-label">Posts Today</div>
+                                </div>
+                                <div class="community-stat-card">
+                                    <div class="community-stat-icon">❤️</div>
+                                    <div class="community-stat-value">5.6k</div>
+                                    <div class="community-stat-label">Reactions</div>
+                                </div>
+                                <div class="community-stat-card">
+                                    <div class="community-stat-icon">⭐</div>
+                                    <div class="community-stat-value">892</div>
+                                    <div class="community-stat-label">Active Now</div>
+                                </div>
+                            </div>
+
+                            <!-- Create Post Button -->
+                            <button class="btn-primary w-full mb-lg" onclick="createPost()">
+                                <span>✏️</span>
+                                <span>Create New Post</span>
+                            </button>
+
+                            <!-- Community Feed -->
+                            <div class="community-feed">
+                                <div class="post-card">
+                                    <div class="post-header">
+                                        <div class="post-avatar">👤</div>
+                                        <div class="post-user-info">
+                                            <h4>Ahmed Rahman</h4>
+                                            <p>2 hours ago</p>
+                                        </div>
+                                    </div>
+                                    <div class="post-content">
+                                        <p>Just tried the new Pistachio Dream flavor! Absolutely amazing! 🌰✨ #SavoyConnect #NewFlavor</p>
+                                    </div>
+                                    <div class="post-actions">
+                                        <button class="post-action-btn" onclick="likePost(this)">
+                                            <span>❤️</span>
+                                            <span>24</span>
+                                        </button>
+                                        <button class="post-action-btn">
+                                            <span>💬</span>
+                                            <span>5</span>
+                                        </button>
+                                        <button class="post-action-btn">
+                                            <span>🔗</span>
+                                            <span>Share</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="post-card">
+                                    <div class="post-header">
+                                        <div class="post-avatar">👤</div>
+                                        <div class="post-user-info">
+                                            <h4>Nusrat Jahan</h4>
+                                            <p>5 hours ago</p>
+                                        </div>
+                                    </div>
+                                    <div class="post-content">
+                                        <p>Completed my first challenge today! 🎯 Feeling proud! Thanks @SavoyConnect for the amazing rewards system! 💰</p>
+                                    </div>
+                                    <div class="post-actions">
+                                        <button class="post-action-btn" onclick="likePost(this)">
+                                            <span>❤️</span>
+                                            <span>48</span>
+                                        </button>
+                                        <button class="post-action-btn">
+                                            <span>💬</span>
+                                            <span>12</span>
+                                        </button>
+                                        <button class="post-action-btn">
+                                            <span>🔗</span>
+                                            <span>Share</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="post-card">
+                                    <div class="post-header">
+                                        <div class="post-avatar">👤</div>
+                                        <div class="post-user-info">
+                                            <h4>Imran Hossain</h4>
+                                            <p>1 day ago</p>
+                                        </div>
+                                    </div>
+                                    <div class="post-content">
+                                        <p>Who else is excited for the seasonal mango flavors? 🥭 Summer vibes! #MangoSeason</p>
+                                    </div>
+                                    <div class="post-actions">
+                                        <button class="post-action-btn" onclick="likePost(this)">
+                                            <span>❤️</span>
+                                            <span>67</span>
+                                        </button>
+                                        <button class="post-action-btn">
+                                            <span>💬</span>
+                                            <span>23</span>
+                                        </button>
+                                        <button class="post-action-btn">
+                                            <span>🔗</span>
+                                            <span>Share</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Profile Screen -->
+                <section id="profile" class="screen">
+                    <div class="container">
+                        <!-- Profile Header -->
+                        <div class="profile-header-card">
+                            <div class="profile-cover">
+                                <div class="profile-cover-gradient"></div>
+                            </div>
+                            <div class="profile-main-info">
+                                <div class="profile-avatar-large">👤</div>
+                                <div class="profile-identity">
+                                    <h2 class="profile-name">Rifaf Ahmed</h2>
+                                    <p class="profile-email">rifaf@example.com</p>
+                                    <div class="profile-badges">
+                                        <span class="profile-tier-badge">🏅 Gold Member</span>
+                                        <span class="profile-join-badge">📅 Joined Dec 2024</span>
+                                    </div>
+                                </div>
+                                <button class="btn-secondary" onclick="editProfile()">Edit Profile</button>
+                            </div>
+                        </div>
+
+                        <!-- Profile Stats Grid -->
+                        <div class="profile-stats-grid grid grid-cols-2 md:grid-cols-4 gap-md mt-lg">
+                            <div class="profile-stat-card">
+                                <div class="profile-stat-icon">💰</div>
+                                <div class="profile-stat-value">2,450</div>
+                                <div class="profile-stat-label">IceCoins</div>
+                            </div>
+                            <div class="profile-stat-card">
+                                <div class="profile-stat-icon">🍦</div>
+                                <div class="profile-stat-value">24</div>
+                                <div class="profile-stat-label">Flavors Tried</div>
+                            </div>
+                            <div class="profile-stat-card">
+                                <div class="profile-stat-icon">🎯</div>
+                                <div class="profile-stat-value">18</div>
+                                <div class="profile-stat-label">Challenges Done</div>
+                            </div>
+                            <div class="profile-stat-card">
+                                <div class="profile-stat-icon">⭐</div>
+                                <div class="profile-stat-value">4.8</div>
+                                <div class="profile-stat-label">Avg Rating</div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="section-card mt-lg">
+                            <h3 class="section-heading">⚡ Quick Actions</h3>
+                            <div class="profile-quick-actions grid grid-cols-2 md:grid-cols-3 gap-md">
+                                <button class="profile-action-card" onclick="navigateTo('wallet')">
+                                    <span class="profile-action-icon">💳</span>
+                                    <span class="profile-action-text">My Wallet</span>
+                                </button>
+                                <button class="profile-action-card" onclick="showOrderHistory()">
+                                    <span class="profile-action-icon">📦</span>
+                                    <span class="profile-action-text">Order History</span>
+                                </button>
+                                <button class="profile-action-card" onclick="showFavorites()">
+                                    <span class="profile-action-icon">❤️</span>
+                                    <span class="profile-action-text">My Favorites</span>
+                                </button>
+                                <button class="profile-action-card" onclick="showAddresses()">
+                                    <span class="profile-action-icon">📍</span>
+                                    <span class="profile-action-text">Addresses</span>
+                                </button>
+                                <button class="profile-action-card" onclick="showPaymentMethods()">
+                                    <span class="profile-action-icon">💳</span>
+                                    <span class="profile-action-text">Payment Methods</span>
+                                </button>
+                                <button class="profile-action-card" onclick="navigateTo('settings')">
+                                    <span class="profile-action-icon">⚙️</span>
+                                    <span class="profile-action-text">Settings</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Achievements & Badges -->
+                        <div class="section-card mt-lg">
+                            <h3 class="section-heading">🏆 Achievements</h3>
+                            <div class="achievements-grid grid grid-cols-3 md:grid-cols-5 gap-md">
+                                <div class="achievement-card unlocked">
+                                    <div class="achievement-icon">🎯</div>
+                                    <p class="achievement-name">First Timer</p>
+                                </div>
+                                <div class="achievement-card unlocked">
+                                    <div class="achievement-icon">🍦</div>
+                                    <p class="achievement-name">Flavor Explorer</p>
+                                </div>
+                                <div class="achievement-card unlocked">
+                                    <div class="achievement-icon">💎</div>
+                                    <p class="achievement-name">Gold Status</p>
+                                </div>
+                                <div class="achievement-card unlocked">
+                                    <div class="achievement-icon">📸</div>
+                                    <p class="achievement-name">Social Star</p>
+                                </div>
+                                <div class="achievement-card unlocked">
+                                    <div class="achievement-icon">♻️</div>
+                                    <p class="achievement-name">Eco Warrior</p>
+                                </div>
+                                <div class="achievement-card locked">
+                                    <div class="achievement-icon">👑</div>
+                                    <p class="achievement-name">Platinum Elite</p>
+                                </div>
+                                <div class="achievement-card locked">
+                                    <div class="achievement-icon">🎂</div>
+                                    <p class="achievement-name">Birthday Special</p>
+                                </div>
+                                <div class="achievement-card locked">
+                                    <div class="achievement-icon">🌟</div>
+                                    <p class="achievement-name">Super Fan</p>
+                                </div>
+                                <div class="achievement-card locked">
+                                    <div class="achievement-icon">🏅</div>
+                                    <p class="achievement-name">Champion</p>
+                                </div>
+                                <div class="achievement-card locked">
+                                    <div class="achievement-icon">💯</div>
+                                    <p class="achievement-name">Perfectionist</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Account Details -->
+                        <div class="section-card mt-lg">
+                            <h3 class="section-heading">👤 Account Details</h3>
+                            <div class="account-details-list">
+                                <div class="account-detail-item">
+                                    <div class="account-detail-label">
+                                        <span class="account-detail-icon">📧</span>
+                                        <span>Email Address</span>
+                                    </div>
+                                    <div class="account-detail-value">rifaf@example.com</div>
+                                </div>
+                                <div class="account-detail-item">
+                                    <div class="account-detail-label">
+                                        <span class="account-detail-icon">📱</span>
+                                        <span>Phone Number</span>
+                                    </div>
+                                    <div class="account-detail-value">+880 1XXX-XXXXXX</div>
+                                </div>
+                                <div class="account-detail-item">
+                                    <div class="account-detail-label">
+                                        <span class="account-detail-icon">🎂</span>
+                                        <span>Date of Birth</span>
+                                    </div>
+                                    <div class="account-detail-value">January 15, 1995</div>
+                                </div>
+                                <div class="account-detail-item">
+                                    <div class="account-detail-label">
+                                        <span class="account-detail-icon">📍</span>
+                                        <span>Location</span>
+                                    </div>
+                                    <div class="account-detail-value">Dhaka, Bangladesh</div>
+                                </div>
+                                <div class="account-detail-item">
+                                    <div class="account-detail-label">
+                                        <span class="account-detail-icon">🏅</span>
+                                        <span>Membership Tier</span>
+                                    </div>
+                                    <div class="account-detail-value">
+                                        <span class="tier-badge-inline">Gold Member</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Account Actions -->
+                        <div class="profile-account-actions mt-xl">
+                            <button class="btn-secondary w-full" onclick="shareProfile()">
+                                <span>🔗</span>
+                                <span>Share Profile</span>
+                            </button>
+                            <button class="btn-text text-error" onclick="logout()">
+                                <span>🚪</span>
+                                <span>Logout</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Health Tracker Screen -->
+                <section id="health-tracker" class="screen">
+                    <div class="container">
+                        <!-- Health Overview Header -->
+                        <div class="health-header-card">
+                            <div class="health-header-content">
+                                <div>
+                                    <h2 class="health-title">🏃 Health Tracker</h2>
+                                    <p class="health-subtitle">Monitor your wellness journey</p>
+                                </div>
+                                <button class="btn-secondary" onclick="addHealthEntry()">+ Log Activity</button>
+                            </div>
+                        </div>
+
+                        <!-- Daily Nutrition Summary -->
+                        <div class="section-card mt-lg">
+                            <h3 class="section-heading">📊 Today's Nutrition</h3>
+                            <div class="nutrition-cards grid grid-cols-2 md:grid-cols-4 gap-md">
+                                <div class="nutrition-card">
+                                    <div class="nutrition-icon">🔥</div>
+                                    <div class="nutrition-value">1,250</div>
+                                    <div class="nutrition-label">Calories</div>
+                                    <div class="nutrition-progress">
+                                        <div class="nutrition-progress-bar" style="width: 62.5%;"></div>
+                                    </div>
+                                    <div class="nutrition-target">of 2,000 goal</div>
+                                </div>
+                                <div class="nutrition-card">
+                                    <div class="nutrition-icon">🥤</div>
+                                    <div class="nutrition-value">45g</div>
+                                    <div class="nutrition-label">Protein</div>
+                                    <div class="nutrition-progress">
+                                        <div class="nutrition-progress-bar" style="width: 75%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+                                    </div>
+                                    <div class="nutrition-target">of 60g goal</div>
+                                </div>
+                                <div class="nutrition-card">
+                                    <div class="nutrition-icon">🌾</div>
+                                    <div class="nutrition-value">180g</div>
+                                    <div class="nutrition-label">Carbs</div>
+                                    <div class="nutrition-progress">
+                                        <div class="nutrition-progress-bar" style="width: 72%; background: linear-gradient(90deg, #f59e0b, #fbbf24);"></div>
+                                    </div>
+                                    <div class="nutrition-target">of 250g goal</div>
+                                </div>
+                                <div class="nutrition-card">
+                                    <div class="nutrition-icon">🥑</div>
+                                    <div class="nutrition-value">38g</div>
+                                    <div class="nutrition-label">Fats</div>
+                                    <div class="nutrition-progress">
+                                        <div class="nutrition-progress-bar" style="width: 54%; background: linear-gradient(90deg, #8b5cf6, #a78bfa);"></div>
+                                    </div>
+                                    <div class="nutrition-target">of 70g goal</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Health Goals -->
+                        <div class="section-card mt-lg">
+                            <div class="flex items-center justify-between mb-md">
+                                <h3 class="section-heading" style="margin-bottom: 0;">🎯 Active Goals</h3>
+                                <button class="btn-text" onclick="manageGoals()">Manage</button>
+                            </div>
+                            <div class="health-goals-list">
+                                <div class="health-goal-item">
+                                    <div class="health-goal-info">
+                                        <div class="health-goal-icon">💧</div>
+                                        <div>
+                                            <div class="health-goal-name">Daily Water Intake</div>
+                                            <div class="health-goal-status">6 / 8 glasses</div>
+                                        </div>
+                                    </div>
+                                    <div class="health-goal-progress-circle">
+                                        <svg width="60" height="60">
+                                            <circle cx="30" cy="30" r="26" stroke="#e5e7eb" stroke-width="4" fill="none"/>
+                                            <circle cx="30" cy="30" r="26" stroke="#0B5FFF" stroke-width="4" fill="none"
+                                                stroke-dasharray="163.36" stroke-dashoffset="40.84" transform="rotate(-90 30 30)"/>
+                                            <text x="30" y="35" text-anchor="middle" font-size="14" font-weight="bold" fill="#0B5FFF">75%</text>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="health-goal-item">
+                                    <div class="health-goal-info">
+                                        <div class="health-goal-icon">👟</div>
+                                        <div>
+                                            <div class="health-goal-name">Daily Steps</div>
+                                            <div class="health-goal-status">8,234 / 10,000 steps</div>
+                                        </div>
+                                    </div>
+                                    <div class="health-goal-progress-circle">
+                                        <svg width="60" height="60">
+                                            <circle cx="30" cy="30" r="26" stroke="#e5e7eb" stroke-width="4" fill="none"/>
+                                            <circle cx="30" cy="30" r="26" stroke="#10b981" stroke-width="4" fill="none"
+                                                stroke-dasharray="163.36" stroke-dashoffset="28.98" transform="rotate(-90 30 30)"/>
+                                            <text x="30" y="35" text-anchor="middle" font-size="14" font-weight="bold" fill="#10b981">82%</text>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="health-goal-item">
+                                    <div class="health-goal-info">
+                                        <div class="health-goal-icon">😴</div>
+                                        <div>
+                                            <div class="health-goal-name">Sleep Duration</div>
+                                            <div class="health-goal-status">7.5 / 8 hours</div>
+                                        </div>
+                                    </div>
+                                    <div class="health-goal-progress-circle">
+                                        <svg width="60" height="60">
+                                            <circle cx="30" cy="30" r="26" stroke="#e5e7eb" stroke-width="4" fill="none"/>
+                                            <circle cx="30" cy="30" r="26" stroke="#8b5cf6" stroke-width="4" fill="none"
+                                                stroke-dasharray="163.36" stroke-dashoffset="20.42" transform="rotate(-90 30 30)"/>
+                                            <text x="30" y="35" text-anchor="middle" font-size="14" font-weight="bold" fill="#8b5cf6">94%</text>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity Log -->
+                        <div class="section-card mt-lg">
+                            <div class="flex items-center justify-between mb-md">
+                                <h3 class="section-heading" style="margin-bottom: 0;">📝 Activity Log</h3>
+                                <select class="activity-filter" onchange="filterActivityLog(this.value)">
+                                    <option value="all">All Activities</option>
+                                    <option value="exercise">Exercise</option>
+                                    <option value="meal">Meals</option>
+                                    <option value="water">Hydration</option>
+                                </select>
+                            </div>
+                            <div class="activity-timeline">
+                                <div class="activity-item" data-type="meal">
+                                    <div class="activity-time">2 hours ago</div>
+                                    <div class="activity-content">
+                                        <div class="activity-header">
+                                            <span class="activity-icon">🍽️</span>
+                                            <span class="activity-title">Lunch - Vanilla Delight</span>
+                                        </div>
+                                        <div class="activity-details">
+                                            <span class="activity-badge">450 cal</span>
+                                            <span class="activity-badge">15g protein</span>
+                                            <span class="activity-badge">60g carbs</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="activity-item" data-type="water">
+                                    <div class="activity-time">3 hours ago</div>
+                                    <div class="activity-content">
+                                        <div class="activity-header">
+                                            <span class="activity-icon">💧</span>
+                                            <span class="activity-title">Water Intake</span>
+                                        </div>
+                                        <div class="activity-details">
+                                            <span class="activity-badge">2 glasses</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="activity-item" data-type="exercise">
+                                    <div class="activity-time">5 hours ago</div>
+                                    <div class="activity-content">
+                                        <div class="activity-header">
+                                            <span class="activity-icon">🏃</span>
+                                            <span class="activity-title">Morning Run</span>
+                                        </div>
+                                        <div class="activity-details">
+                                            <span class="activity-badge">30 min</span>
+                                            <span class="activity-badge">250 cal burned</span>
+                                            <span class="activity-badge">5km</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="activity-item" data-type="meal">
+                                    <div class="activity-time">7 hours ago</div>
+                                    <div class="activity-content">
+                                        <div class="activity-header">
+                                            <span class="activity-icon">🥐</span>
+                                            <span class="activity-title">Breakfast - Chocolate Supreme</span>
+                                        </div>
+                                        <div class="activity-details">
+                                            <span class="activity-badge">380 cal</span>
+                                            <span class="activity-badge">12g protein</span>
+                                            <span class="activity-badge">48g carbs</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="activity-item" data-type="water">
+                                    <div class="activity-time">8 hours ago</div>
+                                    <div class="activity-content">
+                                        <div class="activity-header">
+                                            <span class="activity-icon">💧</span>
+                                            <span class="activity-title">Morning Hydration</span>
+                                        </div>
+                                        <div class="activity-details">
+                                            <span class="activity-badge">3 glasses</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Health Insights -->
+                        <div class="section-card mt-lg">
+                            <h3 class="section-heading">💡 Wellness Insights</h3>
+                            <div class="insights-grid grid md:grid-cols-2 gap-md">
+                                <div class="insight-card insight-positive">
+                                    <div class="insight-icon">✨</div>
+                                    <div class="insight-content">
+                                        <h4 class="insight-title">Great Progress!</h4>
+                                        <p class="insight-text">You're 82% towards your daily step goal. Just 1,766 more steps to go!</p>
+                                    </div>
+                                </div>
+                                <div class="insight-card insight-warning">
+                                    <div class="insight-icon">💧</div>
+                                    <div class="insight-content">
+                                        <h4 class="insight-title">Stay Hydrated</h4>
+                                        <p class="insight-text">You need 2 more glasses of water to reach your daily hydration goal.</p>
+                                    </div>
+                                </div>
+                                <div class="insight-card insight-info">
+                                    <div class="insight-icon">🍽️</div>
+                                    <div class="insight-content">
+                                        <h4 class="insight-title">Balanced Diet</h4>
+                                        <p class="insight-text">Your macro distribution is excellent today. Keep it up!</p>
+                                    </div>
+                                </div>
+                                <div class="insight-card insight-positive">
+                                    <div class="insight-icon">🏆</div>
+                                    <div class="insight-content">
+                                        <h4 class="insight-title">Streak Bonus</h4>
+                                        <p class="insight-text">You've logged activity for 7 days straight! Earn 100 bonus IceCoins.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Store Locator Screen -->
+                <section id="store-locator" class="screen">
+                    <div class="container">
+                        <!-- Store Locator Header -->
+                        <div class="store-header-card">
+                            <div class="store-header-content">
+                                <div>
+                                    <h2 class="store-title">📍 Store Locator</h2>
+                                    <p class="store-subtitle">Find Savoy stores near you</p>
+                                </div>
+                                <button class="btn-secondary" onclick="useMyLocation()">
+                                    <span>📍</span>
+                                    <span>Use My Location</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Search & Filters -->
+                        <div class="store-search-section mt-lg">
+                            <div class="store-search-bar">
+                                <span class="search-icon">🔍</span>
+                                <input type="text" id="storeSearch" placeholder="Search by city, area, or store name..." oninput="searchStores()">
+                            </div>
+                            <div class="store-filters mt-md">
+                                <button class="filter-chip active" onclick="filterStores('all')">All Stores</button>
+                                <button class="filter-chip" onclick="filterStores('depot')">Depots</button>
+                                <button class="filter-chip" onclick="filterStores('retail')">Retail Outlets</button>
+                                <button class="filter-chip" onclick="filterStores('open-now')">Open Now</button>
+                            </div>
+                        </div>
+
+                        <!-- Map View Toggle -->
+                        <div class="map-toggle-section mt-lg">
+                            <div class="toggle-buttons">
+                                <button class="toggle-btn active" onclick="switchStoreView('list')">
+                                    <span>📋</span>
+                                    <span>List View</span>
+                                </button>
+                                <button class="toggle-btn" onclick="switchStoreView('map')">
+                                    <span>🗺️</span>
+                                    <span>Map View</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Map Container (Hidden by default) -->
+                        <div id="mapContainer" class="map-container" style="display: none;">
+                            <div class="map-placeholder">
+                                <div class="map-placeholder-content">
+                                    <span class="map-icon">🗺️</span>
+                                    <p>Interactive map integration</p>
+                                    <p class="map-hint">Google Maps / Leaflet would be integrated here</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Store List -->
+                        <div id="storeListContainer" class="store-list-container mt-lg">
+                            <div class="store-count-info">
+                                <p><strong>15 stores</strong> found near you</p>
+                            </div>
+
+                            <!-- Store Cards -->
+                            <div class="store-cards-grid">
+                                <!-- Store 1 -->
+                                <div class="store-card" data-type="depot" data-status="open">
+                                    <div class="store-card-header">
+                                        <div class="store-badge depot-badge">Main Depot</div>
+                                        <div class="store-status open">Open</div>
+                                    </div>
+                                    <h3 class="store-name">Savoy Main Depot</h3>
+                                    <div class="store-info-item">
+                                        <span class="info-icon">📍</span>
+                                        <span>123 Gulshan Avenue, Dhaka</span>
+                                    </div>
+                                    <div class="store-info-item">
+                                        <span class="info-icon">🕒</span>
+                                        <span>9:00 AM - 10:00 PM</span>
+                                    </div>
+                                    <div class="store-info-item">
+                                        <span class="info-icon">📞</span>
+                                        <span>+880 1XXX-XXXXXX</span>
+                                    </div>
+                                    <div class="store-distance">
+                                        <span>🚶</span>
+                                        <span>1.2 km away</span>
+                                    </div>
+                                    <div class="store-actions">
+                                        <button class="btn-secondary" onclick="getDirections(1)">Directions</button>
+                                        <button class="btn-text" onclick="showStoreDetail(1)">View Details</button>
+                                    </div>
+                                </div>
+
+                                <!-- Store 2 -->
+                                <div class="store-card" data-type="retail" data-status="open">
+                                    <div class="store-card-header">
+                                        <div class="store-badge retail-badge">Retail Outlet</div>
+                                        <div class="store-status open">Open</div>
+                                    </div>
+                                    <h3 class="store-name">Banani Branch</h3>
+                                    <div class="store-info-item">
+                                        <span class="info-icon">📍</span>
+                                        <span>Road 11, Banani, Dhaka</span>
+                                    </div>
+                                    <div class="store-info-item">
+                                        <span class="info-icon">🕒</span>
+                                        <span>10:00 AM - 9:00 PM</span>
+                                    </div>
+                                    <div class="store-info-item">
+                                        <span class="info-icon">📞</span>
+                                        <span>+880 1XXX-XXXXXX</span>
+                                    </div>
+                                    <div class="store-distance">
+                                        <span>🚶</span>
+                                        <span>2.5 km away</span>
+                                    </div>
+                                    <div class="store-actions">
+                                        <button class="btn-secondary" onclick="getDirections(2)">Directions</button>
+                                        <button class="btn-text" onclick="showStoreDetail(2)">View Details</button>
+                                    </div>
+                                </div>
+
+                                <!-- Store 3 -->
+                                <div class="store-card" data-type="retail" data-status="open">
+                                    <div class="store-card-header">
+                                        <div class="store-badge retail-badge">Retail Outlet</div>
+                                        <div class="store-status open">Open</div>
+                                    </div>
+                                    <h3 class="store-name">Dhanmondi Store</h3>
+                                    <div class="store-info-item">
+                                        <span class="info-icon">📍</span>
+                                        <span>Road 27, Dhanmondi, Dhaka</span>
+                                    </div>
+                                    <div class="store-info-item">
+                                        <span class="info-icon">🕒</span>
+                                        <span>10:00 AM - 9:00 PM</span>
+                                    </div>
+                                    <div class="store-info-item">
+                                        <span class="info-icon">📞</span>
+                                        <span>+880 1XXX-XXXXXX</span>
+                                    </div>
+                                    <div class="store-distance">
+                                        <span>🚶</span>
+                                        <span>3.8 km away</span>
+                                    </div>
+                                    <div class="store-actions">
+                                        <button class="btn-secondary" onclick="getDirections(3)">Directions</button>
+                                        <button class="btn-text" onclick="showStoreDetail(3)">View Details</button>
+                                    </div>
+                                </div>
+
+                                <!-- Store 4 -->
+                                <div class="store-card" data-type="retail" data-status="closed">
+                                    <div class="store-card-header">
+                                        <div class="store-badge retail-badge">Retail Outlet</div>
+                                        <div class="store-status closed">Closed</div>
+                                    </div>
+                                    <h3 class="store-name">Uttara Branch</h3>
+                                    <div class="store-info-item">
+                                        <span class="info-icon">📍</span>
+                                        <span>Sector 7, Uttara, Dhaka</span>
+                                    </div>
+                                    <div class="store-info-item">
+                                        <span class="info-icon">🕒</span>
+                                        <span>Opens at 10:00 AM</span>
+                                    </div>
+                                    <div class="store-info-item">
+                                        <span class="info-icon">📞</span>
+                                        <span>+880 1XXX-XXXXXX</span>
+                                    </div>
+                                    <div class="store-distance">
+                                        <span>🚶</span>
+                                        <span>8.5 km away</span>
+                                    </div>
+                                    <div class="store-actions">
+                                        <button class="btn-secondary" onclick="getDirections(4)">Directions</button>
+                                        <button class="btn-text" onclick="showStoreDetail(4)">View Details</button>
+                                    </div>
+                                </div>
+
+                                <!-- Store 5 -->
+                                <div class="store-card" data-type="depot" data-status="open">
+                                    <div class="store-card-header">
+                                        <div class="store-badge depot-badge">Depot</div>
+                                        <div class="store-status open">Open</div>
+                                    </div>
+                                    <h3 class="store-name">Mirpur Depot</h3>
+                                    <div class="store-info-item">
+                                        <span class="info-icon">📍</span>
+                                        <span>Section 10, Mirpur, Dhaka</span>
+                                    </div>
+                                    <div class="store-info-item">
+                                        <span class="info-icon">🕒</span>
+                                        <span>8:00 AM - 11:00 PM</span>
+                                    </div>
+                                    <div class="store-info-item">
+                                        <span class="info-icon">📞</span>
+                                        <span>+880 1XXX-XXXXXX</span>
+                                    </div>
+                                    <div class="store-distance">
+                                        <span>🚶</span>
+                                        <span>5.2 km away</span>
+                                    </div>
+                                    <div class="store-actions">
+                                        <button class="btn-secondary" onclick="getDirections(5)">Directions</button>
+                                        <button class="btn-text" onclick="showStoreDetail(5)">View Details</button>
+                                    </div>
+                                </div>
+
+                                <!-- Store 6 -->
+                                <div class="store-card" data-type="retail" data-status="open">
+                                    <div class="store-card-header">
+                                        <div class="store-badge retail-badge">Retail Outlet</div>
+                                        <div class="store-status open">Open</div>
+                                    </div>
+                                    <h3 class="store-name">Bashundhara City Mall</h3>
+                                    <div class="store-info-item">
+                                        <span class="info-icon">📍</span>
+                                        <span>Level 3, Panthapath, Dhaka</span>
+                                    </div>
+                                    <div class="store-info-item">
+                                        <span class="info-icon">🕒</span>
+                                        <span>10:00 AM - 10:00 PM</span>
+                                    </div>
+                                    <div class="store-info-item">
+                                        <span class="info-icon">📞</span>
+                                        <span>+880 1XXX-XXXXXX</span>
+                                    </div>
+                                    <div class="store-distance">
+                                        <span>🚶</span>
+                                        <span>4.1 km away</span>
+                                    </div>
+                                    <div class="store-actions">
+                                        <button class="btn-secondary" onclick="getDirections(6)">Directions</button>
+                                        <button class="btn-text" onclick="showStoreDetail(6)">View Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- No Results Message -->
+                        <div id="noStoresMessage" class="no-results-message" style="display: none;">
+                            <div class="no-results-icon">🔍</div>
+                            <h3>No stores found</h3>
+                            <p>Try adjusting your search or filters</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Recipes Screen -->
+                <section id="recipes" class="screen">
+                    <div class="container">
+                        <!-- Recipes Header -->
+                        <div class="recipes-header-card">
+                            <div class="recipes-header-content">
+                                <div>
+                                    <h2 class="recipes-title">🍳 Recipe Collection</h2>
+                                    <p class="recipes-subtitle">Delicious recipes inspired by our flavors</p>
+                                </div>
+                                <button class="btn-secondary" onclick="addNewRecipe()">
+                                    <span>➕</span>
+                                    <span>Share Recipe</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Recipe Search -->
+                        <div class="recipe-search-section mt-lg">
+                            <div class="recipe-search-bar">
+                                <span class="search-icon">🔍</span>
+                                <input type="text" id="recipeSearch" placeholder="Search recipes by name or ingredient..." oninput="searchRecipes()">
+                            </div>
+                        </div>
+
+                        <!-- Recipe Categories -->
+                        <div class="recipe-categories mt-lg">
+                            <button class="category-tab active" onclick="filterRecipeCategory('all')">
+                                <span>🍽️</span>
+                                <span>All Recipes</span>
+                            </button>
+                            <button class="category-tab" onclick="filterRecipeCategory('desserts')">
+                                <span>🍰</span>
+                                <span>Desserts</span>
+                            </button>
+                            <button class="category-tab" onclick="filterRecipeCategory('drinks')">
+                                <span>🍹</span>
+                                <span>Drinks</span>
+                            </button>
+                            <button class="category-tab" onclick="filterRecipeCategory('treats')">
+                                <span>🍭</span>
+                                <span>Treats</span>
+                            </button>
+                            <button class="category-tab" onclick="filterRecipeCategory('cakes')">
+                                <span>🎂</span>
+                                <span>Cakes</span>
+                            </button>
+                        </div>
+
+                        <!-- Recipe Stats -->
+                        <div class="recipe-stats mt-lg">
+                            <div class="recipe-stat-item">
+                                <span class="stat-number">48</span>
+                                <span class="stat-label">Total Recipes</span>
+                            </div>
+                            <div class="recipe-stat-item">
+                                <span class="stat-number">12</span>
+                                <span class="stat-label">Your Favorites</span>
+                            </div>
+                            <div class="recipe-stat-item">
+                                <span class="stat-number">5</span>
+                                <span class="stat-label">Tried Recently</span>
+                            </div>
+                        </div>
+
+                        <!-- Recipe Cards Grid -->
+                        <div class="recipe-cards-grid mt-lg">
+                            <!-- Recipe 1 -->
+                            <div class="recipe-card" data-category="desserts">
+                                <div class="recipe-image">
+                                    <div class="recipe-image-placeholder">🍦</div>
+                                    <button class="recipe-favorite-btn" onclick="toggleRecipeFavorite(1)">❤️</button>
+                                </div>
+                                <div class="recipe-content">
+                                    <h3 class="recipe-name">Vanilla Ice Cream Sundae</h3>
+                                    <p class="recipe-description">Classic sundae with vanilla ice cream, chocolate sauce, and toppings</p>
+                                    <div class="recipe-meta">
+                                        <span class="recipe-meta-item">
+                                            <span>🕒</span>
+                                            <span>15 min</span>
+                                        </span>
+                                        <span class="recipe-meta-item">
+                                            <span>👨‍🍳</span>
+                                            <span>Easy</span>
+                                        </span>
+                                        <span class="recipe-meta-item">
+                                            <span>⭐</span>
+                                            <span>4.8</span>
+                                        </span>
+                                    </div>
+                                    <button class="btn-primary w-full mt-md" onclick="viewRecipeDetail(1)">View Recipe</button>
+                                </div>
+                            </div>
+
+                            <!-- Recipe 2 -->
+                            <div class="recipe-card" data-category="drinks">
+                                <div class="recipe-image">
+                                    <div class="recipe-image-placeholder">🥤</div>
+                                    <button class="recipe-favorite-btn" onclick="toggleRecipeFavorite(2)">❤️</button>
+                                </div>
+                                <div class="recipe-content">
+                                    <h3 class="recipe-name">Chocolate Milkshake</h3>
+                                    <p class="recipe-description">Rich and creamy chocolate shake with ice cream</p>
+                                    <div class="recipe-meta">
+                                        <span class="recipe-meta-item">
+                                            <span>🕒</span>
+                                            <span>10 min</span>
+                                        </span>
+                                        <span class="recipe-meta-item">
+                                            <span>👨‍🍳</span>
+                                            <span>Easy</span>
+                                        </span>
+                                        <span class="recipe-meta-item">
+                                            <span>⭐</span>
+                                            <span>4.9</span>
+                                        </span>
+                                    </div>
+                                    <button class="btn-primary w-full mt-md" onclick="viewRecipeDetail(2)">View Recipe</button>
+                                </div>
+                            </div>
+
+                            <!-- Recipe 3 -->
+                            <div class="recipe-card" data-category="desserts">
+                                <div class="recipe-image">
+                                    <div class="recipe-image-placeholder">🍓</div>
+                                    <button class="recipe-favorite-btn" onclick="toggleRecipeFavorite(3)">❤️</button>
+                                </div>
+                                <div class="recipe-content">
+                                    <h3 class="recipe-name">Strawberry Parfait</h3>
+                                    <p class="recipe-description">Layered strawberry ice cream with fresh berries and granola</p>
+                                    <div class="recipe-meta">
+                                        <span class="recipe-meta-item">
+                                            <span>🕒</span>
+                                            <span>20 min</span>
+                                        </span>
+                                        <span class="recipe-meta-item">
+                                            <span>👨‍🍳</span>
+                                            <span>Medium</span>
+                                        </span>
+                                        <span class="recipe-meta-item">
+                                            <span>⭐</span>
+                                            <span>4.7</span>
+                                        </span>
+                                    </div>
+                                    <button class="btn-primary w-full mt-md" onclick="viewRecipeDetail(3)">View Recipe</button>
+                                </div>
+                            </div>
+
+                            <!-- Recipe 4 -->
+                            <div class="recipe-card" data-category="cakes">
+                                <div class="recipe-image">
+                                    <div class="recipe-image-placeholder">🎂</div>
+                                    <button class="recipe-favorite-btn" onclick="toggleRecipeFavorite(4)">❤️</button>
+                                </div>
+                                <div class="recipe-content">
+                                    <h3 class="recipe-name">Ice Cream Cake</h3>
+                                    <p class="recipe-description">Layered cake with ice cream, perfect for celebrations</p>
+                                    <div class="recipe-meta">
+                                        <span class="recipe-meta-item">
+                                            <span>🕒</span>
+                                            <span>45 min</span>
+                                        </span>
+                                        <span class="recipe-meta-item">
+                                            <span>👨‍🍳</span>
+                                            <span>Hard</span>
+                                        </span>
+                                        <span class="recipe-meta-item">
+                                            <span>⭐</span>
+                                            <span>4.9</span>
+                                        </span>
+                                    </div>
+                                    <button class="btn-primary w-full mt-md" onclick="viewRecipeDetail(4)">View Recipe</button>
+                                </div>
+                            </div>
+
+                            <!-- Recipe 5 -->
+                            <div class="recipe-card" data-category="drinks">
+                                <div class="recipe-image">
+                                    <div class="recipe-image-placeholder">🥤</div>
+                                    <button class="recipe-favorite-btn" onclick="toggleRecipeFavorite(5)">❤️</button>
+                                </div>
+                                <div class="recipe-content">
+                                    <h3 class="recipe-name">Mango Smoothie Bowl</h3>
+                                    <p class="recipe-description">Refreshing mango ice cream smoothie with tropical fruits</p>
+                                    <div class="recipe-meta">
+                                        <span class="recipe-meta-item">
+                                            <span>🕒</span>
+                                            <span>15 min</span>
+                                        </span>
+                                        <span class="recipe-meta-item">
+                                            <span>👨‍🍳</span>
+                                            <span>Easy</span>
+                                        </span>
+                                        <span class="recipe-meta-item">
+                                            <span>⭐</span>
+                                            <span>4.6</span>
+                                        </span>
+                                    </div>
+                                    <button class="btn-primary w-full mt-md" onclick="viewRecipeDetail(5)">View Recipe</button>
+                                </div>
+                            </div>
+
+                            <!-- Recipe 6 -->
+                            <div class="recipe-card" data-category="treats">
+                                <div class="recipe-image">
+                                    <div class="recipe-image-placeholder">🍭</div>
+                                    <button class="recipe-favorite-btn" onclick="toggleRecipeFavorite(6)">❤️</button>
+                                </div>
+                                <div class="recipe-content">
+                                    <h3 class="recipe-name">Ice Cream Popsicles</h3>
+                                    <p class="recipe-description">Homemade popsicles with your favorite ice cream flavors</p>
+                                    <div class="recipe-meta">
+                                        <span class="recipe-meta-item">
+                                            <span>🕒</span>
+                                            <span>4 hours</span>
+                                        </span>
+                                        <span class="recipe-meta-item">
+                                            <span>👨‍🍳</span>
+                                            <span>Easy</span>
+                                        </span>
+                                        <span class="recipe-meta-item">
+                                            <span>⭐</span>
+                                            <span>4.8</span>
+                                        </span>
+                                    </div>
+                                    <button class="btn-primary w-full mt-md" onclick="viewRecipeDetail(6)">View Recipe</button>
+                                </div>
+                            </div>
+
+                            <!-- Recipe 7 -->
+                            <div class="recipe-card" data-category="desserts">
+                                <div class="recipe-image">
+                                    <div class="recipe-image-placeholder">🧇</div>
+                                    <button class="recipe-favorite-btn" onclick="toggleRecipeFavorite(7)">❤️</button>
+                                </div>
+                                <div class="recipe-content">
+                                    <h3 class="recipe-name">Waffle Ice Cream Sandwich</h3>
+                                    <p class="recipe-description">Crispy waffles with ice cream filling and toppings</p>
+                                    <div class="recipe-meta">
+                                        <span class="recipe-meta-item">
+                                            <span>🕒</span>
+                                            <span>25 min</span>
+                                        </span>
+                                        <span class="recipe-meta-item">
+                                            <span>👨‍🍳</span>
+                                            <span>Medium</span>
+                                        </span>
+                                        <span class="recipe-meta-item">
+                                            <span>⭐</span>
+                                            <span>4.9</span>
+                                        </span>
+                                    </div>
+                                    <button class="btn-primary w-full mt-md" onclick="viewRecipeDetail(7)">View Recipe</button>
+                                </div>
+                            </div>
+
+                            <!-- Recipe 8 -->
+                            <div class="recipe-card" data-category="treats">
+                                <div class="recipe-image">
+                                    <div class="recipe-image-placeholder">🍪</div>
+                                    <button class="recipe-favorite-btn" onclick="toggleRecipeFavorite(8)">❤️</button>
+                                </div>
+                                <div class="recipe-content">
+                                    <h3 class="recipe-name">Ice Cream Cookie Sandwich</h3>
+                                    <p class="recipe-description">Fresh-baked cookies with ice cream filling</p>
+                                    <div class="recipe-meta">
+                                        <span class="recipe-meta-item">
+                                            <span>🕒</span>
+                                            <span>30 min</span>
+                                        </span>
+                                        <span class="recipe-meta-item">
+                                            <span>👨‍🍳</span>
+                                            <span>Medium</span>
+                                        </span>
+                                        <span class="recipe-meta-item">
+                                            <span>⭐</span>
+                                            <span>4.7</span>
+                                        </span>
+                                    </div>
+                                    <button class="btn-primary w-full mt-md" onclick="viewRecipeDetail(8)">View Recipe</button>
+                                </div>
+                            </div>
+
+                            <!-- Recipe 9 -->
+                            <div class="recipe-card" data-category="drinks">
+                                <div class="recipe-image">
+                                    <div class="recipe-image-placeholder">☕</div>
+                                    <button class="recipe-favorite-btn" onclick="toggleRecipeFavorite(9)">❤️</button>
+                                </div>
+                                <div class="recipe-content">
+                                    <h3 class="recipe-name">Affogato</h3>
+                                    <p class="recipe-description">Italian dessert with vanilla ice cream and espresso</p>
+                                    <div class="recipe-meta">
+                                        <span class="recipe-meta-item">
+                                            <span>🕒</span>
+                                            <span>5 min</span>
+                                        </span>
+                                        <span class="recipe-meta-item">
+                                            <span>👨‍🍳</span>
+                                            <span>Easy</span>
+                                        </span>
+                                        <span class="recipe-meta-item">
+                                            <span>⭐</span>
+                                            <span>4.9</span>
+                                        </span>
+                                    </div>
+                                    <button class="btn-primary w-full mt-md" onclick="viewRecipeDetail(9)">View Recipe</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- No Results Message -->
+                        <div id="noRecipesMessage" class="no-results-message" style="display: none;">
+                            <div class="no-results-icon">🔍</div>
+                            <h3>No recipes found</h3>
+                            <p>Try adjusting your search or category filter</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Settings Screen -->
+                <section id="settings" class="screen">
+                    <div class="container">
+                        <!-- Settings Header -->
+                        <div class="settings-header">
+                            <h2 class="settings-title">⚙️ Settings</h2>
+                            <p class="settings-subtitle">Manage your account and preferences</p>
+                        </div>
+
+                        <!-- Account Settings -->
+                        <div class="section-card mt-lg">
+                            <h3 class="section-heading">👤 Account Settings</h3>
+                            <div class="settings-list">
+                                <div class="settings-item" onclick="editAccountInfo()">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">📝</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Edit Profile</div>
+                                            <div class="settings-item-description">Update your personal information</div>
+                                        </div>
+                                    </div>
+                                    <span class="settings-arrow">›</span>
+                                </div>
+                                <div class="settings-item" onclick="changePassword()">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">🔐</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Change Password</div>
+                                            <div class="settings-item-description">Update your security credentials</div>
+                                        </div>
+                                    </div>
+                                    <span class="settings-arrow">›</span>
+                                </div>
+                                <div class="settings-item" onclick="managePaymentMethods()">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">💳</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Payment Methods</div>
+                                            <div class="settings-item-description">Manage your payment options</div>
+                                        </div>
+                                    </div>
+                                    <span class="settings-arrow">›</span>
+                                </div>
+                                <div class="settings-item" onclick="manageAddresses()">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">📍</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Saved Addresses</div>
+                                            <div class="settings-item-description">Manage delivery addresses</div>
+                                        </div>
+                                    </div>
+                                    <span class="settings-arrow">›</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- App Preferences -->
+                        <div class="section-card mt-lg">
+                            <h3 class="section-heading">🎨 Preferences</h3>
+                            <div class="settings-list">
+                                <div class="settings-item toggle-item">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">🌙</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Dark Mode</div>
+                                            <div class="settings-item-description">Enable dark theme</div>
+                                        </div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="settings-item" onclick="changeLanguage()">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">🌍</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Language</div>
+                                            <div class="settings-item-description">English (US)</div>
+                                        </div>
+                                    </div>
+                                    <span class="settings-arrow">›</span>
+                                </div>
+                                <div class="settings-item" onclick="changeCurrency()">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">💵</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Currency</div>
+                                            <div class="settings-item-description">BDT (৳)</div>
+                                        </div>
+                                    </div>
+                                    <span class="settings-arrow">›</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notifications -->
+                        <div class="section-card mt-lg">
+                            <h3 class="section-heading">🔔 Notifications</h3>
+                            <div class="settings-list">
+                                <div class="settings-item toggle-item">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">📧</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Email Notifications</div>
+                                            <div class="settings-item-description">Receive updates via email</div>
+                                        </div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked onchange="toggleNotification('email')">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="settings-item toggle-item">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">📣</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Push Notifications</div>
+                                            <div class="settings-item-description">Get app notifications</div>
+                                        </div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked onchange="toggleNotification('push')">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="settings-item toggle-item">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">📢</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Promotional Offers</div>
+                                            <div class="settings-item-description">Receive special deals</div>
+                                        </div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked onchange="toggleNotification('promo')">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="settings-item toggle-item">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">🔔</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Order Updates</div>
+                                            <div class="settings-item-description">Track your orders</div>
+                                        </div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked onchange="toggleNotification('order')">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Privacy & Security -->
+                        <div class="section-card mt-lg">
+                            <h3 class="section-heading">🔒 Privacy & Security</h3>
+                            <div class="settings-list">
+                                <div class="settings-item toggle-item">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">🔐</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Two-Factor Authentication</div>
+                                            <div class="settings-item-description">Extra security for your account</div>
+                                        </div>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" onchange="toggle2FA()">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="settings-item" onclick="viewPrivacyPolicy()">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">📜</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Privacy Policy</div>
+                                            <div class="settings-item-description">View our privacy terms</div>
+                                        </div>
+                                    </div>
+                                    <span class="settings-arrow">›</span>
+                                </div>
+                                <div class="settings-item" onclick="viewTerms()">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">📑</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Terms of Service</div>
+                                            <div class="settings-item-description">Read terms & conditions</div>
+                                        </div>
+                                    </div>
+                                    <span class="settings-arrow">›</span>
+                                </div>
+                                <div class="settings-item" onclick="manageDataPrivacy()">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">🛡️</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Data & Privacy</div>
+                                            <div class="settings-item-description">Manage your data preferences</div>
+                                        </div>
+                                    </div>
+                                    <span class="settings-arrow">›</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Support & Help -->
+                        <div class="section-card mt-lg">
+                            <h3 class="section-heading">❓ Support & Help</h3>
+                            <div class="settings-list">
+                                <div class="settings-item" onclick="openHelpCenter()">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">📚</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Help Center</div>
+                                            <div class="settings-item-description">FAQs and guides</div>
+                                        </div>
+                                    </div>
+                                    <span class="settings-arrow">›</span>
+                                </div>
+                                <div class="settings-item" onclick="contactSupport()">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">💬</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Contact Support</div>
+                                            <div class="settings-item-description">Get help from our team</div>
+                                        </div>
+                                    </div>
+                                    <span class="settings-arrow">›</span>
+                                </div>
+                                <div class="settings-item" onclick="reportIssue()">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">🐞</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Report a Problem</div>
+                                            <div class="settings-item-description">Let us know about issues</div>
+                                        </div>
+                                    </div>
+                                    <span class="settings-arrow">›</span>
+                                </div>
+                                <div class="settings-item" onclick="sendFeedback()">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">📝</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Send Feedback</div>
+                                            <div class="settings-item-description">Share your thoughts</div>
+                                        </div>
+                                    </div>
+                                    <span class="settings-arrow">›</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- About -->
+                        <div class="section-card mt-lg">
+                            <h3 class="section-heading">ℹ️ About</h3>
+                            <div class="settings-list">
+                                <div class="settings-item" onclick="viewAppInfo()">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">📱</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">App Version</div>
+                                            <div class="settings-item-description">v1.0.0 (Build 100)</div>
+                                        </div>
+                                    </div>
+                                    <span class="settings-arrow">›</span>
+                                </div>
+                                <div class="settings-item" onclick="rateApp()">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">⭐</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Rate Us</div>
+                                            <div class="settings-item-description">Share your experience</div>
+                                        </div>
+                                    </div>
+                                    <span class="settings-arrow">›</span>
+                                </div>
+                                <div class="settings-item" onclick="checkUpdates()">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">🔄</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Check for Updates</div>
+                                            <div class="settings-item-description">Stay up to date</div>
+                                        </div>
+                                    </div>
+                                    <span class="settings-arrow">›</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Danger Zone -->
+                        <div class="section-card mt-lg danger-zone">
+                            <h3 class="section-heading text-error">⚠️ Danger Zone</h3>
+                            <div class="settings-list">
+                                <div class="settings-item" onclick="clearCache()">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon">🗑️</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title">Clear Cache</div>
+                                            <div class="settings-item-description">Free up storage space</div>
+                                        </div>
+                                    </div>
+                                    <span class="settings-arrow">›</span>
+                                </div>
+                                <div class="settings-item" onclick="deleteAccount()">
+                                    <div class="settings-item-left">
+                                        <span class="settings-icon text-error">🚫</span>
+                                        <div class="settings-item-content">
+                                            <div class="settings-item-title text-error">Delete Account</div>
+                                            <div class="settings-item-description">Permanently remove your account</div>
+                                        </div>
+                                    </div>
+                                    <span class="settings-arrow text-error">›</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Logout Button -->
+                        <div class="mt-xl pb-xl">
+                            <button class="btn-secondary w-full" onclick="logout()">
+                                <span>🚺</span>
+                                <span>Logout</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Flavor Detail Screen -->
+                <section id="flavor-detail" class="screen premium-flavor-detail">
+                    <div class="screen-header">
+                        <button class="btn-back" onclick="navigateTo('explore')">←</button>
+                        <h1 class="screen-title">Flavor Details</h1>
+                        <button class="btn-icon" onclick="shareFlavor()">📤</button>
+                    </div>
+                    
+                    <div class="content-container">
+                        <!-- Flavor Hero -->
+                        <div class="flavor-hero">
+                            <div class="flavor-hero-image" id="flavorHeroImage">🍫</div>
+                            <h2 id="flavorName">Chocolate Delight</h2>
+                            <p class="flavor-tagline" id="flavorTagline">Rich & Creamy</p>
+                            <span class="badge badge-trending" id="flavorBadge" style="display: none;">🔥 Trending</span>
+                        </div>
+
+                        <!-- Flavor Story -->
+                        <div class="section-card">
+                            <h3 class="section-heading">📖 The Story</h3>
+                            <div class="flavor-story">
+                                <p id="flavorStory">Crafted with premium Belgian chocolate and fresh cream, Chocolate Delight has been a customer favorite since 1995.</p>
+                            </div>
+                        </div>
+
+                        <!-- Ingredients -->
+                        <div class="section-card mt-lg">
+                            <h3 class="section-heading">🥄 Ingredients</h3>
+                            <div class="ingredients-grid" id="ingredientsList">
+                                <span class="ingredient-tag">🥛 Fresh Milk</span>
+                                <span class="ingredient-tag">🍫 Belgian Chocolate</span>
+                                <span class="ingredient-tag">🧈 Pure Cream</span>
+                                <span class="ingredient-tag">🍬 Natural Sugar</span>
+                                <span class="ingredient-tag">🧂 Sea Salt</span>
+                                <span class="ingredient-tag">🌿 Vanilla Extract</span>
+                            </div>
+                        </div>
+
+                        <!-- Nutrition Info -->
+                        <div class="section-card mt-lg">
+                            <h3 class="section-heading">📊 Nutrition Facts</h3>
+                            <div class="nutrition-info">
+                                <div class="nutrition-row">
+                                    <span class="nutrition-label">Serving Size</span>
+                                    <span class="nutrition-value" id="servingSize">100g</span>
+                                </div>
+                                <div class="nutrition-row">
+                                    <span class="nutrition-label">Calories</span>
+                                    <span class="nutrition-value" id="calories">220 kcal</span>
+                                </div>
+                                <div class="nutrition-row">
+                                    <span class="nutrition-label">Total Fat</span>
+                                    <span class="nutrition-value" id="fat">12g</span>
+                                </div>
+                                <div class="nutrition-row">
+                                    <span class="nutrition-label">Carbohydrates</span>
+                                    <span class="nutrition-value" id="carbs">24g</span>
+                                </div>
+                                <div class="nutrition-row">
+                                    <span class="nutrition-label">Protein</span>
+                                    <span class="nutrition-value" id="protein">4g</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Availability -->
+                        <div class="section-card mt-lg">
+                            <h3 class="section-heading">📍 Where to Find</h3>
+                            <div class="availability-card">
+                                <div class="availability-status">
+                                    <span class="availability-icon">✅</span>
+                                    <div>
+                                        <h4>Available Now</h4>
+                                        <p id="availabilityText">In stock at 15 stores near you</p>
+                                    </div>
+                                </div>
+                                <button class="btn-primary mt-md" onclick="navigateTo('store-locator')">
+                                    📍 Find Nearest Store
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Recipe Inspiration Section -->
+                        <div class="section-card mt-lg" id="recipeInspirationSection" style="display: none;">
+                            <div class="recipe-inspiration-banner">
+                                <div class="recipe-banner-icon">🍳</div>
+                                <div class="recipe-banner-content">
+                                    <h3>Recipe Inspiration</h3>
+                                    <p id="recipeInspirationText">Explore delicious recipes with <span id="mainIngredientName"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Recipe Detail Screen -->
+                <section id="recipe-detail" class="screen">
+                    <div class="screen-header">
+                        <button class="btn-back" onclick="navigateTo('recipes')">←</button>
+                        <h1 class="screen-title">Recipe Details</h1>
+                        <button class="btn-icon" onclick="shareRecipe()">📤</button>
+                    </div>
+                    
+                    <div class="content-container">
+                        <!-- Recipe Hero -->
+                        <div class="recipe-hero">
+                            <div class="recipe-hero-image" id="recipeDetailImage">🍫</div>
+                            <h2 id="recipeDetailName">Chocolate Brownie Sundae</h2>
+                            <div class="recipe-meta">
+                                <span class="meta-item">⏱️ <span id="recipeDetailPrepTime">25 min</span></span>
+                                <span class="meta-item">👥 <span id="recipeDetailServings">4</span></span>
+                                <span class="meta-item">📊 <span id="recipeDetailDifficulty">Medium</span></span>
+                            </div>
+                            <div class="recipe-category-badge">
+                                <span id="recipeDetailCategory">Desserts</span>
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="section-card">
+                            <p class="recipe-description" id="recipeDetailDescription">Warm chocolate brownies topped with vanilla ice cream, chocolate sauce, and nuts</p>
+                        </div>
+
+                        <!-- Ingredients -->
+                        <div class="section-card mt-lg">
+                            <h3 class="section-heading">🥄 Ingredients</h3>
+                            <ul class="recipe-ingredients-list" id="recipeDetailIngredients">
+                                <li>4 chocolate brownies (homemade or store-bought)</li>
+                                <li>4 scoops Savoy Vanilla Ice Cream</li>
+                                <li>1/2 cup chocolate sauce</li>
+                            </ul>
+                        </div>
+
+                        <!-- Instructions -->
+                        <div class="section-card mt-lg">
+                            <h3 class="section-heading">👨‍🍳 Instructions</h3>
+                            <ol class="recipe-instructions-list" id="recipeDetailInstructions">
+                                <li>Warm the brownies in the oven at 350°F for 5 minutes</li>
+                                <li>Place each warm brownie in a serving bowl</li>
+                                <li>Top each brownie with a generous scoop of Savoy Vanilla ice cream</li>
+                            </ol>
+                        </div>
+
+                        <!-- Tips -->
+                        <div class="section-card mt-lg" id="recipeTipsSection">
+                            <h3 class="section-heading">💡 Chef's Tips</h3>
+                            <div class="recipe-tips">
+                                <p id="recipeDetailTips">The contrast between warm brownie and cold ice cream creates the perfect texture.</p>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="recipe-actions mt-lg pb-xl">
+                            <button class="btn-primary" onclick="saveRecipe()">❤️ Save Recipe</button>
+                            <button class="btn-secondary" onclick="shareRecipe()">📤 Share</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay desktop-hidden" id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
+    <div class="mobile-menu desktop-hidden" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <h2>Menu</h2>
+            <button class="close-btn" onclick="closeMobileMenu()">✕</button>
+        </div>
+        <nav class="mobile-menu-nav">
+            <a href="#home" class="mobile-nav-link" onclick="navigateTo('home'); closeMobileMenu();">
+                <span>🏠</span> Home
+            </a>
+            <a href="#explore" class="mobile-nav-link" onclick="navigateTo('explore'); closeMobileMenu();">
+                <span>🍦</span> Explore Flavors
+            </a>
+            <a href="#wallet" class="mobile-nav-link" onclick="navigateTo('wallet'); closeMobileMenu();">
+                <span>💰</span> IceCoins Wallet
+            </a>
+            <a href="#challenges" class="mobile-nav-link" onclick="navigateTo('challenges'); closeMobileMenu();">
+                <span>🎯</span> Challenges
+            </a>
+            <a href="#recipes" class="mobile-nav-link" onclick="navigateTo('recipes'); closeMobileMenu();">
+                <span>📖</span> Recipes
+            </a>
+            <a href="#health-tracker" class="mobile-nav-link" onclick="navigateTo('health-tracker'); closeMobileMenu();">
+                <span>❤️</span> Health Tracker
+            </a>
+            <a href="#store-locator" class="mobile-nav-link" onclick="navigateTo('store-locator'); closeMobileMenu();">
+                <span>📍</span> Store Locator
+            </a>
+            <a href="#settings" class="mobile-nav-link" onclick="navigateTo('settings'); closeMobileMenu();">
+                <span>⚙️</span> Settings
+            </a>
+        </nav>
+    </div>
+
+    <!-- Order Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content order-modal-content">
+            <div class="modal-header">
+                <h2>📦 Order Ice Cream</h2>
+                <button class="modal-close" onclick="closeOrderModal()">✕</button>
+            </div>
+            
+            <div class="modal-body order-modal-body">
+                <!-- Order Summary Header -->
+                <div class="order-summary-header">
+                    <div class="summary-item">
+                        <span class="summary-label" id="summaryUnitLabel">Total Boxes:</span>
+                        <span class="summary-value" id="totalBoxes">0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label" id="summaryQuantityLabel">Total Pieces:</span>
+                        <span class="summary-value" id="totalPieces">0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Total Amount:</span>
+                        <span class="summary-value" id="totalAmount">৳0</span>
+                    </div>
+                </div>
+
+                <!-- Order Info -->
+                <div class="order-info-card">
+                    <h4>📌 Order Information</h4>
+                    <p>• <strong>Box Orders:</strong> Minimum 1 box (24 pieces) at ৳50/piece (৳1,200/box)</p>
+                    <p>• <strong>Liter Orders:</strong> Minimum 1 liter at ৳800/liter</p>
+                    <p>• Mix and match flavors in your order</p>
+                    <p>• Free delivery for orders above ৳5,000</p>
+                </div>
+
+                <!-- Flavor Selection -->
+                <div class="flavor-selection-section">
+                    <h3>Select Flavors</h3>
+                    
+                    <!-- Order Type Tabs -->
+                    <div class="order-type-tabs">
+                        <button class="order-type-tab active" onclick="switchOrderType('pieces')" id="piecesTab">
+                            📦 By Piece (Box)
+                        </button>
+                        <button class="order-type-tab" onclick="switchOrderType('liters')" id="litersTab">
+                            🥛 By Liter
+                        </button>
+                    </div>
+                    
+                    <div class="flavor-selection-grid">
+                        <!-- Chocolate Delight -->
+                        <div class="order-flavor-card">
+                            <div class="flavor-header">
+                                <div class="flavor-icon-large">🍫</div>
+                                <div class="flavor-info">
+                                    <h4>Chocolate Delight</h4>
+                                    <p class="flavor-price" id="price-chocolate-delight">৳50/piece</p>
+                                </div>
+                            </div>
+                            <div class="quantity-control">
+                                <button class="qty-btn" onclick="decreaseQuantity('chocolate-delight')">−</button>
+                                <input type="number" id="qty-chocolate-delight" value="0" min="0" readonly class="qty-input">
+                                <button class="qty-btn" onclick="increaseQuantity('chocolate-delight')">+</button>
+                            </div>
+                        </div>
+
+                        <!-- Strawberry Bliss -->
+                        <div class="order-flavor-card">
+                            <div class="flavor-header">
+                                <div class="flavor-icon-large">🍓</div>
+                                <div class="flavor-info">
+                                    <h4>Strawberry Bliss</h4>
+                                    <p class="flavor-price" id="price-strawberry-bliss">৳50/piece</p>
+                                </div>
+                            </div>
+                            <div class="quantity-control">
+                                <button class="qty-btn" onclick="decreaseQuantity('strawberry-bliss')">−</button>
+                                <input type="number" id="qty-strawberry-bliss" value="0" min="0" readonly class="qty-input">
+                                <button class="qty-btn" onclick="increaseQuantity('strawberry-bliss')">+</button>
+                            </div>
+                        </div>
+
+                        <!-- Vanilla Classic -->
+                        <div class="order-flavor-card">
+                            <div class="flavor-header">
+                                <div class="flavor-icon-large">🍦</div>
+                                <div class="flavor-info">
+                                    <h4>Vanilla Classic</h4>
+                                    <p class="flavor-price" id="price-vanilla-classic">৳50/piece</p>
+                                </div>
+                            </div>
+                            <div class="quantity-control">
+                                <button class="qty-btn" onclick="decreaseQuantity('vanilla-classic')">−</button>
+                                <input type="number" id="qty-vanilla-classic" value="0" min="0" readonly class="qty-input">
+                                <button class="qty-btn" onclick="increaseQuantity('vanilla-classic')">+</button>
+                            </div>
+                        </div>
+
+                        <!-- Mango Tango -->
+                        <div class="order-flavor-card">
+                            <div class="flavor-header">
+                                <div class="flavor-icon-large">🥭</div>
+                                <div class="flavor-info">
+                                    <h4>Mango Tango</h4>
+                                    <p class="flavor-price" id="price-mango-tango">৳50/piece</p>
+                                </div>
+                            </div>
+                            <div class="quantity-control">
+                                <button class="qty-btn" onclick="decreaseQuantity('mango-tango')">−</button>
+                                <input type="number" id="qty-mango-tango" value="0" min="0" readonly class="qty-input">
+                                <button class="qty-btn" onclick="increaseQuantity('mango-tango')">+</button>
+                            </div>
+                        </div>
+
+                        <!-- Mint Chocolate -->
+                        <div class="order-flavor-card">
+                            <div class="flavor-header">
+                                <div class="flavor-icon-large">🌿</div>
+                                <div class="flavor-info">
+                                    <h4>Mint Chocolate</h4>
+                                    <p class="flavor-price" id="price-mint-chocolate">৳50/piece</p>
+                                </div>
+                            </div>
+                            <div class="quantity-control">
+                                <button class="qty-btn" onclick="decreaseQuantity('mint-chocolate')">−</button>
+                                <input type="number" id="qty-mint-chocolate" value="0" min="0" readonly class="qty-input">
+                                <button class="qty-btn" onclick="increaseQuantity('mint-chocolate')">+</button>
+                            </div>
+                        </div>
+
+                        <!-- Cookies & Cream -->
+                        <div class="order-flavor-card">
+                            <div class="flavor-header">
+                                <div class="flavor-icon-large">🍪</div>
+                                <div class="flavor-info">
+                                    <h4>Cookies & Cream</h4>
+                                    <p class="flavor-price" id="price-cookies-cream">৳50/piece</p>
+                                </div>
+                            </div>
+                            <div class="quantity-control">
+                                <button class="qty-btn" onclick="decreaseQuantity('cookies-cream')">−</button>
+                                <input type="number" id="qty-cookies-cream" value="0" min="0" readonly class="qty-input">
+                                <button class="qty-btn" onclick="increaseQuantity('cookies-cream')">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delivery Details -->
+                <div class="delivery-section">
+                    <h3>Fulfillment Method</h3>
+                    
+                    <!-- Delivery Method Selection -->
+                    <div class="delivery-method-tabs">
+                        <button class="delivery-method-tab active" onclick="switchDeliveryMethod('delivery')" id="deliveryTab">
+                            <span class="method-icon">🏍️</span>
+                            <div class="method-info">
+                                <span class="method-title">Home Delivery</span>
+                                <span class="method-subtitle">By Rider</span>
+                            </div>
+                        </button>
+                        <button class="delivery-method-tab" onclick="switchDeliveryMethod('pickup')" id="pickupTab">
+                            <span class="method-icon">🏪</span>
+                            <div class="method-info">
+                                <span class="method-title">Store Pickup</span>
+                                <span class="method-subtitle">Self Collection</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Home Delivery Form -->
+                    <form id="orderForm" class="delivery-form-content active">
+                        <div class="form-group">
+                            <label for="deliveryAddress">Delivery Address *</label>
+                            <textarea id="deliveryAddress" rows="3" placeholder="Enter your complete delivery address..." required></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactName">Contact Name *</label>
+                                <input type="text" id="contactName" placeholder="Your name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactPhone">Phone Number *</label>
+                                <input type="tel" id="contactPhone" placeholder="+880 1XXX-XXXXXX" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="deliveryDate">Preferred Delivery Date *</label>
+                            <input type="date" id="deliveryDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="deliveryTime">Preferred Time Slot</label>
+                            <select id="deliveryTime">
+                                <option value="morning">Morning (9 AM - 12 PM)</option>
+                                <option value="afternoon">Afternoon (12 PM - 4 PM)</option>
+                                <option value="evening">Evening (4 PM - 8 PM)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="orderNotes">Special Instructions (Optional)</label>
+                            <textarea id="orderNotes" rows="2" placeholder="Any special requests or notes..."></textarea>
+                        </div>
+                    </form>
+
+                    <!-- Store Pickup Form -->
+                    <form id="pickupForm" class="delivery-form-content" style="display: none;">
+                        <div class="form-group">
+                            <label for="pickupStore">Select Pickup Store *</label>
+                            <select id="pickupStore" required>
+                                <option value="">Choose a store...</option>
+                                <option value="depot-main">🏭 Savoy Main Depot - Dhaka (0.5 km)</option>
+                                <option value="retailer-dhanmondi">🏪 Sweet Corner - Dhanmondi (1.2 km)</option>
+                                <option value="retailer-gulshan">🏪 Ice Cream Paradise - Gulshan (2.3 km)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pickupName">Your Name *</label>
+                                <input type="text" id="pickupName" placeholder="Name for pickup" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pickupPhone">Phone Number *</label>
+                                <input type="tel" id="pickupPhone" placeholder="+880 1XXX-XXXXXX" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pickupDate">Preferred Pickup Date *</label>
+                            <input type="date" id="pickupDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pickupTime">Preferred Pickup Time</label>
+                            <select id="pickupTime" required>
+                                <option value="">Select time slot...</option>
+                                <option value="morning">Morning (9 AM - 12 PM)</option>
+                                <option value="afternoon">Afternoon (12 PM - 4 PM)</option>
+                                <option value="evening">Evening (4 PM - 8 PM)</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="order-summary-final">
+                    <h3>Order Summary</h3>
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="summarySubtotal">৳0</span>
+                    </div>
+                    <div class="summary-row" id="deliveryFeeRow">
+                        <span id="deliveryFeeLabel">Delivery Fee:</span>
+                        <span id="summaryDelivery">৳200</span>
+                    </div>
+                    <div class="summary-row discount" id="freeDeliveryRow" style="display: none;">
+                        <span>🎉 Free Delivery Discount:</span>
+                        <span>-৳200</span>
+                    </div>
+                    <div class="summary-row success" id="pickupSavingsRow" style="display: none;">
+                        <span>💰 Store Pickup Savings:</span>
+                        <span>-৳200</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total Amount:</span>
+                        <span id="summaryTotal">৳0</span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="order-actions">
+                    <button class="btn-secondary btn-full" onclick="closeOrderModal()">Cancel</button>
+                    <button class="btn-primary btn-full" onclick="placeOrder()" id="placeOrderBtn" disabled>
+                        Place Order
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SVG Definitions for Gradients -->
+    <svg style="position: absolute; width: 0; height: 0;">
+        <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+</body>
+</html>

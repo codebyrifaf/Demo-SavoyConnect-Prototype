@@ -1,0 +1,1071 @@
+/* SavoyConnect - Premium Royal Authentication Styles */
+
+/* ========================================
+   AUTH PAGE BASE
+   ======================================== */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #1A1625;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ========================================
+   ANIMATED BACKGROUND
+   ======================================== */
+.auth-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bg-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(ellipse at 20% 20%, rgba(74, 30, 140, 0.4) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(212, 175, 55, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(139, 74, 125, 0.3) 0%, transparent 70%),
+    linear-gradient(180deg, #1A1625 0%, #2D2640 50%, #1E1A2E 100%);
+}
+
+.bg-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(rgba(212, 175, 55, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: patternMove 20s linear infinite;
+}
+
+@keyframes patternMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 40px 40px;
+  }
+}
+
+/* Floating Elements */
+.floating-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.float-icon {
+  position: absolute;
+  font-size: 2.5rem;
+  opacity: 0.15;
+  animation: float 8s ease-in-out infinite;
+}
+
+.icon-1 { top: 10%; left: 10%; animation-delay: 0s; }
+.icon-2 { top: 20%; right: 15%; animation-delay: 1.5s; }
+.icon-3 { bottom: 30%; left: 8%; animation-delay: 3s; }
+.icon-4 { bottom: 15%; right: 10%; animation-delay: 4.5s; }
+.icon-5 { top: 50%; left: 50%; animation-delay: 6s; }
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+  }
+}
+
+/* ========================================
+   AUTH CONTAINER
+   ======================================== */
+.auth-container {
+  display: flex;
+  max-width: 1100px;
+  width: 100%;
+  min-height: 650px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 
+    0 32px 64px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(212, 175, 55, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  position: relative;
+  z-index: 1;
+  animation: containerReveal 0.8s ease-out;
+}
+
+@keyframes containerReveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ========================================
+   BRANDING PANEL (Left)
+   ======================================== */
+.auth-branding {
+  flex: 1;
+  background: linear-gradient(135deg, #4A1E8C 0%, #2D0F5A 50%, #1A1625 100%);
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-branding::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 60%);
+  animation: rotate 30s linear infinite;
+}
+
+.auth-branding::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #D4AF37, #F4E19C, #D4AF37);
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.brand-content {
+  position: relative;
+  z-index: 2;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.logo-crown {
+  font-size: 2rem;
+  animation: crownBounce 2s ease-in-out infinite;
+  position: absolute;
+  top: -20px;
+  left: 20px;
+}
+
+@keyframes crownBounce {
+  0%, 100% { transform: translateY(0) rotate(-10deg); }
+  50% { transform: translateY(-8px) rotate(10deg); }
+}
+
+.logo-img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  filter: brightness(0) invert(1) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.brand-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 8px;
+  letter-spacing: -1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.brand-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  color: rgba(212, 175, 55, 0.9);
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+
+/* Brand Features */
+.brand-features {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: rgba(212, 175, 55, 0.3);
+  transform: translateX(8px);
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+}
+
+.feature-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Brand Quote */
+.brand-quote {
+  padding: 20px;
+  background: rgba(212, 175, 55, 0.08);
+  border-left: 3px solid #D4AF37;
+  border-radius: 0 12px 12px 0;
+}
+
+.brand-quote p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+/* Membership Tiers Preview */
+.membership-tiers {
+  margin-top: 32px;
+}
+
+.membership-tiers h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.tiers-preview {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tier {
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.tier.bronze { border-color: #CD7F32; color: #CD7F32; }
+.tier.silver { border-color: #C0C0C0; color: #C0C0C0; }
+.tier.gold { 
+  border-color: #D4AF37; 
+  color: #D4AF37; 
+  background: rgba(212, 175, 55, 0.1);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+}
+.tier.platinum { 
+  border-color: #E5E4E2; 
+  color: #E5E4E2;
+  background: rgba(229, 228, 226, 0.1);
+}
+
+/* ========================================
+   FORM PANEL (Right)
+   ======================================== */
+.auth-form-panel {
+  flex: 1;
+  background: linear-gradient(145deg, #FDFCFF 0%, #F8F6FC 100%);
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.auth-form-container.signup-form {
+  max-width: 450px;
+}
+
+/* Form Header */
+.form-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.form-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1A1625;
+  margin-bottom: 8px;
+}
+
+.form-subtitle {
+  font-size: 1rem;
+  color: #6B6580;
+}
+
+/* ========================================
+   SIGNUP PROGRESS STEPS
+   ======================================== */
+.signup-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+  gap: 8px;
+}
+
+.progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.step-number {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: #E8E5F0;
+  color: #6B6580;
+  transition: all 0.3s ease;
+}
+
+.progress-step.active .step-number {
+  background: linear-gradient(135deg, #4A1E8C 0%, #6B3FA0 100%);
+  color: white;
+  box-shadow: 0 4px 16px rgba(74, 30, 140, 0.4);
+}
+
+.progress-step.completed .step-number {
+  background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+  color: #1A1625;
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.4);
+}
+
+.progress-step.completed .step-number::after {
+  content: '✓';
+}
+
+.step-label {
+  font-size: 0.75rem;
+  color: #6B6580;
+  font-weight: 500;
+}
+
+.progress-step.active .step-label {
+  color: #4A1E8C;
+  font-weight: 600;
+}
+
+.progress-line {
+  width: 40px;
+  height: 2px;
+  background: #E8E5F0;
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+
+/* Form Steps */
+.form-step {
+  display: none;
+}
+
+.form-step.active {
+  display: block;
+  animation: stepFadeIn 0.4s ease-out;
+}
+
+@keyframes stepFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ========================================
+   ROYAL INPUT GROUPS
+   ======================================== */
+.input-group-royal {
+  margin-bottom: 20px;
+}
+
+.input-group-royal label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #2D2640;
+  margin-bottom: 8px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  font-size: 1.1rem;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  border: 2px solid rgba(212, 175, 55, 0.2);
+  border-radius: 12px;
+  background: white;
+  color: #1A1625;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.input-wrapper input::placeholder {
+  color: #9490A8;
+}
+
+.input-wrapper input:focus {
+  border-color: #D4AF37;
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1), 0 4px 16px rgba(212, 175, 55, 0.15);
+}
+
+.input-focus-border {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #D4AF37, #4A1E8C);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.input-wrapper input:focus ~ .input-focus-border {
+  width: calc(100% - 24px);
+}
+
+/* Toggle Password Button */
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+  padding: 4px;
+}
+
+.toggle-password:hover {
+  opacity: 1;
+}
+
+/* Password Strength */
+.password-strength {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.strength-bar {
+  flex: 1;
+  height: 4px;
+  background: #E8E5F0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.strength-fill {
+  height: 100%;
+  width: 0;
+  background: #E8E5F0;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.strength-text {
+  font-size: 0.75rem;
+  color: #6B6580;
+  min-width: 60px;
+}
+
+/* Input Row (Two Columns) */
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ========================================
+   FORM OPTIONS
+   ======================================== */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+/* Royal Checkbox */
+.checkbox-royal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.checkbox-royal input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.checkbox-royal input:checked ~ .checkmark {
+  background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+  border-color: #D4AF37;
+}
+
+.checkbox-royal input:checked ~ .checkmark::after {
+  content: '✓';
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.checkbox-text {
+  font-size: 0.875rem;
+  color: #4A4458;
+}
+
+.checkbox-text a {
+  color: #4A1E8C;
+  text-decoration: underline;
+}
+
+/* Forgot Link */
+.forgot-link {
+  font-size: 0.875rem;
+  color: #4A1E8C;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.forgot-link:hover {
+  color: #D4AF37;
+}
+
+/* ========================================
+   ROYAL BUTTONS
+   ======================================== */
+.btn-royal-primary,
+.btn-royal-secondary,
+.btn-royal-gold {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 16px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-royal-primary {
+  background: linear-gradient(135deg, #4A1E8C 0%, #6B3FA0 100%);
+  color: white;
+  box-shadow: 0 8px 24px rgba(74, 30, 140, 0.4);
+}
+
+.btn-royal-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(74, 30, 140, 0.5);
+}
+
+.btn-royal-secondary {
+  background: transparent;
+  color: #4A1E8C;
+  border: 2px solid rgba(74, 30, 140, 0.3);
+}
+
+.btn-royal-secondary:hover {
+  background: rgba(74, 30, 140, 0.05);
+  border-color: #4A1E8C;
+}
+
+.btn-royal-gold {
+  background: linear-gradient(135deg, #D4AF37 0%, #F4E19C 50%, #D4AF37 100%);
+  background-size: 200% 200%;
+  color: #1A1625;
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
+  animation: goldShimmer 3s ease infinite;
+}
+
+@keyframes goldShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.btn-royal-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.5), 0 0 40px rgba(212, 175, 55, 0.3);
+}
+
+.btn-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-royal-primary:hover .btn-shine,
+.btn-royal-gold:hover .btn-shine {
+  left: 100%;
+}
+
+.btn-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.btn-royal-primary:hover .btn-icon,
+.btn-royal-gold:hover .btn-icon {
+  transform: translateX(4px);
+}
+
+/* Loading State */
+.btn-royal-primary.loading,
+.btn-royal-gold.loading {
+  pointer-events: none;
+}
+
+.btn-royal-primary.loading .btn-text,
+.btn-royal-gold.loading .btn-text {
+  opacity: 0;
+}
+
+.btn-royal-primary.loading::after,
+.btn-royal-gold.loading::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Form Buttons Row */
+.form-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.form-buttons .btn-royal-secondary {
+  flex: 0 0 auto;
+  width: auto;
+  padding: 16px 20px;
+}
+
+.form-buttons .btn-royal-primary,
+.form-buttons .btn-royal-gold {
+  flex: 1;
+}
+
+/* ========================================
+   DIVIDER
+   ======================================== */
+.divider-royal {
+  display: flex;
+  align-items: center;
+  margin: 24px 0;
+}
+
+.divider-royal::before,
+.divider-royal::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+}
+
+.divider-royal span {
+  padding: 0 16px;
+  font-size: 0.875rem;
+  color: #6B6580;
+  white-space: nowrap;
+}
+
+/* ========================================
+   SOCIAL LOGIN
+   ======================================== */
+.social-login {
+  display: flex;
+  gap: 12px;
+}
+
+.social-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 2px solid #E8E5F0;
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #2D2640;
+}
+
+.social-btn:hover {
+  border-color: #D4AF37;
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.15);
+  transform: translateY(-2px);
+}
+
+.social-btn svg {
+  flex-shrink: 0;
+}
+
+/* ========================================
+   FORM FOOTER
+   ======================================== */
+.form-footer {
+  text-align: center;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.form-footer p {
+  font-size: 0.95rem;
+  color: #6B6580;
+}
+
+.link-royal {
+  color: #4A1E8C;
+  font-weight: 600;
+  text-decoration: none;
+  position: relative;
+}
+
+.link-royal::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #D4AF37, #4A1E8C);
+  transition: width 0.3s ease;
+}
+
+.link-royal:hover::after {
+  width: 100%;
+}
+
+/* ========================================
+   PREFERENCES SECTION (Signup)
+   ======================================== */
+.preferences-section {
+  margin-bottom: 24px;
+}
+
+.preferences-section h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: #2D2640;
+  margin-bottom: 16px;
+}
+
+.flavor-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.flavor-chip {
+  cursor: pointer;
+}
+
+.flavor-chip input {
+  display: none;
+}
+
+.chip-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border: 2px solid rgba(212, 175, 55, 0.2);
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4A4458;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.flavor-chip input:checked + .chip-content {
+  background: linear-gradient(135deg, rgba(74, 30, 140, 0.1) 0%, rgba(212, 175, 55, 0.1) 100%);
+  border-color: #D4AF37;
+  color: #4A1E8C;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+}
+
+.flavor-chip:hover .chip-content {
+  border-color: rgba(212, 175, 55, 0.5);
+}
+
+/* Terms Section */
+.terms-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 900px) {
+  .auth-container {
+    flex-direction: column;
+    max-width: 500px;
+    min-height: auto;
+  }
+
+  .auth-branding {
+    padding: 32px;
+  }
+
+  .brand-title {
+    font-size: 2rem;
+  }
+
+  .brand-features {
+    display: none;
+  }
+
+  .brand-quote {
+    display: none;
+  }
+
+  .membership-tiers {
+    display: none;
+  }
+
+  .auth-form-panel {
+    padding: 32px;
+  }
+
+  .form-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .auth-page {
+    padding: 12px;
+  }
+
+  .auth-container {
+    border-radius: 20px;
+  }
+
+  .auth-branding {
+    padding: 24px;
+  }
+
+  .brand-logo {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .logo-crown {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+
+  .brand-title {
+    font-size: 1.75rem;
+  }
+
+  .auth-form-panel {
+    padding: 24px;
+  }
+
+  .input-row {
+    grid-template-columns: 1fr;
+  }
+
+  .social-login {
+    flex-direction: column;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+  }
+
+  .form-buttons .btn-royal-secondary {
+    width: 100%;
+    order: 1;
+  }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+.auth-form {
+  animation: formFadeIn 0.6s ease-out 0.3s both;
+}
+
+@keyframes formFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.input-group-royal {
+  animation: inputSlideIn 0.5s ease-out both;
+}
+
+.input-group-royal:nth-child(1) { animation-delay: 0.4s; }
+.input-group-royal:nth-child(2) { animation-delay: 0.5s; }
+.input-group-royal:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes inputSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.feature-item {
+  animation: featureFadeIn 0.5s ease-out both;
+}
+
+.feature-item:nth-child(1) { animation-delay: 0.5s; }
+.feature-item:nth-child(2) { animation-delay: 0.6s; }
+.feature-item:nth-child(3) { animation-delay: 0.7s; }
+
+@keyframes featureFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

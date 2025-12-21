@@ -1,0 +1,474 @@
+/* SavoyConnect - Premium Royal Animations */
+
+/* ========================================
+   ENTRANCE ANIMATIONS - Royal Premium
+   ======================================== */
+
+/* Fade in from bottom */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in with scale */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Royal reveal animation */
+@keyframes royalReveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Gold shimmer sweep */
+@keyframes goldSweep {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Slide in from left */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Slide in from right */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Bounce in */
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Pulse animation - Royal Gold Glow */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px 5px rgba(212, 175, 55, 0.2);
+  }
+}
+
+/* Crown float animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+/* Premium shimmer effect */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Rotate */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Wiggle */
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+/* ========================================
+   HOME SCREEN ANIMATIONS
+   ======================================== */
+
+/* Welcome section */
+.welcome-section {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.welcome-section h1 {
+  animation: slideInLeft 0.8s ease-out;
+}
+
+.welcome-section p {
+  animation: slideInRight 0.8s ease-out 0.2s both;
+}
+
+/* Stats cards with staggered entrance */
+.stat-card {
+  animation: bounceIn 0.6s ease-out both;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Hover effects for stat cards - Royal Premium */
+.stat-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 16px 48px rgba(74, 30, 140, 0.15), 0 0 30px rgba(212, 175, 55, 0.1);
+}
+
+.stat-card:active {
+  transform: translateY(-4px) scale(0.98);
+}
+
+/* Stat icon animations */
+.stat-icon {
+  animation: float 3s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover .stat-icon {
+  animation: wiggle 0.5s ease;
+  transform: scale(1.2);
+}
+
+/* Stat value count-up effect */
+.stat-value {
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover .stat-value {
+  transform: scale(1.1);
+  font-weight: var(--font-weight-bold);
+  filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.3));
+}
+
+/* ========================================
+   PROMO CARD ANIMATIONS - Royal Premium
+   ======================================== */
+
+.promo-card {
+  animation: fadeInScale 0.8s ease-out 0.5s both;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.promo-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(212, 175, 55, 0.15),
+    transparent
+  );
+  animation: shimmer 3s infinite;
+}
+
+.promo-card:hover {
+  transform: scale(1.02) translateY(-5px);
+  box-shadow: 0 20px 60px rgba(74, 30, 140, 0.25), 0 0 40px rgba(212, 175, 55, 0.15);
+}
+
+/* ========================================
+   ACTION BUTTONS ANIMATIONS
+   ======================================== */
+
+.action-btn {
+  animation: fadeInUp 0.6s ease-out both;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.action-btn:nth-child(1) { animation-delay: 0.6s; }
+.action-btn:nth-child(2) { animation-delay: 0.7s; }
+.action-btn:nth-child(3) { animation-delay: 0.8s; }
+.action-btn:nth-child(4) { animation-delay: 0.9s; }
+
+.action-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.action-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.action-btn:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 16px 48px rgba(74, 30, 140, 0.15), 0 0 30px rgba(212, 175, 55, 0.1);
+}
+
+.action-btn:active {
+  transform: translateY(-2px) scale(0.95);
+}
+
+.action-icon {
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.action-btn:hover .action-icon {
+  animation: pulse 0.6s ease;
+  transform: scale(1.2) rotate(5deg);
+}
+
+/* ========================================
+   FLAVOR CARDS ANIMATIONS
+   ======================================== */
+
+.flavor-card {
+  animation: fadeInUp 0.6s ease-out both;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.flavor-card:nth-child(1) { animation-delay: 0.1s; }
+.flavor-card:nth-child(2) { animation-delay: 0.2s; }
+.flavor-card:nth-child(3) { animation-delay: 0.3s; }
+.flavor-card:nth-child(4) { animation-delay: 0.4s; }
+.flavor-card:nth-child(5) { animation-delay: 0.5s; }
+.flavor-card:nth-child(6) { animation-delay: 0.6s; }
+
+.flavor-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(74, 30, 140, 0.15), 0 0 40px rgba(212, 175, 55, 0.1);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+.flavor-icon {
+  transition: all 0.4s ease;
+  display: inline-block;
+}
+
+.flavor-card:hover .flavor-icon {
+  transform: scale(1.2) rotate(10deg);
+  animation: wiggle 0.5s ease;
+}
+
+.flavor-badge {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ========================================
+   BUTTONS & INTERACTIVE ELEMENTS
+   ======================================== */
+
+.btn-primary, .btn-secondary {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after, .btn-secondary::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.5s, height 0.5s;
+}
+
+.btn-primary:hover::after, .btn-secondary:hover::after {
+  width: 300px;
+  height: 300px;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(74, 30, 140, 0.25), 0 0 20px rgba(212, 175, 55, 0.15);
+}
+
+.btn-primary:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.btn-secondary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(74, 30, 140, 0.2);
+}
+
+/* ========================================
+   SEARCH BAR ANIMATION
+   ======================================== */
+
+.search-bar {
+  animation: fadeInScale 0.6s ease-out;
+  transition: all 0.3s ease;
+}
+
+.search-bar:focus-within {
+  transform: scale(1.02);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.search-icon {
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.search-bar:focus-within .search-icon {
+  animation: rotate 0.5s ease;
+}
+
+/* ========================================
+   CATEGORY TABS ANIMATION
+   ======================================== */
+
+.category-tab {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.category-tab::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background: var(--color-primary);
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+}
+
+.category-tab:hover::before,
+.category-tab.active::before {
+  width: 100%;
+}
+
+.category-tab:hover {
+  transform: translateY(-2px);
+  color: var(--color-primary);
+}
+
+.category-tab:active {
+  transform: scale(0.95);
+}
+
+/* ========================================
+   SECTION CARDS
+   ======================================== */
+
+.section-card {
+  animation: fadeInUp 0.8s ease-out both;
+  transition: all 0.3s ease;
+}
+
+.section-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   RESPONSIVE ADJUSTMENTS
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Reduce animations on mobile for performance */
+@media (max-width: 768px) {
+  .stat-icon,
+  .action-icon,
+  .flavor-icon {
+    animation: none;
+  }
+  
+  .stat-card:hover,
+  .action-btn:hover,
+  .flavor-card:hover {
+    transform: scale(1.02);
+  }
+}
