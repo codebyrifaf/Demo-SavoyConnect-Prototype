@@ -96,7 +96,9 @@
   height: 44px;
   object-fit: contain;
   flex-shrink: 0;
-  filter: drop-shadow(0 2px 4px rgba(74, 30, 140, 0.2));
+  filter: none;
+  box-shadow: none;
+  background: none;
 }
 
 .sidebar-brand {
@@ -306,7 +308,47 @@
 .top-bar-actions {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md);
+}
+
+.btn-login,
+.btn-get-started {
+  padding: 0.6rem 1.5rem;
+  border-radius: 25px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.btn-login {
+  background: transparent;
+  color: #19486A;
+  border: 2px solid #19486A;
+}
+
+.btn-login:hover {
+  background: #19486A;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(25, 72, 106, 0.3);
+}
+
+.btn-get-started {
+  background: linear-gradient(135deg, #B87333 0%, #8B5C46 100%);
+  color: white;
+  box-shadow: 0 5px 15px rgba(184, 115, 51, 0.3);
+}
+
+.btn-get-started:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(184, 115, 51, 0.4);
 }
 
 .icon-btn {
@@ -355,7 +397,7 @@
 
 .screen {
   display: none;
-  padding: var(--spacing-lg) 0;
+  padding: 0;
   animation: fadeInScreen 0.3s ease-in-out;
 }
 

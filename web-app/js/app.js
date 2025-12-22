@@ -1838,3 +1838,254 @@ if (typeof module !== 'undefined' && module.exports) {
     };
 }
 
+/* ========================================
+   LANDING PAGE FUNCTIONS
+   ======================================== */
+
+// Carousel functionality with infinite scroll
+let currentSlide = 0;
+let totalSlides = 5;
+let isTransitioning = false;
+
+function updateCarousel() {
+    const carousel = document.querySelector('.flavours-carousel');
+    const slides = document.querySelectorAll('.flavour-slide');
+    const dots = document.querySelectorAll('.dot');
+    
+    if (!carousel || !slides.length) return;
+    
+    // Update active slide
+    slides.forEach((slide, index) => {
+        slide.classList.remove('active-slide');
+        if (index === currentSlide || index === currentSlide + totalSlides || index === currentSlide + totalSlides * 2) {
+            slide.classList.add('active-slide');
+        }
+    });
+    
+    // Update dots (only show original 5)
+    const actualSlide = currentSlide % totalSlides;
+    dots.forEach((dot, index) => {
+        dot.classList.remove('active');
+        if (index === actualSlide) {
+            dot.classList.add('active');
+        }
+    });
+    
+    // Calculate scroll position
+    const slideWidth = slides[0].offsetWidth;
+    const gap = 48; // 3rem in pixels
+    const scrollPosition = currentSlide * (slideWidth + gap);
+    
+    carousel.scrollTo({
+        left: scrollPosition,
+        behavior: isTransitioning ? 'smooth' : 'auto'
+    });
+}
+
+function slideCarousel(direction) {
+    if (isTransitioning) return;
+    
+    isTransitioning = true;
+    
+    if (direction === 'next') {
+        currentSlide++;
+    } else {
+        currentSlide--;
+    }
+    
+    updateCarousel();
+    
+    setTimeout(() => {
+        isTransitioning = false;
+        
+        // Reset position for infinite loop
+        const carousel = document.querySelector('.flavours-carousel');
+        const slides = document.querySelectorAll('.flavour-slide');
+        if (!carousel || !slides.length) return;
+        
+        if (currentSlide >= totalSlides * 2) {
+            currentSlide = totalSlides;
+            const slideWidth = slides[0].offsetWidth;
+            const gap = 48;
+            carousel.scrollTo({
+                left: currentSlide * (slideWidth + gap),
+                behavior: 'auto'
+            });
+        } else if (currentSlide < totalSlides) {
+            currentSlide = totalSlides;
+            const slideWidth = slides[0].offsetWidth;
+            const gap = 48;
+            carousel.scrollTo({
+                left: currentSlide * (slideWidth + gap),
+                behavior: 'auto'
+            });
+        }
+    }, 500);
+}
+
+function jumpToSlide(index) {
+    if (isTransitioning) return;
+    
+    isTransitioning = true;
+    currentSlide = totalSlides + index;
+    updateCarousel();
+    
+    setTimeout(() => {
+        isTransitioning = false;
+    }, 500);
+}
+
+// Auto-play carousel with infinite loop
+let carouselInterval;
+
+function startCarouselAutoplay() {
+    carouselInterval = setInterval(() => {
+        slideCarousel('next');
+    }, 3000); // Change slide every 3 seconds
+}
+
+function stopCarouselAutoplay() {
+    if (carouselInterval) {
+        clearInterval(carouselInterval);
+    }
+}
+
+// Clone slides for infinite effect
+function setupInfiniteCarousel() {
+    const carousel = document.querySelector('.flavours-carousel');
+    if (!carousel) return;
+    
+    const originalSlides = Array.from(carousel.querySelectorAll('.flavour-slide'));
+    totalSlides = originalSlides.length;
+    
+    // Clear carousel
+    carousel.innerHTML = '';
+    
+    // Add slides: [clones] [originals] [clones]
+    // First set of clones
+    originalSlides.forEach(slide => {
+        const clone = slide.cloneNode(true);
+        carousel.appendChild(clone);
+    });
+    
+    // Original slides
+    originalSlides.forEach(slide => {
+        carousel.appendChild(slide);
+    });
+    
+    // Second set of clones
+    originalSlides.forEach(slide => {
+        const clone = slide.cloneNode(true);
+        carousel.appendChild(clone);
+    });
+    
+    // Start at middle set (original slides)
+    currentSlide = totalSlides;
+    
+    // Set initial position without animation
+    setTimeout(() => {
+        updateCarousel();
+    }, 100);
+}
+
+// Store directions
+function getDirections(storeName) {
+    alert(`Opening directions to Savoy ${storeName.charAt(0).toUpperCase() + storeName.slice(1)}...\n\nThis would open your preferred maps application.`);
+}
+
+function viewAllOnMap() {
+    alert('View All Stores on Map\n\nThis would open an interactive map showing all Savoy store locations.');
+}
+
+// Order functions
+function customizeBox() {
+    alert('Customize Your Box\n\nCreate your perfect gift box by selecting 4-6 of your favorite flavors!\n\nRedirecting to customization page...');
+    // In a real app, this would navigate to the customization page
+}
+
+function orderNow() {
+    alert('Order Ice Cream\n\nChoose your favorite flavors and get them delivered fresh to your doorstep!\n\nRedirecting to order page...');
+    // In a real app, this would navigate to the order page
+}
+
+function exploreHeritage() {
+    alert('Explore Our Heritage\n\nDiscover the rich history of Savoy Ice Cream Factory - from our humble beginnings in the 1950s to becoming a beloved brand today.\n\nOpening heritage page...');
+    // In a real app, this would navigate to the heritage/about page
+}
+
+// Contact form
+function handleContactForm(event) {
+    if (event) {
+        event.preventDefault();
+    }
+    
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+    
+    // Get form data
+    const formData = new FormData(form);
+    
+    // Show success message
+    alert('Thank you for reaching out!\n\nWe\'ve received your message and will get back to you within 24 hours.');
+    
+    // Reset form
+    form.reset();
+}
+
+// Initialize landing page
+function initLandingPage() {
+    // Set up infinite carousel
+    setupInfiniteCarousel();
+    
+    // Start autoplay
+    startCarouselAutoplay();
+    
+    // Pause autoplay on hover
+    const carousel = document.querySelector('.flavours-carousel');
+    if (carousel) {
+        carousel.addEventListener('mouseenter', stopCarouselAutoplay);
+        carousel.addEventListener('mouseleave', startCarouselAutoplay);
+        
+        // Prevent manual scrolling interference
+        carousel.addEventListener('scroll', (e) => {
+            if (!isTransitioning) {
+                e.preventDefault();
+            }
+        });
+    }
+    
+    // Set up contact form
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', handleContactForm);
+    }
+    
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href.length > 1) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
+        });
+    });
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLandingPage);
+} else {
+    initLandingPage();
+}
+
+// Cleanup on navigation away
+window.addEventListener('beforeunload', () => {
+    stopCarouselAutoplay();
+});
